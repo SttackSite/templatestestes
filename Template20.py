@@ -1,17 +1,18 @@
 import streamlit as st
 
-# ✅ ALTERE: Configuração da página - Mude o título, ícone e nome conforme sua marca
+# ✅ ALTERE: Configuração da página - Mude o título, ícone e nome da marca
 st.set_page_config(
-    page_title="Agência Digital - Transforme seu Negócio",  # ✅ ALTERE: Título que aparece na aba do navegador
-    page_icon="🚀",  # ✅ ALTERE: Ícone que aparece na aba do navegador
-    layout="wide",  # ❌ NÃO ALTERE: Define o layout da página em modo wide
-    initial_sidebar_state="collapsed"  # ❌ NÃO ALTERE: Esconde a barra lateral do Streamlit
+    page_title="FitPro Academia - Transforme seu Corpo",  # ✅ Título que aparece na aba do navegador
+    page_icon="💪",  # ✅ Ícone que aparece na aba do navegador
+    layout="wide",  # ❌ Layout da página (não altere)
+    initial_sidebar_state="collapsed"  # ❌ Estado inicial da barra lateral (não altere)
 )
 
-# ❌ NÃO ALTERE: CSS ULTRA PROFISSIONAL - Responsável por todo o visual da página
+# ❌ NÃO ALTERE: CSS ULTRA PROFISSIONAL - Toda a estilização visual da página
+# Este bloco CSS é responsável por toda a aparência, cores, fontes, animações e responsividade
 custom_css = """
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
     * {
         margin: 0;
@@ -20,25 +21,10 @@ custom_css = """
     }
     
     html, body, [data-testid="stAppViewContainer"] {
-        background: linear-gradient(180deg, #f8f9ff 0%, #f0f4ff 50%, #f8f9ff 100%);
-        background-attachment: fixed;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+        background: #f5f5f5;
+        font-family: 'Montserrat', sans-serif;
         color: #1a1a1a;
         line-height: 1.6;
-    }
-    
-    html::before, body::before {
-        content: '';
-        position: fixed;
-        top: 0;
-        left: 0;
-        right: 0;
-        bottom: 0;
-        background: 
-            radial-gradient(circle at 20% 50%, rgba(0, 102, 255, 0.08) 0%, transparent 50%),
-            radial-gradient(circle at 80% 80%, rgba(0, 102, 255, 0.05) 0%, transparent 50%);
-        pointer-events: none;
-        z-index: 0;
     }
     
     [data-testid="stDecoration"] { display: none; }
@@ -50,257 +36,193 @@ custom_css = """
         z-index: 1;
     }
     
-    /* ❌ NÃO ALTERE: NAVBAR - Barra de navegação no topo da página */
+    /* NAVBAR - Barra de navegação no topo */
     .navbar {
-        background: rgba(255, 255, 255, 0.95);
-        backdrop-filter: blur(10px);
-        padding: 16px 60px;
+        background: #ffffff;
+        padding: 18px 60px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 1px solid rgba(0, 102, 255, 0.1);
+        border-bottom: 3px solid #FF6B35;
         position: sticky;
         top: 0;
         z-index: 100;
-        box-shadow: 0 2px 10px rgba(0, 102, 255, 0.08);
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
     }
     
-    /* ✅ ALTERE: Logo da navbar - Mude o texto e cor conforme sua marca */
     .navbar-logo {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 900;
+        color: #1a1a1a;
         text-decoration: none;
         letter-spacing: -0.5px;
+        font-family: 'Poppins', sans-serif;
     }
     
-    /* ❌ NÃO ALTERE: Container dos links da navbar */
+    .navbar-logo-highlight {
+        color: #FF6B35;
+    }
+    
     .navbar-links {
         display: flex;
         gap: 50px;
         align-items: center;
     }
     
-    /* ❌ NÃO ALTERE: Estilo dos links da navbar com underline animado */
     .navbar-link {
         color: #1a1a1a;
-        text-decoration: none !important;
-        font-weight: 500;
-        font-size: 15px;
-        transition: all 0.3s ease;
-        position: relative;
-        cursor: pointer;
-    }
-    
-    /* ❌ NÃO ALTERE: Efeito hover dos links - Underline animado */
-    .navbar-link::after {
-        content: '';
-        position: absolute;
-        bottom: -5px;
-        left: 0;
-        width: 0;
-        height: 2px;
-        background: #0066FF;
-        transition: width 0.3s ease;
-    }
-    
-    .navbar-link:hover::after {
-        width: 100%;
-    }
-    
-    .navbar-link:hover {
-        color: #0066FF;
-    }
-    
-    /* ✅ ALTERE: Botão CTA da navbar - Mude o texto e URL */
-    .cta-button {
-        background: linear-gradient(90deg, #0066FF, #0052CC);
-        color: white !important;
-        padding: 10px 28px;
-        border-radius: 8px;
         text-decoration: none !important;
         font-weight: 600;
         font-size: 14px;
         transition: all 0.3s ease;
+    }
+    
+    .navbar-link:visited {
+        color: #1a1a1a !important;
+    }
+    
+    .navbar-link:hover {
+        color: #FF6B35;
+    }
+    
+    .navbar-cta {
+        background: #FF6B35;
+        color: white;
+        padding: 12px 32px;
+        border-radius: 4px;
+        text-decoration: none !important;
+        font-weight: 700;
+        font-size: 13px;
+        transition: all 0.3s ease;
         border: none;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.2);
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .navbar-cta:hover {
+        background: #E55A25;
         transform: translateY(-2px);
-        box-shadow: 0 6px 20px rgba(0, 102, 255, 0.3);
+        box-shadow: 0 6px 16px rgba(255, 107, 53, 0.35);
     }
     
-    /* ❌ NÃO ALTERE: HERO SECTION - Seção principal de apresentação */
+    /* HERO SECTION - Seção principal com título grande */
     .hero-section {
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.8) 0%, rgba(248, 249, 255, 0.6) 100%);
-        backdrop-filter: blur(10px);
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
         padding: 120px 60px;
-        text-align: center;
         position: relative;
         overflow: hidden;
-        border-bottom: 1px solid rgba(0, 102, 255, 0.1);
     }
     
     .hero-section::before {
         content: '';
         position: absolute;
         top: -50%;
-        right: -20%;
-        width: 600px;
-        height: 600px;
-        background: radial-gradient(circle, rgba(0, 102, 255, 0.08) 0%, transparent 70%);
-        border-radius: 50%;
-    }
-    
-    .hero-section::after {
-        content: '';
-        position: absolute;
-        bottom: -30%;
-        left: -10%;
+        right: -10%;
         width: 500px;
         height: 500px;
-        background: radial-gradient(circle, rgba(0, 102, 255, 0.05) 0%, transparent 70%);
+        background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
         border-radius: 50%;
     }
     
     .hero-content {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 60px;
+        align-items: center;
         position: relative;
         z-index: 2;
-        max-width: 900px;
+        max-width: 1400px;
         margin: 0 auto;
     }
     
-    /* ✅ ALTERE: Título principal do hero - Mude o texto conforme sua marca */
-    .hero-title {
-        font-size: 64px;
+    .hero-text h1 {
+        font-size: 68px;
         font-weight: 900;
-        line-height: 1.15;
+        line-height: 1.1;
         margin-bottom: 24px;
-        color: #1a1a1a;
-        letter-spacing: -1px;
+        color: #ffffff;
+        letter-spacing: -1.5px;
+        font-family: 'Poppins', sans-serif;
     }
     
-    /* ✅ ALTERE: Parte destacada do título - Mude a cor conforme sua marca */
-    .hero-title-highlight {
-        color: #0066FF;
+    .hero-text h1 .highlight {
+        color: #FF6B35;
     }
     
-    /* ✅ ALTERE: Subtítulo do hero - Mude o texto conforme sua marca */
-    .hero-subtitle {
-        font-size: 20px;
-        line-height: 1.6;
-        margin-bottom: 50px;
-        color: #666666;
+    .hero-text p {
+        font-size: 18px;
+        line-height: 1.8;
+        margin-bottom: 40px;
+        color: #e0e0e0;
         font-weight: 400;
     }
     
-    /* ❌ NÃO ALTERE: Container das estatísticas do hero */
     .hero-stats {
         display: flex;
-        justify-content: center;
-        gap: 80px;
-        margin-top: 60px;
-        padding-top: 60px;
-        border-top: 1px solid #e0e0e0;
+        gap: 50px;
+        margin-bottom: 40px;
     }
     
     .hero-stat {
-        text-align: center;
+        border-left: 3px solid #FF6B35;
+        padding-left: 20px;
     }
     
-    /* ✅ ALTERE: Números das estatísticas - Mude os números conforme seus dados */
     .hero-stat-number {
         font-size: 36px;
         font-weight: 900;
-        color: #0066FF;
-        margin-bottom: 8px;
+        color: #FF6B35;
+        margin-bottom: 4px;
     }
     
-    /* ✅ ALTERE: Labels das estatísticas - Mude os textos conforme seus dados */
     .hero-stat-label {
-        font-size: 14px;
-        color: #666666;
-        font-weight: 500;
-    }
-    
-    /* ❌ NÃO ALTERE: BADGES - Pequenos rótulos de destaque */
-    .badges-container {
-        display: flex;
-        justify-content: center;
-        gap: 12px;
-        flex-wrap: wrap;
-        margin-bottom: 30px;
-    }
-    
-    .badge {
-        background: #f0f0f0;
-        color: #1a1a1a;
-        padding: 8px 16px;
-        border-radius: 20px;
         font-size: 13px;
+        color: #b0b0b0;
         font-weight: 600;
-        display: inline-flex;
-        align-items: center;
-        gap: 6px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
-    .badge-icon {
-        font-size: 14px;
-    }
-    
-    .badge-primary {
-        background: #0066FF;
-        color: white;
-    }
-    
-    .badge-success {
-        background: #00AA44;
-        color: white;
-    }
-    
-    .badge-warning {
-        background: #FF6600;
-        color: white;
-    }
-    
-    /* ❌ NÃO ALTERE: BUTTONS - Botões de ação */
-    .cta-button {
-        display: inline-block;
-        background: linear-gradient(135deg, #0066FF, #0052CC);
-        color: white !important;
-        padding: 16px 48px;
+    .hero-image {
+        background: linear-gradient(135deg, #FF6B35 0%, #FF8555 100%);
+        height: 400px;
         border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 120px;
+        color: rgba(255, 255, 255, 0.2);
+    }
+    
+    .hero-cta {
+        display: inline-block;
+        background: #FF6B35;
+        color: white;
+        padding: 16px 48px;
+        border-radius: 4px;
         font-weight: 700;
-        font-size: 16px;
-        text-decoration: none;
+        font-size: 14px;
+        text-decoration: none !important;
         transition: all 0.3s ease;
         border: none;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(0, 102, 255, 0.25);
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
-    .cta-button:hover {
+    .hero-cta:hover {
+        background: #E55A25;
         transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(0, 102, 255, 0.35);
+        box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
     }
     
-    .cta-button-secondary {
-        background: white;
-        color: #0066FF;
-        border: 2px solid #0066FF;
-        box-shadow: none;
-    }
-    
-    .cta-button-secondary:hover {
-        background: #f0f6ff;
-    }
-    
-    /* ❌ NÃO ALTERE: FEATURES SECTION - Seção de características */
-    .features-section {
+    /* SERVICES SECTION - Seção de serviços com cards */
+    .services-section {
         padding: 100px 60px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(248, 249, 255, 0.5) 100%);
-        backdrop-filter: blur(5px);
+        background: #ffffff;
     }
     
     .section-header {
@@ -311,244 +233,360 @@ custom_css = """
         margin-right: auto;
     }
     
-    /* ✅ ALTERE: Título das seções - Mude o texto conforme sua marca */
     .section-title {
         font-size: 48px;
         font-weight: 900;
         margin-bottom: 20px;
         color: #1a1a1a;
         letter-spacing: -0.5px;
+        font-family: 'Poppins', sans-serif;
     }
     
-    /* ✅ ALTERE: Parte destacada do título da seção - Mude a cor conforme sua marca */
     .section-title-highlight {
-        color: #0066FF;
+        color: #FF6B35;
     }
     
-    /* ✅ ALTERE: Descrição das seções - Mude o texto conforme sua marca */
     .section-description {
-        font-size: 18px;
+        font-size: 16px;
         color: #666666;
         line-height: 1.7;
         font-weight: 400;
     }
     
-    /* ❌ NÃO ALTERE: Grid de features */
-    .features-grid {
+    .services-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-        gap: 40px;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
         max-width: 1400px;
         margin: 0 auto;
     }
     
-    /* ❌ NÃO ALTERE: Card de feature */
-    .feature-card {
-        background: rgba(255, 255, 255, 0.8);
-        backdrop-filter: blur(10px);
-        padding: 40px;
-        border-radius: 12px;
-        border: 1px solid rgba(0, 102, 255, 0.15);
+    .service-card {
+        background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+        padding: 50px 40px;
+        border-radius: 8px;
+        border: 1px solid #e5e5e5;
+        text-align: center;
         transition: all 0.4s ease;
         cursor: pointer;
+        position: relative;
     }
     
-    .feature-card:hover {
+    .service-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, #FF6B35, #FF8555);
+        border-radius: 8px 8px 0 0;
+    }
+    
+    .service-card:hover {
         transform: translateY(-8px);
-        border-color: #0066FF;
-        box-shadow: 0 12px 40px rgba(0, 102, 255, 0.12);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+        border-color: #FF6B35;
     }
     
-    /* ✅ ALTERE: Ícone das features - Mude os emojis conforme sua marca */
-    .feature-icon {
-        font-size: 48px;
-        margin-bottom: 20px;
-        display: inline-block;
+    .service-icon {
+        width: 60px;
+        height: 60px;
+        background: linear-gradient(135deg, #FF6B35, #FF8555);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 24px;
+        font-size: 28px;
     }
     
-    /* ✅ ALTERE: Título das features - Mude o texto conforme sua marca */
-    .feature-title {
+    .service-title {
         font-size: 20px;
         font-weight: 800;
         margin-bottom: 12px;
         color: #1a1a1a;
+        font-family: 'Poppins', sans-serif;
     }
     
-    /* ✅ ALTERE: Descrição das features - Mude o texto conforme sua marca */
-    .feature-desc {
-        font-size: 15px;
+    .service-desc {
+        font-size: 14px;
         color: #666666;
         line-height: 1.7;
     }
     
-    /* ❌ NÃO ALTERE: SERVICES SECTION - Seção de serviços */
-    .services-section {
+    /* FEATURES SECTION - Seção de diferenciais */
+    .features-section {
         padding: 100px 60px;
-        background: linear-gradient(180deg, rgba(248, 249, 255, 0.8) 0%, rgba(240, 244, 255, 0.6) 100%);
-        backdrop-filter: blur(5px);
+        background: linear-gradient(180deg, #f5f5f5 0%, #efefef 100%);
     }
     
-    /* ❌ NÃO ALTERE: Grid de serviços */
-    .services-grid {
+    .features-grid {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 40px;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
         max-width: 1400px;
         margin: 0 auto;
     }
     
-    /* ❌ NÃO ALTERE: Card de serviço */
-    .service-card {
-        background: rgba(255, 255, 255, 0.85);
-        backdrop-filter: blur(10px);
-        padding: 50px 40px;
-        border-radius: 12px;
-        border: 1px solid rgba(0, 102, 255, 0.15);
-        text-align: center;
+    .feature-box {
+        background: white;
+        padding: 40px;
+        border-radius: 8px;
+        border-left: 4px solid #FF6B35;
         transition: all 0.4s ease;
     }
     
-    .service-card:hover {
-        transform: translateY(-10px);
-        border-color: #0066FF;
-        box-shadow: 0 16px 48px rgba(0, 102, 255, 0.15);
+    .feature-box:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
     }
     
-    /* ✅ ALTERE: Número dos serviços - Mude os números conforme sua ordem */
-    .service-number {
-        font-size: 48px;
-        font-weight: 900;
-        color: #0066FF;
-        margin-bottom: 16px;
-    }
-    
-    /* ✅ ALTERE: Título dos serviços - Mude o texto conforme sua marca */
-    .service-title {
-        font-size: 22px;
+    .feature-box h3 {
+        font-size: 18px;
         font-weight: 800;
-        margin-bottom: 16px;
+        margin-bottom: 12px;
         color: #1a1a1a;
+        font-family: 'Poppins', sans-serif;
     }
     
-    /* ✅ ALTERE: Descrição dos serviços - Mude o texto conforme sua marca */
-    .service-desc {
-        font-size: 15px;
+    .feature-box p {
+        font-size: 14px;
         color: #666666;
         line-height: 1.7;
     }
     
-    /* ❌ NÃO ALTERE: TESTIMONIALS SECTION - Seção de depoimentos */
+    /* PRICING SECTION - Seção de planos e preços */
+    .pricing-section {
+        padding: 100px 60px;
+        background: #ffffff;
+    }
+    
+    .pricing-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 30px;
+        max-width: 1200px;
+        margin: 0 auto;
+    }
+    
+    .pricing-card {
+        background: white;
+        border: 2px solid #e5e5e5;
+        border-radius: 8px;
+        padding: 50px 40px;
+        text-align: center;
+        transition: all 0.4s ease;
+        position: relative;
+    }
+    
+    .pricing-card.featured {
+        border-color: #FF6B35;
+        transform: scale(1.05);
+        box-shadow: 0 20px 40px rgba(255, 107, 53, 0.15);
+    }
+    
+    .pricing-card:hover {
+        border-color: #FF6B35;
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
+    }
+    
+    .pricing-badge {
+        position: absolute;
+        top: -15px;
+        left: 50%;
+        transform: translateX(-50%);
+        background: #FF6B35;
+        color: white;
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-size: 12px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .pricing-title {
+        font-size: 22px;
+        font-weight: 800;
+        margin-bottom: 16px;
+        color: #1a1a1a;
+        font-family: 'Poppins', sans-serif;
+    }
+    
+    .pricing-price {
+        font-size: 48px;
+        font-weight: 900;
+        color: #FF6B35;
+        margin-bottom: 8px;
+    }
+    
+    .pricing-period {
+        font-size: 13px;
+        color: #999999;
+        margin-bottom: 30px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .pricing-features {
+        text-align: left;
+        margin-bottom: 30px;
+        border-top: 1px solid #e5e5e5;
+        border-bottom: 1px solid #e5e5e5;
+        padding: 30px 0;
+    }
+    
+    .pricing-feature {
+        font-size: 14px;
+        color: #666666;
+        margin-bottom: 12px;
+        padding-left: 24px;
+        position: relative;
+    }
+    
+    .pricing-feature::before {
+        content: '✓';
+        position: absolute;
+        left: 0;
+        color: #FF6B35;
+        font-weight: 900;
+    }
+    
+    .pricing-cta {
+        background: #FF6B35;
+        color: white;
+        padding: 14px 40px;
+        border-radius: 4px;
+        font-weight: 700;
+        font-size: 13px;
+        text-decoration: none !important;
+        transition: all 0.3s ease;
+        border: none;
+        cursor: pointer;
+        width: 100%;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+    
+    .pricing-cta:hover {
+        background: #E55A25;
+        transform: translateY(-2px);
+    }
+    
+    .pricing-card.featured .pricing-cta {
+        background: #FF6B35;
+    }
+    
+    /* TESTIMONIALS SECTION - Seção de depoimentos */
     .testimonials-section {
         padding: 100px 60px;
-        background: linear-gradient(180deg, rgba(255, 255, 255, 0.7) 0%, rgba(248, 249, 255, 0.5) 100%);
-        backdrop-filter: blur(5px);
+        background: linear-gradient(180deg, #f5f5f5 0%, #efefef 100%);
     }
     
-    /* ❌ NÃO ALTERE: Card de depoimento */
     .testimonial-card {
-        background: rgba(248, 249, 255, 0.8);
-        backdrop-filter: blur(10px);
+        background: white;
         padding: 40px;
-        border-radius: 12px;
-        border-left: 4px solid #0066FF;
+        border-radius: 8px;
+        border-left: 4px solid #FF6B35;
         margin-bottom: 30px;
-        border: 1px solid rgba(0, 102, 255, 0.15);
-        border-left: 4px solid #0066FF;
+        max-width: 900px;
+        margin-left: auto;
+        margin-right: auto;
     }
     
-    /* ✅ ALTERE: Texto do depoimento - Mude o texto conforme seus clientes */
     .testimonial-text {
         font-size: 16px;
         color: #1a1a1a;
         line-height: 1.8;
         margin-bottom: 20px;
-        font-style: italic;
     }
     
-    /* ✅ ALTERE: Nome do autor - Mude o nome conforme seus clientes */
     .testimonial-author {
         font-size: 14px;
         font-weight: 700;
         color: #1a1a1a;
     }
     
-    /* ✅ ALTERE: Cargo do autor - Mude o cargo conforme seus clientes */
     .testimonial-role {
         font-size: 13px;
-        color: #666666;
+        color: #999999;
         font-weight: 500;
     }
     
-    /* ❌ NÃO ALTERE: CTA FINAL SECTION - Seção final de chamada para ação */
+    /* CTA FINAL SECTION - Seção de chamada para ação final */
     .cta-final-section {
-        background: linear-gradient(135deg, #0066FF 0%, #0052CC 100%);
+        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
         color: white;
         padding: 100px 60px;
         text-align: center;
     }
     
-    /* ✅ ALTERE: Título CTA final - Mude o texto conforme sua marca */
     .cta-final-title {
         font-size: 48px;
         font-weight: 900;
         margin-bottom: 20px;
         letter-spacing: -0.5px;
+        font-family: 'Poppins', sans-serif;
     }
     
-    /* ✅ ALTERE: Descrição CTA final - Mude o texto conforme sua marca */
+    .cta-final-title .highlight {
+        color: #FF6B35;
+    }
+    
     .cta-final-desc {
         font-size: 18px;
         margin-bottom: 50px;
-        opacity: 0.95;
+        opacity: 0.9;
         max-width: 600px;
         margin-left: auto;
         margin-right: auto;
     }
     
-    /* ❌ NÃO ALTERE: Botão CTA final */
     .cta-final-button {
-        background: white;
-        color: #0066FF;
+        background: #FF6B35;
+        color: white;
         padding: 16px 48px;
-        border-radius: 8px;
+        border-radius: 4px;
         font-weight: 700;
-        font-size: 16px;
-        text-decoration: none;
+        font-size: 14px;
+        text-decoration: none !important;
         transition: all 0.3s ease;
         border: none;
         cursor: pointer;
         display: inline-block;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
     }
     
     .cta-final-button:hover {
+        background: #E55A25;
         transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
+        box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
     }
     
-    /* ❌ NÃO ALTERE: FOOTER - Rodapé da página */
+    /* FOOTER - Rodapé da página */
     .footer {
-        background: #1a1a1a;
+        background: #000000;
         color: rgba(255, 255, 255, 0.7);
         padding: 60px;
         text-align: center;
     }
     
-    /* ✅ ALTERE: Texto do footer - Mude as informações conforme sua empresa */
     .footer-text {
-        font-size: 15px;
+        font-size: 14px;
         margin-bottom: 10px;
     }
     
-    /* ✅ ALTERE: Copyright do footer - Mude o texto conforme sua empresa */
     .footer-copyright {
-        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        border-top: 1px solid rgba(255, 107, 53, 0.2);
         padding-top: 30px;
         margin-top: 30px;
-        font-size: 13px;
+        font-size: 12px;
     }
     
-    /* ❌ NÃO ALTERE: RESPONSIVIDADE - Adaptação para dispositivos móveis */
+    /* RESPONSIVIDADE - Adaptação para celulares e tablets */
     @media (max-width: 768px) {
         .navbar {
             flex-direction: column;
@@ -562,21 +600,23 @@ custom_css = """
             width: 100%;
         }
         
-        .hero-section {
-            padding: 60px 20px;
+        .hero-content {
+            grid-template-columns: 1fr;
+            gap: 40px;
         }
         
-        .hero-title {
+        .hero-text h1 {
             font-size: 36px;
         }
         
         .hero-stats {
             flex-direction: column;
-            gap: 40px;
+            gap: 30px;
         }
         
-        .features-section,
         .services-section,
+        .features-section,
+        .pricing-section,
         .testimonials-section,
         .cta-final-section {
             padding: 60px 20px;
@@ -589,182 +629,217 @@ custom_css = """
         .cta-final-title {
             font-size: 32px;
         }
+        
+        .pricing-card.featured {
+            transform: scale(1);
+        }
     }
 </style>
 """
 
 # ❌ NÃO ALTERE: Injetar CSS na página
+# Esta linha aplica todo o CSS customizado ao Streamlit
 st.markdown(custom_css, unsafe_allow_html=True)
 
 # ==================== NAVBAR ====================
-# ✅ ALTERE: Navegação superior - Mude os textos dos links e URLs
-navbar_html = '''<div class="navbar">
-    <a href="#" class="navbar-logo">🚀 Agência Digital</a>
-    <div class="navbar-links">
-        <a href="#servicos" class="navbar-link">Serviços</a>
-        <a href="#sobre" class="navbar-link">Sobre</a>
-        <a href="#portfolio" class="navbar-link">Portfólio</a>
-        <a href="#contato" class="navbar-link">Contato</a>
-        <a href="https://www.google.com/" target="_blank" class="navbar-cta">Começar Agora</a>
-    </div>
-</div>'''
+# ✅ ALTERE: Navbar - Mude os textos dos links e URLs
+# Esta é a barra de navegação que aparece no topo da página
+navbar_html = '<div class="navbar"><a href="#" class="navbar-logo">FIT<span class="navbar-logo-highlight">PRO</span></a><div class="navbar-links"><a href="#recursos" class="navbar-link">Recursos</a><a href="#galeria" class="navbar-link">Galeria</a><a href="#sobre" class="navbar-link">Sobre</a><a href="#contato" class="navbar-link">Contato</a><a href="https://www.google.com/" target="_blank" class="navbar-cta">Começar Agora</a></div></div>'
 st.markdown(navbar_html, unsafe_allow_html=True)
 
 # ==================== HERO SECTION ====================
-# ✅ ALTERE: Seção principal - Mude os textos, números e URLs dos botões
-hero_html = '''<div class="hero-section" id="hero">
+# ✅ ALTERE: Hero Section - Mude o título, descrição, números e URL do botão
+# Esta é a seção principal com o título grande e chamada para ação
+hero_html = '''<div class="hero-section">
     <div class="hero-content">
-        <div class="badges-container">
-            <div class="badge badge-primary"><span class="badge-icon">⭐</span> Agência Premium</div>
-            <div class="badge"><span class="badge-icon">🏆</span> Prêmio Melhor Agência 2024</div>
-            <div class="badge"><span class="badge-icon">✓</span> +500 Clientes Satisfeitos</div>
+        <div class="hero-text">
+            <h1>Transforme seu <span class="highlight">corpo</span> e mente</h1>
+            <p>Programas personalizados, treinadores experientes e ambiente de primeira qualidade. Alcance seus objetivos conosco.</p>
+            <div class="hero-stats">
+                <div class="hero-stat">
+                    <div class="hero-stat-number">5.000+</div>
+                    <div class="hero-stat-label">Alunos Ativos</div>
+                </div>
+                <div class="hero-stat">
+                    <div class="hero-stat-number">15+</div>
+                    <div class="hero-stat-label">Anos de Experiência</div>
+                </div>
+            </div>
+            <a href="https://www.google.com/" target="_blank" class="hero-cta">Agende uma Avaliação Gratuita</a>
         </div>
-        <div class="hero-title">Transforme seu negócio com <span class="hero-title-highlight">marketing digital estratégico</span></div>
-        <div class="hero-subtitle">Crescimento comprovado através de estratégias personalizadas, criatividade e tecnologia de ponta</div>
-        <a href="https://www.google.com/" target="_blank" class="cta-button">Agende uma consultoria gratuita</a>
-        <div class="hero-stats">
-            <div class="hero-stat">
-                <div class="hero-stat-number">+500%</div>
-                <div class="hero-stat-label">Crescimento Médio em Vendas</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-number">98%</div>
-                <div class="hero-stat-label">Taxa de Satisfação de Clientes</div>
-            </div>
-            <div class="hero-stat">
-                <div class="hero-stat-number">12+</div>
-                <div class="hero-stat-label">Anos de Experiência</div>
-            </div>
-        </div>
+        <div class="hero-image">🏋️‍♂️</div>
     </div>
 </div>'''
 st.markdown(hero_html, unsafe_allow_html=True)
 
-# ==================== FEATURES SECTION ====================
-# ✅ ALTERE: Seção de características - Mude os textos, ícones e descrições
-features_html = '''<div class="features-section">
-    <div class="section-header">
-        <div class="section-title">Por que escolher nossa <span class="section-title-highlight">agência?</span></div>
-        <div class="section-description">Oferecemos soluções completas de marketing digital que transformam visitantes em clientes</div>
-    </div>
-    <div class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon">🎯</div>
-            <div class="feature-title">Estratégia Personalizada</div>
-            <div class="feature-desc">Cada negócio é único. Criamos estratégias sob medida para seus objetivos específicos.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">📊</div>
-            <div class="feature-title">Resultados Mensuráveis</div>
-            <div class="feature-desc">Relatórios detalhados e transparentes. Você acompanha cada métrica em tempo real.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🚀</div>
-            <div class="feature-title">Crescimento Acelerado</div>
-            <div class="feature-desc">Técnicas comprovadas para aumentar sua visibilidade e conversões rapidamente.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">💡</div>
-            <div class="feature-title">Inovação Constante</div>
-            <div class="feature-desc">Sempre atualizados com as últimas tendências e tecnologias do mercado.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">👥</div>
-            <div class="feature-title">Equipe Experiente</div>
-            <div class="feature-desc">Profissionais certificados com experiência em diversos segmentos de mercado.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🤝</div>
-            <div class="feature-title">Parceria de Longo Prazo</div>
-            <div class="feature-desc">Não somos apenas fornecedores, somos parceiros no crescimento do seu negócio.</div>
-        </div>
-    </div>
-</div>'''
-st.markdown(features_html, unsafe_allow_html=True)
-
 # ==================== SERVICES SECTION ====================
-# ✅ ALTERE: Seção de serviços - Mude os textos, números e descrições
-services_html = '''<div class="services-section" id="servicos">
+# ✅ ALTERE: Services Section - Mude os títulos, descrições, emojis e adicione/remova cards
+# Esta seção mostra os serviços oferecidos em cards com ícones
+services_html = '''<div class="services-section" id="recursos">
     <div class="section-header">
         <div class="section-title">Nossos <span class="section-title-highlight">Serviços</span></div>
-        <div class="section-description">Soluções completas de marketing digital para impulsionar seu negócio</div>
+        <div class="section-description">Oferecemos uma variedade de programas e serviços para atender todos os seus objetivos fitness</div>
     </div>
     <div class="services-grid">
         <div class="service-card">
-            <div class="service-number">01</div>
-            <div class="service-title">Google Ads</div>
-            <div class="service-desc">Campanhas otimizadas para máximo ROI. Anúncios que convertem visitantes em clientes.</div>
+            <div class="service-icon">🏋️</div>
+            <div class="service-title">Musculação</div>
+            <div class="service-desc">Programas de treinamento com pesos para ganho de massa e força muscular.</div>
         </div>
         <div class="service-card">
-            <div class="service-number">02</div>
-            <div class="service-title">Social Media</div>
-            <div class="service-desc">Gestão completa de redes sociais com conteúdo estratégico e engajamento real.</div>
+            <div class="service-icon">🏃</div>
+            <div class="service-title">Cardio</div>
+            <div class="service-desc">Equipamentos modernos para treinos cardiovasculares de alta performance.</div>
         </div>
         <div class="service-card">
-            <div class="service-number">03</div>
-            <div class="service-title">SEO Avançado</div>
-            <div class="service-desc">Posicionamento orgânico no Google para tráfego qualificado e sustentável.</div>
+            <div class="service-icon">🧘</div>
+            <div class="service-title">Yoga e Pilates</div>
+            <div class="service-desc">Aulas de flexibilidade, equilíbrio e bem-estar mental.</div>
         </div>
         <div class="service-card">
-            <div class="service-number">04</div>
-            <div class="service-title">Criação de Conteúdo</div>
-            <div class="service-desc">Conteúdo de qualidade que atrai, engaja e converte seu público-alvo.</div>
+            <div class="service-icon">👨‍🏫</div>
+            <div class="service-title">Personal Training</div>
+            <div class="service-desc">Acompanhamento individual com treinadores certificados.</div>
         </div>
         <div class="service-card">
-            <div class="service-number">05</div>
-            <div class="service-title">Email Marketing</div>
-            <div class="service-desc">Campanhas de email segmentadas com alta taxa de abertura e conversão.</div>
+            <div class="service-icon">🥗</div>
+            <div class="service-title">Nutrição</div>
+            <div class="service-desc">Orientação nutricional personalizada para seus objetivos.</div>
         </div>
         <div class="service-card">
-            <div class="service-number">06</div>
-            <div class="service-title">Análise e Relatórios</div>
-            <div class="service-desc">Dados precisos e insights acionáveis para otimizar suas estratégias.</div>
+            <div class="service-icon">💪</div>
+            <div class="service-title">Grupos Funcionais</div>
+            <div class="service-desc">Treinos em grupo para motivação e diversão.</div>
         </div>
     </div>
 </div>'''
 st.markdown(services_html, unsafe_allow_html=True)
 
-# ==================== TESTIMONIALS SECTION ====================
-# ✅ ALTERE: Seção de depoimentos - Mude os textos, nomes e cargos
-testimonials_html = '''<div class="testimonials-section" id="sobre">
+# ==================== FEATURES SECTION ====================
+# ✅ ALTERE: Features Section - Mude os títulos e descrições dos diferenciais
+# Esta seção destaca os pontos fortes e diferenciais da academia
+features_html = '''<div class="features-section" id="galeria">
     <div class="section-header">
-        <div class="section-title">O que nossos <span class="section-title-highlight">clientes dizem</span></div>
-        <div class="section-description">Histórias reais de sucesso e transformação digital</div>
+        <div class="section-title">Por que escolher a <span class="section-title-highlight">FitPro</span></div>
+        <div class="section-description">Diferenciais que fazem a diferença na sua jornada fitness</div>
     </div>
-    <div style="max-width: 900px; margin: 0 auto;">
-        <div class="testimonial-card">
-            <div class="testimonial-text">"A agência transformou completamente meu negócio. Em 6 meses, triplicamos nossas vendas. Profissionais incríveis!"</div>
-            <div class="testimonial-author">João Silva</div>
-            <div class="testimonial-role">CEO - E-commerce Fashion</div>
+    <div class="features-grid">
+        <div class="feature-box">
+            <h3>Equipamentos Modernos</h3>
+            <p>Máquinas de última geração importadas, sempre mantidas em perfeito funcionamento.</p>
         </div>
-        <div class="testimonial-card">
-            <div class="testimonial-text">"Melhor investimento que fiz. O retorno foi imediato e os resultados continuam crescendo. Recomendo muito!"</div>
-            <div class="testimonial-author">Maria Santos</div>
-            <div class="testimonial-role">Proprietária - Consultoria Empresarial</div>
+        <div class="feature-box">
+            <h3>Treinadores Certificados</h3>
+            <p>Profissionais qualificados e experientes para orientar seu treino.</p>
         </div>
-        <div class="testimonial-card">
-            <div class="testimonial-text">"Equipe profissional, dedicada e com resultados comprovados. Não tenho dúvidas em recomendar para qualquer negócio."</div>
-            <div class="testimonial-author">Carlos Oliveira</div>
-            <div class="testimonial-role">Diretor - Agência Imobiliária</div>
+        <div class="feature-box">
+            <h3>Ambiente Acolhedor</h3>
+            <p>Espaço limpo, climatizado e seguro para você treinar com conforto.</p>
         </div>
+        <div class="feature-box">
+            <h3>Horários Flexíveis</h3>
+            <p>Aberto de segunda a domingo, com horários que se adaptam à sua rotina.</p>
+        </div>
+        <div class="feature-box">
+            <h3>Comunidade Ativa</h3>
+            <p>Faça parte de uma comunidade motivada e comprometida com resultados.</p>
+        </div>
+        <div class="feature-box">
+            <h3>Acompanhamento Contínuo</h3>
+            <p>Avaliações periódicas para acompanhar sua evolução e ajustar treinos.</p>
+        </div>
+    </div>
+</div>'''
+st.markdown(features_html, unsafe_allow_html=True)
+
+# ==================== PRICING SECTION ====================
+# ✅ ALTERE: Pricing Section - Mude os nomes dos planos, preços, features e URLs dos botões
+# Esta seção mostra os planos de preços disponíveis
+pricing_html = '''<div class="pricing-section" id="sobre">
+    <div class="section-header">
+        <div class="section-title">Planos e <span class="section-title-highlight">Preços</span></div>
+        <div class="section-description">Escolha o plano que melhor se adequa aos seus objetivos</div>
+    </div>
+    <div class="pricing-grid">
+        <div class="pricing-card">
+            <div class="pricing-title">Básico</div>
+            <div class="pricing-price">R$ 99</div>
+            <div class="pricing-period">Por mês</div>
+            <div class="pricing-features">
+                <div class="pricing-feature">Acesso à academia</div>
+                <div class="pricing-feature">Uso de todos os equipamentos</div>
+                <div class="pricing-feature">Vestiário e chuveiro</div>
+            </div>
+            <a href="https://www.google.com/" target="_blank" class="pricing-cta">Escolher Plano</a>
+        </div>
+        <div class="pricing-card featured">
+            <div class="pricing-badge">Mais Popular</div>
+            <div class="pricing-title">Premium</div>
+            <div class="pricing-price">R$ 199</div>
+            <div class="pricing-period">Por mês</div>
+            <div class="pricing-features">
+                <div class="pricing-feature">Acesso à academia</div>
+                <div class="pricing-feature">Aulas em grupo ilimitadas</div>
+                <div class="pricing-feature">2 sessões personal/mês</div>
+                <div class="pricing-feature">Avaliação física mensal</div>
+            </div>
+            <a href="https://www.google.com/" target="_blank" class="pricing-cta">Escolher Plano</a>
+        </div>
+        <div class="pricing-card">
+            <div class="pricing-title">Elite</div>
+            <div class="pricing-price">R$ 399</div>
+            <div class="pricing-period">Por mês</div>
+            <div class="pricing-features">
+                <div class="pricing-feature">Acesso 24/7</div>
+                <div class="pricing-feature">Personal training ilimitado</div>
+                <div class="pricing-feature">Aulas em grupo ilimitadas</div>
+                <div class="pricing-feature">Orientação nutricional</div>
+                <div class="pricing-feature">Suplementos com desconto</div>
+            </div>
+            <a href="https://www.google.com/" target="_blank" class="pricing-cta">Escolher Plano</a>
+        </div>
+    </div>
+</div>'''
+st.markdown(pricing_html, unsafe_allow_html=True)
+
+# ==================== TESTIMONIALS SECTION ====================
+# ✅ ALTERE: Testimonials Section - Mude os depoimentos, nomes e funções dos clientes
+# Esta seção mostra histórias de sucesso de clientes
+testimonials_html = '''<div class="testimonials-section">
+    <div class="section-header">
+        <div class="section-title">Histórias de <span class="section-title-highlight">Sucesso</span></div>
+        <div class="section-description">Veja como nossos alunos transformaram suas vidas</div>
+    </div>
+    <div class="testimonial-card">
+        <div class="testimonial-text">"Entrei na FitPro sem conhecimento nenhum sobre treino. Os profissionais me orientaram perfeitamente e em 6 meses consegui resultados incríveis. Recomendo muito!"</div>
+        <div class="testimonial-author">Roberto Silva</div>
+        <div class="testimonial-role">Aluno há 2 anos</div>
+    </div>
+    <div class="testimonial-card">
+        <div class="testimonial-text">"O ambiente é acolhedor, os treinadores são atenciosos e os resultados falam por si. Já perdi 20kg e ganhei muita confiança. Melhor decisão que tomei!"</div>
+        <div class="testimonial-author">Juliana Costa</div>
+        <div class="testimonial-role">Aluna Premium</div>
+    </div>
+    <div class="testimonial-card">
+        <div class="testimonial-text">"A comunidade da FitPro é incrível. Tenho amigos, motivação e profissionais que realmente se importam com meu progresso. Voltaria mil vezes!"</div>
+        <div class="testimonial-author">Marcus Oliveira</div>
+        <div class="testimonial-role">Aluno Elite</div>
     </div>
 </div>'''
 st.markdown(testimonials_html, unsafe_allow_html=True)
 
 # ==================== CTA FINAL SECTION ====================
-# ✅ ALTERE: Seção final de chamada para ação - Mude os textos e URLs
+# ✅ ALTERE: CTA Final Section - Mude o título, descrição e URL do botão
+# Esta é a seção final de chamada para ação antes do rodapé
 cta_final_html = '''<div class="cta-final-section" id="contato">
-    <div class="cta-final-title">Pronto para crescer?</div>
-    <div class="cta-final-desc">Agende uma consultoria gratuita com nossos especialistas e descubra como podemos transformar seu negócio</div>
-    <a href="https://www.google.com/" target="_blank" class="cta-final-button">Agende Agora</a>
+    <div class="cta-final-title">Comece sua transformação <span class="highlight">hoje</span></div>
+    <div class="cta-final-desc">Agende uma avaliação gratuita e conheça nossas instalações. Nossos profissionais estão prontos para ajudá-lo!</div>
+    <a href="https://www.google.com/" target="_blank" class="cta-final-button">Agende Sua Avaliação</a>
 </div>'''
 st.markdown(cta_final_html, unsafe_allow_html=True)
 
 # ==================== FOOTER ====================
-# ✅ ALTERE: Rodapé - Mude as informações de contato e copyright
-footer_html = '''<div class="footer" id="portfolio">
-    <div class="footer-text">📞 (99) 99999-9999 | 📧 contato@agenciadigital.com.br</div>
-    <div class="footer-text">📍 São Paulo, SP - Brasil</div>
-    <div class="footer-copyright">© 2025 Agência Digital. Todos os direitos reservados. Transformando negócios através do marketing digital.</div>
-</div>'''
+# ✅ ALTERE: Footer - Mude o telefone, email, endereço e copyright
+# Esta é a seção do rodapé com informações de contato
+footer_html = '<div class="footer"><div class="footer-text">Telefone: (99) 99999-9999 | Email: contato@fitpro.com.br</div><div class="footer-text">Endereço: Av. Principal, 1234 - São Paulo, SP</div><div class="footer-copyright">© 2025 FitPro Academia. Todos os direitos reservados. Transformando vidas através do fitness.</div></div>'
 st.markdown(footer_html, unsafe_allow_html=True)
