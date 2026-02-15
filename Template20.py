@@ -1,18 +1,17 @@
 import streamlit as st
 
-# ✅ ALTERE: Configuração da página - Mude o título, ícone e nome da marca
+# ❌ NÃO ALTERE: Configuração da página - Define o título da aba, ícone e layout
 st.set_page_config(
-    page_title="FitPro Academia - Transforme seu Corpo",  # ✅ Título que aparece na aba do navegador
-    page_icon="💪",  # ✅ Ícone que aparece na aba do navegador
-    layout="wide",  # ❌ Layout da página (não altere)
-    initial_sidebar_state="collapsed"  # ❌ Estado inicial da barra lateral (não altere)
+    page_title="Experiência Absurda",  # ✅ ALTERE: Título da aba do navegador
+    page_icon="✨",  # ✅ ALTERE: Ícone que aparece na aba
+    layout="wide",  # ❌ NÃO ALTERE: Layout da página
+    initial_sidebar_state="collapsed"  # ❌ NÃO ALTERE: Esconde a sidebar
 )
 
-# ❌ NÃO ALTERE: CSS ULTRA PROFISSIONAL - Toda a estilização visual da página
-# Este bloco CSS é responsável por toda a aparência, cores, fontes, animações e responsividade
+# ❌ NÃO ALTERE: CSS ORIGINAL E INOVADOR - Estilos visuais da página inteira com cores dinâmicas
 custom_css = """
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Outfit:wght@300;400;500;600;700;800;900&display=swap');
     
     * {
         margin: 0;
@@ -21,10 +20,11 @@ custom_css = """
     }
     
     html, body, [data-testid="stAppViewContainer"] {
-        background: #f5f5f5;
-        font-family: 'Montserrat', sans-serif;
-        color: #1a1a1a;
+        background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 50%, #16213e 100%);
+        font-family: 'Space Grotesk', sans-serif;
+        color: #ffffff;
         line-height: 1.6;
+        overflow-x: hidden;
     }
     
     [data-testid="stDecoration"] { display: none; }
@@ -36,81 +36,133 @@ custom_css = """
         z-index: 1;
     }
     
-    /* NAVBAR - Barra de navegação no topo */
+    /* ❌ NÃO ALTERE: Animações absurdas que fazem elementos pulsar, flutuar e mudar de cor */
+    @keyframes gradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    @keyframes floatUp {
+        0% { transform: translateY(0px); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(-20px); opacity: 0; }
+    }
+    
+    @keyframes pulse {
+        0%, 100% { transform: scale(1); }
+        50% { transform: scale(1.05); }
+    }
+    
+    @keyframes slideIn {
+        from { transform: translateX(-100%); opacity: 0; }
+        to { transform: translateX(0); opacity: 1; }
+    }
+    
+    @keyframes glow {
+        0%, 100% { box-shadow: 0 0 20px rgba(255, 0, 150, 0.5); }
+        50% { box-shadow: 0 0 40px rgba(255, 0, 150, 0.8); }
+    }
+    
+    /* ❌ NÃO ALTERE: Navbar absurda com backdrop blur e borda gradiente */
     .navbar {
-        background: #ffffff;
-        padding: 18px 60px;
+        background: rgba(15, 15, 30, 0.95);
+        backdrop-filter: blur(20px);
+        padding: 20px 60px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 3px solid #FF6B35;
+        border-bottom: 2px solid;
+        border-image: linear-gradient(90deg, #FF006E, #00D9FF, #FFD60A, #FF006E) 1;
         position: sticky;
         top: 0;
         z-index: 100;
-        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        box-shadow: 0 8px 32px rgba(255, 0, 110, 0.15);
     }
     
+    /* ✅ ALTERE: Logo - Mude o texto "PREMIUM" na navbar */
     .navbar-logo {
-        font-size: 26px;
+        font-size: 32px;
         font-weight: 900;
-        color: #1a1a1a;
-        text-decoration: none;
-        letter-spacing: -0.5px;
-        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #FF006E, #00D9FF, #FFD60A);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: 2px;
+        animation: pulse 2s ease-in-out infinite;
     }
     
-    .navbar-logo-highlight {
-        color: #FF6B35;
-    }
-    
+    /* ❌ NÃO ALTERE: Container dos links da navbar */
     .navbar-links {
         display: flex;
         gap: 50px;
         align-items: center;
     }
     
+    /* ✅ ALTERE: Links da navbar - Mude cor, tamanho e espaçamento */
     .navbar-link {
-        color: #1a1a1a;
+        color: #00D9FF;
         text-decoration: none !important;
         font-weight: 600;
-        font-size: 14px;
+        font-size: 13px;
         transition: all 0.3s ease;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        position: relative;
     }
     
-    .navbar-link:visited {
-        color: #1a1a1a !important;
+    /* ❌ NÃO ALTERE: Underline animado dos links - Aparece ao passar o mouse */
+    .navbar-link::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background: linear-gradient(90deg, #FF006E, #00D9FF);
+        transition: width 0.3s ease;
+    }
+    
+    .navbar-link:hover::after {
+        width: 100%;
     }
     
     .navbar-link:hover {
-        color: #FF6B35;
+        color: #FFD60A;
     }
     
+    /* ✅ ALTERE: Botão CTA da navbar - Mude cor, texto e tamanho */
     .navbar-cta {
-        background: #FF6B35;
+        background: linear-gradient(135deg, #FF006E, #FF4D6D);
         color: white;
         padding: 12px 32px;
-        border-radius: 4px;
+        border-radius: 50px;
         text-decoration: none !important;
         font-weight: 700;
-        font-size: 13px;
+        font-size: 12px;
         transition: all 0.3s ease;
-        border: none;
+        border: 2px solid #FF006E;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.25);
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
+        box-shadow: 0 4px 15px rgba(255, 0, 110, 0.4);
     }
     
     .navbar-cta:hover {
-        background: #E55A25;
-        transform: translateY(-2px);
-        box-shadow: 0 6px 16px rgba(255, 107, 53, 0.35);
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(255, 0, 110, 0.6);
+        border-color: #00D9FF;
     }
     
-    /* HERO SECTION - Seção principal com título grande */
+    /* ❌ NÃO ALTERE: Hero section - Seção principal com fundo gradiente animado */
     .hero-section {
-        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        padding: 120px 60px;
+        background: linear-gradient(135deg, #0f0f1e 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #1a1a2e 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 15s ease infinite;
+        min-height: 800px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         position: relative;
         overflow: hidden;
     }
@@ -118,210 +170,218 @@ custom_css = """
     .hero-section::before {
         content: '';
         position: absolute;
-        top: -50%;
-        right: -10%;
         width: 500px;
         height: 500px;
-        background: linear-gradient(135deg, rgba(255, 107, 53, 0.15) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(255, 0, 110, 0.2) 0%, transparent 70%);
         border-radius: 50%;
+        top: -100px;
+        right: -100px;
+        animation: pulse 4s ease-in-out infinite;
+    }
+    
+    .hero-section::after {
+        content: '';
+        position: absolute;
+        width: 600px;
+        height: 600px;
+        background: radial-gradient(circle, rgba(0, 217, 255, 0.15) 0%, transparent 70%);
+        border-radius: 50%;
+        bottom: -150px;
+        left: -150px;
+        animation: pulse 5s ease-in-out infinite;
     }
     
     .hero-content {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 60px;
-        align-items: center;
-        position: relative;
+        text-align: center;
         z-index: 2;
-        max-width: 1400px;
-        margin: 0 auto;
+        position: relative;
+        max-width: 900px;
     }
     
-    .hero-text h1 {
-        font-size: 68px;
+    /* ✅ ALTERE: Título do hero - Mude o texto principal */
+    .hero-title {
+        font-size: 80px;
         font-weight: 900;
+        margin-bottom: 20px;
+        background: linear-gradient(135deg, #FF006E, #00D9FF, #FFD60A, #FF006E);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: gradientShift 8s ease infinite;
+        letter-spacing: -2px;
         line-height: 1.1;
-        margin-bottom: 24px;
-        color: #ffffff;
-        letter-spacing: -1.5px;
-        font-family: 'Poppins', sans-serif;
     }
     
-    .hero-text h1 .highlight {
-        color: #FF6B35;
+    /* ✅ ALTERE: Subtítulo do hero - Mude o texto secundário */
+    .hero-subtitle {
+        font-size: 24px;
+        font-weight: 300;
+        margin-bottom: 50px;
+        color: #00D9FF;
+        letter-spacing: 1px;
+        animation: slideIn 1s ease-out;
     }
     
-    .hero-text p {
-        font-size: 18px;
-        line-height: 1.8;
-        margin-bottom: 40px;
-        color: #e0e0e0;
-        font-weight: 400;
-    }
-    
-    .hero-stats {
+    .hero-cta-group {
         display: flex;
-        gap: 50px;
-        margin-bottom: 40px;
-    }
-    
-    .hero-stat {
-        border-left: 3px solid #FF6B35;
-        padding-left: 20px;
-    }
-    
-    .hero-stat-number {
-        font-size: 36px;
-        font-weight: 900;
-        color: #FF6B35;
-        margin-bottom: 4px;
-    }
-    
-    .hero-stat-label {
-        font-size: 13px;
-        color: #b0b0b0;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .hero-image {
-        background: linear-gradient(135deg, #FF6B35 0%, #FF8555 100%);
-        height: 400px;
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
+        gap: 20px;
         justify-content: center;
-        font-size: 120px;
-        color: rgba(255, 255, 255, 0.2);
+        animation: slideIn 1.2s ease-out;
     }
     
-    .hero-cta {
-        display: inline-block;
-        background: #FF6B35;
+    /* ✅ ALTERE: Botão primário do hero - Mude cor, texto e tamanho */
+    .hero-cta-primary {
+        background: linear-gradient(135deg, #FF006E, #FF4D6D);
         color: white;
-        padding: 16px 48px;
-        border-radius: 4px;
+        padding: 18px 50px;
+        border-radius: 50px;
         font-weight: 700;
         font-size: 14px;
         text-decoration: none !important;
         transition: all 0.3s ease;
-        border: none;
+        border: 2px solid #FF006E;
         cursor: pointer;
-        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
+        display: inline-block;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 1px;
+        box-shadow: 0 8px 25px rgba(255, 0, 110, 0.4);
     }
     
-    .hero-cta:hover {
-        background: #E55A25;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+    .hero-cta-primary:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(255, 0, 110, 0.6);
     }
     
-    /* SERVICES SECTION - Seção de serviços com cards */
-    .services-section {
-        padding: 100px 60px;
-        background: #ffffff;
+    /* ✅ ALTERE: Botão secundário do hero - Mude cor, texto e tamanho */
+    .hero-cta-secondary {
+        background: transparent;
+        color: #00D9FF;
+        padding: 18px 50px;
+        border-radius: 50px;
+        font-weight: 700;
+        font-size: 14px;
+        text-decoration: none !important;
+        transition: all 0.3s ease;
+        border: 2px solid #00D9FF;
+        cursor: pointer;
+        display: inline-block;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .hero-cta-secondary:hover {
+        background: #00D9FF;
+        color: #0f0f1e;
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(0, 217, 255, 0.4);
+    }
+    
+    /* ❌ NÃO ALTERE: Features section - Container com grid de cards */
+    .features-section {
+        padding: 120px 60px;
+        background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+        position: relative;
     }
     
     .section-header {
         text-align: center;
-        margin-bottom: 80px;
-        max-width: 800px;
-        margin-left: auto;
-        margin-right: auto;
+        margin-bottom: 100px;
     }
     
+    /* ✅ ALTERE: Título da seção - Mude "Recursos Incríveis" */
     .section-title {
-        font-size: 48px;
+        font-size: 56px;
         font-weight: 900;
         margin-bottom: 20px;
-        color: #1a1a1a;
-        letter-spacing: -0.5px;
-        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #FFD60A, #FF006E, #00D9FF);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -1px;
     }
     
-    .section-title-highlight {
-        color: #FF6B35;
-    }
-    
+    /* ✅ ALTERE: Descrição da seção - Mude o texto descritivo */
     .section-description {
-        font-size: 16px;
-        color: #666666;
-        line-height: 1.7;
-        font-weight: 400;
+        font-size: 18px;
+        color: #00D9FF;
+        font-weight: 300;
+        max-width: 600px;
+        margin: 0 auto;
     }
     
-    .services-grid {
+    .features-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
+        gap: 40px;
         max-width: 1400px;
         margin: 0 auto;
     }
     
-    .service-card {
-        background: linear-gradient(135deg, #f9f9f9 0%, #ffffff 100%);
+    .feature-card {
+        background: linear-gradient(135deg, rgba(255, 0, 110, 0.1), rgba(0, 217, 255, 0.1));
+        border: 2px solid;
+        border-image: linear-gradient(135deg, #FF006E, #00D9FF) 1;
         padding: 50px 40px;
-        border-radius: 8px;
-        border: 1px solid #e5e5e5;
-        text-align: center;
+        border-radius: 20px;
         transition: all 0.4s ease;
-        cursor: pointer;
         position: relative;
+        overflow: hidden;
     }
     
-    .service-card::before {
+    .feature-card::before {
         content: '';
         position: absolute;
         top: 0;
         left: 0;
         right: 0;
-        height: 4px;
-        background: linear-gradient(90deg, #FF6B35, #FF8555);
-        border-radius: 8px 8px 0 0;
+        bottom: 0;
+        background: linear-gradient(135deg, rgba(255, 0, 110, 0.2), rgba(0, 217, 255, 0.2));
+        opacity: 0;
+        transition: opacity 0.4s ease;
+        z-index: -1;
     }
     
-    .service-card:hover {
-        transform: translateY(-8px);
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
-        border-color: #FF6B35;
+    .feature-card:hover {
+        transform: translateY(-15px);
+        border-image: linear-gradient(135deg, #00D9FF, #FFD60A) 1;
+        box-shadow: 0 20px 50px rgba(255, 0, 110, 0.2);
     }
     
-    .service-icon {
-        width: 60px;
-        height: 60px;
-        background: linear-gradient(135deg, #FF6B35, #FF8555);
-        border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin: 0 auto 24px;
-        font-size: 28px;
+    .feature-card:hover::before {
+        opacity: 1;
     }
     
-    .service-title {
-        font-size: 20px;
+    .feature-icon {
+        font-size: 48px;
+        margin-bottom: 20px;
+        animation: floatUp 3s ease-in-out infinite;
+    }
+    
+    .feature-title {
+        font-size: 24px;
         font-weight: 800;
-        margin-bottom: 12px;
-        color: #1a1a1a;
-        font-family: 'Poppins', sans-serif;
+        margin-bottom: 15px;
+        color: #FFD60A;
+        letter-spacing: 1px;
     }
     
-    .service-desc {
-        font-size: 14px;
-        color: #666666;
-        line-height: 1.7;
+    .feature-desc {
+        font-size: 15px;
+        color: #b0b0b0;
+        line-height: 1.8;
+        font-weight: 300;
     }
     
-    /* FEATURES SECTION - Seção de diferenciais */
-    .features-section {
-        padding: 100px 60px;
-        background: linear-gradient(180deg, #f5f5f5 0%, #efefef 100%);
+    /* ❌ NÃO ALTERE: Showcase section - Container com cards de números */
+    .showcase-section {
+        padding: 120px 60px;
+        background: linear-gradient(135deg, #0f3460 0%, #1a1a2e 50%, #16213e 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 20s ease infinite;
     }
     
-    .features-grid {
+    .showcase-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
         gap: 30px;
@@ -329,264 +389,156 @@ custom_css = """
         margin: 0 auto;
     }
     
-    .feature-box {
-        background: white;
+    .showcase-card {
+        background: linear-gradient(135deg, rgba(255, 0, 110, 0.15), rgba(0, 217, 255, 0.15));
+        border: 2px solid #FF006E;
+        border-radius: 15px;
         padding: 40px;
-        border-radius: 8px;
-        border-left: 4px solid #FF6B35;
-        transition: all 0.4s ease;
-    }
-    
-    .feature-box:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
-    }
-    
-    .feature-box h3 {
-        font-size: 18px;
-        font-weight: 800;
-        margin-bottom: 12px;
-        color: #1a1a1a;
-        font-family: 'Poppins', sans-serif;
-    }
-    
-    .feature-box p {
-        font-size: 14px;
-        color: #666666;
-        line-height: 1.7;
-    }
-    
-    /* PRICING SECTION - Seção de planos e preços */
-    .pricing-section {
-        padding: 100px 60px;
-        background: #ffffff;
-    }
-    
-    .pricing-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-        gap: 30px;
-        max-width: 1200px;
-        margin: 0 auto;
-    }
-    
-    .pricing-card {
-        background: white;
-        border: 2px solid #e5e5e5;
-        border-radius: 8px;
-        padding: 50px 40px;
         text-align: center;
         transition: all 0.4s ease;
-        position: relative;
-    }
-    
-    .pricing-card.featured {
-        border-color: #FF6B35;
-        transform: scale(1.05);
-        box-shadow: 0 20px 40px rgba(255, 107, 53, 0.15);
-    }
-    
-    .pricing-card:hover {
-        border-color: #FF6B35;
-        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.1);
-    }
-    
-    .pricing-badge {
-        position: absolute;
-        top: -15px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: #FF6B35;
-        color: white;
-        padding: 6px 16px;
-        border-radius: 20px;
-        font-size: 12px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .pricing-title {
-        font-size: 22px;
-        font-weight: 800;
-        margin-bottom: 16px;
-        color: #1a1a1a;
-        font-family: 'Poppins', sans-serif;
-    }
-    
-    .pricing-price {
-        font-size: 48px;
-        font-weight: 900;
-        color: #FF6B35;
-        margin-bottom: 8px;
-    }
-    
-    .pricing-period {
-        font-size: 13px;
-        color: #999999;
-        margin-bottom: 30px;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-    
-    .pricing-features {
-        text-align: left;
-        margin-bottom: 30px;
-        border-top: 1px solid #e5e5e5;
-        border-bottom: 1px solid #e5e5e5;
-        padding: 30px 0;
-    }
-    
-    .pricing-feature {
-        font-size: 14px;
-        color: #666666;
-        margin-bottom: 12px;
-        padding-left: 24px;
-        position: relative;
-    }
-    
-    .pricing-feature::before {
-        content: '✓';
-        position: absolute;
-        left: 0;
-        color: #FF6B35;
-        font-weight: 900;
-    }
-    
-    .pricing-cta {
-        background: #FF6B35;
-        color: white;
-        padding: 14px 40px;
-        border-radius: 4px;
-        font-weight: 700;
-        font-size: 13px;
-        text-decoration: none !important;
-        transition: all 0.3s ease;
-        border: none;
         cursor: pointer;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .showcase-card::after {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
         width: 100%;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+        transition: left 0.5s ease;
     }
     
-    .pricing-cta:hover {
-        background: #E55A25;
-        transform: translateY(-2px);
+    .showcase-card:hover::after {
+        left: 100%;
     }
     
-    .pricing-card.featured .pricing-cta {
-        background: #FF6B35;
+    .showcase-card:hover {
+        transform: translateY(-10px) scale(1.05);
+        border-color: #00D9FF;
+        box-shadow: 0 20px 50px rgba(0, 217, 255, 0.3);
     }
     
-    /* TESTIMONIALS SECTION - Seção de depoimentos */
-    .testimonials-section {
-        padding: 100px 60px;
-        background: linear-gradient(180deg, #f5f5f5 0%, #efefef 100%);
-    }
-    
-    .testimonial-card {
-        background: white;
-        padding: 40px;
-        border-radius: 8px;
-        border-left: 4px solid #FF6B35;
-        margin-bottom: 30px;
-        max-width: 900px;
-        margin-left: auto;
-        margin-right: auto;
-    }
-    
-    .testimonial-text {
-        font-size: 16px;
-        color: #1a1a1a;
-        line-height: 1.8;
-        margin-bottom: 20px;
-    }
-    
-    .testimonial-author {
-        font-size: 14px;
-        font-weight: 700;
-        color: #1a1a1a;
-    }
-    
-    .testimonial-role {
-        font-size: 13px;
-        color: #999999;
-        font-weight: 500;
-    }
-    
-    /* CTA FINAL SECTION - Seção de chamada para ação final */
-    .cta-final-section {
-        background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
-        color: white;
-        padding: 100px 60px;
-        text-align: center;
-    }
-    
-    .cta-final-title {
+    .showcase-number {
         font-size: 48px;
         font-weight: 900;
-        margin-bottom: 20px;
-        letter-spacing: -0.5px;
-        font-family: 'Poppins', sans-serif;
+        background: linear-gradient(135deg, #FF006E, #00D9FF);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        margin-bottom: 15px;
     }
     
-    .cta-final-title .highlight {
-        color: #FF6B35;
-    }
-    
-    .cta-final-desc {
+    .showcase-label {
         font-size: 18px;
+        font-weight: 700;
+        color: #FFD60A;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    /* ❌ NÃO ALTERE: CTA final - Seção com fundo gradiente colorido */
+    .cta-final-section {
+        padding: 150px 60px;
+        background: linear-gradient(135deg, #FF006E 0%, #FF4D6D 25%, #00D9FF 50%, #FFD60A 75%, #FF006E 100%);
+        background-size: 400% 400%;
+        animation: gradientShift 10s ease infinite;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+    }
+    
+    .cta-final-section::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(15, 15, 30, 0.3);
+    }
+    
+    .cta-final-content {
+        position: relative;
+        z-index: 2;
+    }
+    
+    /* ✅ ALTERE: Título final - Mude o texto "Pronto para Transformar?" */
+    .cta-final-title {
+        font-size: 56px;
+        font-weight: 900;
+        margin-bottom: 20px;
+        color: white;
+        letter-spacing: -1px;
+    }
+    
+    /* ✅ ALTERE: Descrição final - Mude o texto descritivo */
+    .cta-final-desc {
+        font-size: 20px;
         margin-bottom: 50px;
-        opacity: 0.9;
-        max-width: 600px;
+        color: rgba(255, 255, 255, 0.95);
+        max-width: 700px;
         margin-left: auto;
         margin-right: auto;
+        font-weight: 300;
     }
     
+    /* ✅ ALTERE: Botão final - Mude cor, texto e tamanho */
     .cta-final-button {
-        background: #FF6B35;
-        color: white;
-        padding: 16px 48px;
-        border-radius: 4px;
-        font-weight: 700;
+        background: rgba(15, 15, 30, 0.9);
+        color: #FFD60A;
+        padding: 18px 60px;
+        border: 3px solid #FFD60A;
+        border-radius: 50px;
+        font-weight: 800;
         font-size: 14px;
         text-decoration: none !important;
         transition: all 0.3s ease;
-        border: none;
         cursor: pointer;
         display: inline-block;
-        box-shadow: 0 4px 12px rgba(255, 107, 53, 0.3);
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 2px;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
     
     .cta-final-button:hover {
-        background: #E55A25;
-        transform: translateY(-3px);
-        box-shadow: 0 8px 24px rgba(255, 107, 53, 0.4);
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        background: #FFD60A;
+        color: #0f0f1e;
     }
     
-    /* FOOTER - Rodapé da página */
+    /* ❌ NÃO ALTERE: Footer - Rodapé com informações de contato */
     .footer {
-        background: #000000;
-        color: rgba(255, 255, 255, 0.7);
+        background: #0f0f1e;
+        color: #888888;
         padding: 60px;
         text-align: center;
+        border-top: 2px solid;
+        border-image: linear-gradient(90deg, #FF006E, #00D9FF) 1;
     }
     
+    /* ✅ ALTERE: Texto do footer - Mude email, telefone e endereço */
     .footer-text {
         font-size: 14px;
         margin-bottom: 10px;
+        font-weight: 300;
     }
     
+    /* ✅ ALTERE: Copyright - Mude o ano e nome da empresa */
     .footer-copyright {
-        border-top: 1px solid rgba(255, 107, 53, 0.2);
+        border-top: 1px solid rgba(255, 0, 110, 0.2);
         padding-top: 30px;
         margin-top: 30px;
         font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
     }
     
-    /* RESPONSIVIDADE - Adaptação para celulares e tablets */
+    /* ❌ NÃO ALTERE: Responsividade - Ajusta layout para telas menores */
     @media (max-width: 768px) {
         .navbar {
             flex-direction: column;
@@ -600,246 +552,156 @@ custom_css = """
             width: 100%;
         }
         
-        .hero-content {
-            grid-template-columns: 1fr;
-            gap: 40px;
+        .hero-section {
+            min-height: 500px;
         }
         
-        .hero-text h1 {
-            font-size: 36px;
+        .hero-title {
+            font-size: 42px;
         }
         
-        .hero-stats {
+        .hero-subtitle {
+            font-size: 18px;
+        }
+        
+        .hero-cta-group {
             flex-direction: column;
-            gap: 30px;
         }
         
-        .services-section,
         .features-section,
-        .pricing-section,
-        .testimonials-section,
+        .showcase-section,
         .cta-final-section {
-            padding: 60px 20px;
+            padding: 80px 20px;
         }
         
         .section-title {
-            font-size: 32px;
+            font-size: 36px;
         }
         
         .cta-final-title {
-            font-size: 32px;
-        }
-        
-        .pricing-card.featured {
-            transform: scale(1);
+            font-size: 36px;
         }
     }
 </style>
 """
 
-# ❌ NÃO ALTERE: Injetar CSS na página
-# Esta linha aplica todo o CSS customizado ao Streamlit
+# ❌ NÃO ALTERE: Injetar CSS na página - Aplica todos os estilos acima
 st.markdown(custom_css, unsafe_allow_html=True)
 
 # ==================== NAVBAR ====================
-# ✅ ALTERE: Navbar - Mude os textos dos links e URLs
-# Esta é a barra de navegação que aparece no topo da página
-navbar_html = '<div class="navbar"><a href="#" class="navbar-logo">FIT<span class="navbar-logo-highlight">PRO</span></a><div class="navbar-links"><a href="#recursos" class="navbar-link">Recursos</a><a href="#galeria" class="navbar-link">Galeria</a><a href="#sobre" class="navbar-link">Sobre</a><a href="#contato" class="navbar-link">Contato</a><a href="https://www.google.com/" target="_blank" class="navbar-cta">Começar Agora</a></div></div>'
+# ✅ ALTERE: Navbar - Mude os textos dos links e URLs das seções
+navbar_html = '''<div class="navbar">
+    <div class="navbar-logo">PREMIUM</div>
+    <div class="navbar-links">
+        <a href="#recursos" class="navbar-link">Recursos</a>
+        <a href="#galeria" class="navbar-link">Galeria</a>
+        <a href="#sobre" class="navbar-link">Sobre</a>
+        <a href="#contato" class="navbar-link">Contato</a>
+        <a href="https://www.google.com/" target="_blank" class="navbar-cta">Começar Agora</a>
+    </div>
+</div>'''
 st.markdown(navbar_html, unsafe_allow_html=True)
 
 # ==================== HERO SECTION ====================
-# ✅ ALTERE: Hero Section - Mude o título, descrição, números e URL do botão
-# Esta é a seção principal com o título grande e chamada para ação
-hero_html = '''<div class="hero-section">
+# ✅ ALTERE: Hero - Mude os textos dos botões e URLs
+hero_html = '''<div class="hero-section" id="recursos">
     <div class="hero-content">
-        <div class="hero-text">
-            <h1>Transforme seu <span class="highlight">corpo</span> e mente</h1>
-            <p>Programas personalizados, treinadores experientes e ambiente de primeira qualidade. Alcance seus objetivos conosco.</p>
-            <div class="hero-stats">
-                <div class="hero-stat">
-                    <div class="hero-stat-number">5.000+</div>
-                    <div class="hero-stat-label">Alunos Ativos</div>
-                </div>
-                <div class="hero-stat">
-                    <div class="hero-stat-number">15+</div>
-                    <div class="hero-stat-label">Anos de Experiência</div>
-                </div>
-            </div>
-            <a href="https://www.google.com/" target="_blank" class="hero-cta">Agende uma Avaliação Gratuita</a>
+        <div class="hero-title">Experiência Absurda</div>
+        <div class="hero-subtitle">Design que transforma, cores que inspiram</div>
+        <div class="hero-cta-group">
+            <a href="https://www.google.com/" target="_blank" class="hero-cta-primary">Explorar Agora</a>
+            <a href="https://www.google.com/" target="_blank" class="hero-cta-secondary">Saiba Mais</a>
         </div>
-        <div class="hero-image">🏋️‍♂️</div>
     </div>
 </div>'''
 st.markdown(hero_html, unsafe_allow_html=True)
 
-# ==================== SERVICES SECTION ====================
-# ✅ ALTERE: Services Section - Mude os títulos, descrições, emojis e adicione/remova cards
-# Esta seção mostra os serviços oferecidos em cards com ícones
-services_html = '''<div class="services-section" id="recursos">
-    <div class="section-header">
-        <div class="section-title">Nossos <span class="section-title-highlight">Serviços</span></div>
-        <div class="section-description">Oferecemos uma variedade de programas e serviços para atender todos os seus objetivos fitness</div>
-    </div>
-    <div class="services-grid">
-        <div class="service-card">
-            <div class="service-icon">🏋️</div>
-            <div class="service-title">Musculação</div>
-            <div class="service-desc">Programas de treinamento com pesos para ganho de massa e força muscular.</div>
-        </div>
-        <div class="service-card">
-            <div class="service-icon">🏃</div>
-            <div class="service-title">Cardio</div>
-            <div class="service-desc">Equipamentos modernos para treinos cardiovasculares de alta performance.</div>
-        </div>
-        <div class="service-card">
-            <div class="service-icon">🧘</div>
-            <div class="service-title">Yoga e Pilates</div>
-            <div class="service-desc">Aulas de flexibilidade, equilíbrio e bem-estar mental.</div>
-        </div>
-        <div class="service-card">
-            <div class="service-icon">👨‍🏫</div>
-            <div class="service-title">Personal Training</div>
-            <div class="service-desc">Acompanhamento individual com treinadores certificados.</div>
-        </div>
-        <div class="service-card">
-            <div class="service-icon">🥗</div>
-            <div class="service-title">Nutrição</div>
-            <div class="service-desc">Orientação nutricional personalizada para seus objetivos.</div>
-        </div>
-        <div class="service-card">
-            <div class="service-icon">💪</div>
-            <div class="service-title">Grupos Funcionais</div>
-            <div class="service-desc">Treinos em grupo para motivação e diversão.</div>
-        </div>
-    </div>
-</div>'''
-st.markdown(services_html, unsafe_allow_html=True)
-
 # ==================== FEATURES SECTION ====================
-# ✅ ALTERE: Features Section - Mude os títulos e descrições dos diferenciais
-# Esta seção destaca os pontos fortes e diferenciais da academia
-features_html = '''<div class="features-section" id="galeria">
+# ✅ ALTERE: Recursos - Mude os títulos, descrições e emojis dos cards
+features_html = '''<div class="features-section">
     <div class="section-header">
-        <div class="section-title">Por que escolher a <span class="section-title-highlight">FitPro</span></div>
-        <div class="section-description">Diferenciais que fazem a diferença na sua jornada fitness</div>
+        <div class="section-title">Recursos Incríveis</div>
+        <div class="section-description">Tudo que você precisa para impressionar seus clientes</div>
     </div>
     <div class="features-grid">
-        <div class="feature-box">
-            <h3>Equipamentos Modernos</h3>
-            <p>Máquinas de última geração importadas, sempre mantidas em perfeito funcionamento.</p>
+        <div class="feature-card">
+            <div class="feature-icon">⚡</div>
+            <div class="feature-title">Ultra Rápido</div>
+            <div class="feature-desc">Performance otimizada para a melhor experiência do usuário em qualquer dispositivo.</div>
         </div>
-        <div class="feature-box">
-            <h3>Treinadores Certificados</h3>
-            <p>Profissionais qualificados e experientes para orientar seu treino.</p>
+        <div class="feature-card">
+            <div class="feature-icon">🎨</div>
+            <div class="feature-title">Design Moderno</div>
+            <div class="feature-desc">Interface visual impressionante com animações suaves e cores dinâmicas.</div>
         </div>
-        <div class="feature-box">
-            <h3>Ambiente Acolhedor</h3>
-            <p>Espaço limpo, climatizado e seguro para você treinar com conforto.</p>
+        <div class="feature-card">
+            <div class="feature-icon">🔧</div>
+            <div class="feature-title">Totalmente Customizável</div>
+            <div class="feature-desc">Adapte cores, textos e conteúdo facilmente para seu negócio específico.</div>
         </div>
-        <div class="feature-box">
-            <h3>Horários Flexíveis</h3>
-            <p>Aberto de segunda a domingo, com horários que se adaptam à sua rotina.</p>
+        <div class="feature-card">
+            <div class="feature-icon">📱</div>
+            <div class="feature-title">Responsivo</div>
+            <div class="feature-desc">Funciona perfeitamente em desktop, tablet e mobile com experiência fluida.</div>
         </div>
-        <div class="feature-box">
-            <h3>Comunidade Ativa</h3>
-            <p>Faça parte de uma comunidade motivada e comprometida com resultados.</p>
+        <div class="feature-card">
+            <div class="feature-icon">🚀</div>
+            <div class="feature-title">Conversão Máxima</div>
+            <div class="feature-desc">Design estratégico focado em converter visitantes em clientes.</div>
         </div>
-        <div class="feature-box">
-            <h3>Acompanhamento Contínuo</h3>
-            <p>Avaliações periódicas para acompanhar sua evolução e ajustar treinos.</p>
+        <div class="feature-card">
+            <div class="feature-icon">✨</div>
+            <div class="feature-title">Experiência Premium</div>
+            <div class="feature-desc">Cada detalhe foi pensado para criar uma experiência memorável.</div>
         </div>
     </div>
 </div>'''
 st.markdown(features_html, unsafe_allow_html=True)
 
-# ==================== PRICING SECTION ====================
-# ✅ ALTERE: Pricing Section - Mude os nomes dos planos, preços, features e URLs dos botões
-# Esta seção mostra os planos de preços disponíveis
-pricing_html = '''<div class="pricing-section" id="sobre">
+# ==================== SHOWCASE SECTION ====================
+# ✅ ALTERE: Números - Mude os valores e labels dos cards
+showcase_html = '''<div class="showcase-section" id="galeria">
     <div class="section-header">
-        <div class="section-title">Planos e <span class="section-title-highlight">Preços</span></div>
-        <div class="section-description">Escolha o plano que melhor se adequa aos seus objetivos</div>
+        <div class="section-title">Números que Falam</div>
+        <div class="section-description">Resultados comprovados de padrões premium</div>
     </div>
-    <div class="pricing-grid">
-        <div class="pricing-card">
-            <div class="pricing-title">Básico</div>
-            <div class="pricing-price">R$ 99</div>
-            <div class="pricing-period">Por mês</div>
-            <div class="pricing-features">
-                <div class="pricing-feature">Acesso à academia</div>
-                <div class="pricing-feature">Uso de todos os equipamentos</div>
-                <div class="pricing-feature">Vestiário e chuveiro</div>
-            </div>
-            <a href="https://www.google.com/" target="_blank" class="pricing-cta">Escolher Plano</a>
+    <div class="showcase-grid">
+        <div class="showcase-card">
+            <div class="showcase-number">300%</div>
+            <div class="showcase-label">Mais Conversões</div>
         </div>
-        <div class="pricing-card featured">
-            <div class="pricing-badge">Mais Popular</div>
-            <div class="pricing-title">Premium</div>
-            <div class="pricing-price">R$ 199</div>
-            <div class="pricing-period">Por mês</div>
-            <div class="pricing-features">
-                <div class="pricing-feature">Acesso à academia</div>
-                <div class="pricing-feature">Aulas em grupo ilimitadas</div>
-                <div class="pricing-feature">2 sessões personal/mês</div>
-                <div class="pricing-feature">Avaliação física mensal</div>
-            </div>
-            <a href="https://www.google.com/" target="_blank" class="pricing-cta">Escolher Plano</a>
+        <div class="showcase-card">
+            <div class="showcase-number">50K+</div>
+            <div class="showcase-label">Clientes Felizes</div>
         </div>
-        <div class="pricing-card">
-            <div class="pricing-title">Elite</div>
-            <div class="pricing-price">R$ 399</div>
-            <div class="pricing-period">Por mês</div>
-            <div class="pricing-features">
-                <div class="pricing-feature">Acesso 24/7</div>
-                <div class="pricing-feature">Personal training ilimitado</div>
-                <div class="pricing-feature">Aulas em grupo ilimitadas</div>
-                <div class="pricing-feature">Orientação nutricional</div>
-                <div class="pricing-feature">Suplementos com desconto</div>
-            </div>
-            <a href="https://www.google.com/" target="_blank" class="pricing-cta">Escolher Plano</a>
+        <div class="showcase-card">
+            <div class="showcase-number">99%</div>
+            <div class="showcase-label">Satisfação</div>
+        </div>
+        <div class="showcase-card">
+            <div class="showcase-number">24/7</div>
+            <div class="showcase-label">Suporte</div>
         </div>
     </div>
 </div>'''
-st.markdown(pricing_html, unsafe_allow_html=True)
+st.markdown(showcase_html, unsafe_allow_html=True)
 
-# ==================== TESTIMONIALS SECTION ====================
-# ✅ ALTERE: Testimonials Section - Mude os depoimentos, nomes e funções dos clientes
-# Esta seção mostra histórias de sucesso de clientes
-testimonials_html = '''<div class="testimonials-section">
-    <div class="section-header">
-        <div class="section-title">Histórias de <span class="section-title-highlight">Sucesso</span></div>
-        <div class="section-description">Veja como nossos alunos transformaram suas vidas</div>
+# ==================== CTA FINAL ====================
+# ✅ ALTERE: CTA Final - Mude o texto e URL do botão
+cta_final_html = '''<div class="cta-final-section" id="sobre">
+    <div class="cta-final-content">
+        <div class="cta-final-title">Pronto para Transformar?</div>
+        <div class="cta-final-desc">Junte-se a milhares de empresas que já estão usando padrões premium para crescer exponencialmente.</div>
+        <a href="https://www.google.com/" target="_blank" class="cta-final-button">Começar Sua Jornada</a>
     </div>
-    <div class="testimonial-card">
-        <div class="testimonial-text">"Entrei na FitPro sem conhecimento nenhum sobre treino. Os profissionais me orientaram perfeitamente e em 6 meses consegui resultados incríveis. Recomendo muito!"</div>
-        <div class="testimonial-author">Roberto Silva</div>
-        <div class="testimonial-role">Aluno há 2 anos</div>
-    </div>
-    <div class="testimonial-card">
-        <div class="testimonial-text">"O ambiente é acolhedor, os treinadores são atenciosos e os resultados falam por si. Já perdi 20kg e ganhei muita confiança. Melhor decisão que tomei!"</div>
-        <div class="testimonial-author">Juliana Costa</div>
-        <div class="testimonial-role">Aluna Premium</div>
-    </div>
-    <div class="testimonial-card">
-        <div class="testimonial-text">"A comunidade da FitPro é incrível. Tenho amigos, motivação e profissionais que realmente se importam com meu progresso. Voltaria mil vezes!"</div>
-        <div class="testimonial-author">Marcus Oliveira</div>
-        <div class="testimonial-role">Aluno Elite</div>
-    </div>
-</div>'''
-st.markdown(testimonials_html, unsafe_allow_html=True)
-
-# ==================== CTA FINAL SECTION ====================
-# ✅ ALTERE: CTA Final Section - Mude o título, descrição e URL do botão
-# Esta é a seção final de chamada para ação antes do rodapé
-cta_final_html = '''<div class="cta-final-section" id="contato">
-    <div class="cta-final-title">Comece sua transformação <span class="highlight">hoje</span></div>
-    <div class="cta-final-desc">Agende uma avaliação gratuita e conheça nossas instalações. Nossos profissionais estão prontos para ajudá-lo!</div>
-    <a href="https://www.google.com/" target="_blank" class="cta-final-button">Agende Sua Avaliação</a>
 </div>'''
 st.markdown(cta_final_html, unsafe_allow_html=True)
 
 # ==================== FOOTER ====================
-# ✅ ALTERE: Footer - Mude o telefone, email, endereço e copyright
-# Esta é a seção do rodapé com informações de contato
-footer_html = '<div class="footer"><div class="footer-text">Telefone: (99) 99999-9999 | Email: contato@fitpro.com.br</div><div class="footer-text">Endereço: Av. Principal, 1234 - São Paulo, SP</div><div class="footer-copyright">© 2025 FitPro Academia. Todos os direitos reservados. Transformando vidas através do fitness.</div></div>'
+# ✅ ALTERE: Footer - Mude email, telefone, endereço e copyright
+footer_html = '''<div class="footer" id="contato">
+    <div class="footer-text">Email: contato@premium.com.br | Telefone: (99) 99999-9999</div>
+    <div class="footer-text">Endereço: Av. Principal, 1000 - São Paulo, SP</div>
+    <div class="footer-copyright">© 2025 Premium padrões. Todos os direitos reservados. Transformando negócios com design excepcional.</div>
+</div>'''
 st.markdown(footer_html, unsafe_allow_html=True)
