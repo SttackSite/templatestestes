@@ -3,8 +3,8 @@ import streamlit as st  # ❌ NÃO ALTERE: Importa a biblioteca Streamlit para c
 # ========== SEÇÃO 1: CONFIGURAÇÃO DA PÁGINA ==========
 # ❌ NÃO ALTERE: Define as configurações básicas da página
 st.set_page_config(
-    page_title="Breakfast | Digital Design Agency",  # ✅ ALTERE: Título que aparece na aba do navegador
-    page_icon="🍳",  # ✅ ALTERE: Emoji que aparece na aba do navegador
+    page_title="Daniel Aristizábal | Studio",  # ✅ ALTERE: Título que aparece na aba do navegador
+    page_icon="🎨",  # ✅ ALTERE: Emoji que aparece na aba do navegador
     layout="wide"  # ❌ NÃO ALTERE: Define o layout como largura total
 )
 
@@ -13,108 +13,103 @@ st.set_page_config(
 # Alterar aqui pode quebrar completamente o design da página
 st.markdown("""
 <style>
-    /* ❌ NÃO ALTERE: Importa a fonte do Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
+    /* ❌ NÃO ALTERE: Importa as fontes do Google Fonts */
+    @import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;700&family=Inter:wght@900&display=swap');
 
-    /* ❌ NÃO ALTERE: Reset geral - Define o fundo branco e texto preto */
+    /* ❌ NÃO ALTERE: Reset geral - Define o fundo preto e texto branco */
     .stApp {
-        background-color: #ffffff;  /* Fundo branco */
+        background-color: #000000;  /* Fundo preto */
+        color: #ffffff;  /* Texto branco */
     }
     
-    /* ❌ NÃO ALTERE: Tipografia padrão */
-    html, body, [class*="css"] {
-        font-family: 'Inter', sans-serif;  /* Fonte moderna */
-        color: #000000;  /* Texto preto */
-        line-height: 1.2;  /* Altura da linha compacta */
+    /* ❌ NÃO ALTERE: Remove padding padrão do Streamlit para ocupar 100% da largura */
+    .block-container { 
+        padding: 0 !important;  /* Remove espaçamento interno */
+        max-width: 100% !important;  /* Ocupa 100% da largura */
     }
 
-    /* ❌ NÃO ALTERE: Header brutalista */
-    .header-bf {
+    /* ❌ NÃO ALTERE: Tipografia padrão - Fonte monospace */
+    html, body, [class*="css"] {
+        font-family: 'JetBrains Mono', monospace;  /* Fonte monospace moderna */
+    }
+
+    /* ❌ NÃO ALTERE: Header fixo no topo */
+    .header-daniel {
         display: flex;  /* Layout flexível */
         justify-content: space-between;  /* Espaça itens nas extremidades */
-        padding: 30px 5%;  /* Espaçamento interno */
-        border-bottom: 1px solid #000;  /* Linha divisória preta */
-        font-weight: 700;  /* Peso pesado */
+        padding: 30px 40px;  /* Espaçamento interno */
+        position: fixed;  /* Fica fixo ao rolar */
+        width: 100%;  /* Largura total */
+        top: 0;  /* Posição no topo */
+        z-index: 1000;  /* Fica acima de outros elementos */
+        background: rgba(0,0,0,0.8);  /* Fundo preto semi-transparente */
+        backdrop-filter: blur(10px);  /* Efeito blur no fundo */
+        border-bottom: 1px solid #222;  /* Linha divisória cinza escura */
         text-transform: uppercase;  /* Maiúsculas */
-        font-size: 14px;  /* Tamanho médio */
-        letter-spacing: 1px;  /* Espaçamento entre letras */
+        font-size: 12px;  /* Tamanho pequeno */
+        letter-spacing: 2px;  /* Espaçamento entre letras */
     }
 
     /* ❌ NÃO ALTERE: Seção hero */
-    .hero-bf {
-        padding: 100px 5%;  /* Espaçamento interno */
-        border-bottom: 1px solid #000;  /* Linha divisória preta */
+    .hero-section {
+        padding: 180px 40px 100px 40px;  /* Espaçamento interno */
+        text-align: left;  /* Texto alinhado à esquerda */
     }
     
     /* ❌ NÃO ALTERE: Estilo do título principal */
-    .hero-text {
-        font-size: clamp(40px, 10vw, 150px);  /* Tamanho responsivo */
+    .hero-big-text {
+        font-family: 'Inter', sans-serif;  /* Fonte sans-serif pesada */
+        font-size: clamp(40px, 12vw, 160px);  /* Tamanho responsivo */
         font-weight: 900;  /* Peso muito pesado */
-        text-transform: uppercase;  /* Maiúsculas */
-        letter-spacing: -4px;  /* Espaçamento negativo entre letras */
         line-height: 0.85;  /* Altura da linha compacta */
+        letter-spacing: -0.05em;  /* Espaçamento negativo entre letras */
+        margin-bottom: 40px;  /* Espaçamento inferior */
     }
 
     /* ❌ NÃO ALTERE: Grid de projetos */
-    .project-grid {
+    .grid-wrap {
+        padding: 0 40px;  /* Espaçamento interno */
         display: grid;  /* Layout grid */
-        grid-template-columns: 1fr 1fr;  /* 2 colunas iguais */
-        border-bottom: 1px solid #000;  /* Linha divisória preta */
+        grid-template-columns: repeat(12, 1fr);  /* 12 colunas */
+        gap: 20px;  /* Espaçamento entre itens */
+    }
+
+    /* ❌ NÃO ALTERE: Item individual de projeto */
+    .project-item {
+        position: relative;  /* Posicionamento relativo */
+        overflow: hidden;  /* Oculta conteúdo que sai da área */
+        margin-bottom: 40px;  /* Espaçamento inferior */
+    }
+
+    /* ❌ NÃO ALTERE: Imagem do projeto */
+    .project-img {
+        width: 100%;  /* Largura total */
+        height: auto;  /* Altura automática */
+        display: block;  /* Exibe como bloco */
+        transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);  /* Animação suave */
+        filter: saturate(1.2);  /* Aumenta saturação da cor */
     }
     
-    /* ❌ NÃO ALTERE: Item individual do grid */
-    .grid-item {
-        border-right: 1px solid #000;  /* Borda direita preta */
-        padding: 0;  /* Sem espaçamento */
-        transition: all 0.5s ease;  /* Animação suave */
-    }
-    
-    /* ❌ NÃO ALTERE: Remove borda do último item */
-    .grid-item:last-child {
-        border-right: none;  /* Remove borda */
+    /* ❌ NÃO ALTERE: Efeito hover na imagem */
+    .project-item:hover .project-img {
+        transform: scale(1.03);  /* Aumenta 3% ao passar mouse */
     }
 
     /* ❌ NÃO ALTERE: Informações do projeto */
     .project-info {
-        padding: 20px;  /* Espaçamento interno */
-        font-weight: 700;  /* Peso pesado */
+        margin-top: 15px;  /* Espaçamento superior */
+        font-size: 11px;  /* Tamanho pequeno */
         text-transform: uppercase;  /* Maiúsculas */
-        font-size: 13px;  /* Tamanho pequeno */
+        color: #666;  /* Cor cinza */
         display: flex;  /* Layout flexível */
         justify-content: space-between;  /* Espaça itens nas extremidades */
     }
 
-    /* ❌ NÃO ALTERE: Seções de texto (filosofia) */
-    .text-section {
-        padding: 120px 5%;  /* Espaçamento interno */
-        font-size: 42px;  /* Tamanho grande */
-        font-weight: 700;  /* Peso pesado */
-        border-bottom: 1px solid #000;  /* Linha divisória preta */
-    }
-
-    /* ❌ NÃO ALTERE: Rodapé brutalista */
-    .footer-bf {
-        padding: 100px 5%;  /* Espaçamento interno */
-        background-color: #000;  /* Fundo preto */
-        color: #fff;  /* Texto branco */
-    }
-
-    /* ❌ NÃO ALTERE: Estilo dos botões nativos do Streamlit */
-    div.stButton > button {
-        background: transparent;  /* Fundo transparente */
-        border: 1px solid #000;  /* Borda preta */
-        color: #000;  /* Texto preto */
-        border-radius: 0;  /* Sem arredondamento */
-        font-weight: 700;  /* Peso pesado */
-        text-transform: uppercase;  /* Maiúsculas */
-        padding: 20px 40px;  /* Espaçamento interno */
-        width: 100%;  /* Largura total */
-    }
-    
-    /* ❌ NÃO ALTERE: Efeito hover nos botões */
-    div.stButton > button:hover {
-        background: #000;  /* Fundo preto */
-        color: #fff;  /* Texto branco */
+    /* ❌ NÃO ALTERE: Rodapé */
+    .footer-daniel {
+        padding: 100px 40px;  /* Espaçamento interno */
+        border-top: 1px solid #222;  /* Linha divisória cinza escura */
+        margin-top: 100px;  /* Espaçamento superior */
     }
 
     /* ❌ NÃO ALTERE: Estilo dos botões em links */
@@ -122,13 +117,13 @@ st.markdown("""
         display: inline-block !important;  /* Exibe como bloco inline */
         background-color: transparent !important;  /* Fundo transparente */
         color: #fff !important;  /* Texto branco */
-        border: 1px solid #fff !important;  /* Borda branca */
+        border: 1px solid #666 !important;  /* Borda cinza */
         border-radius: 0px !important;  /* Sem arredondamento */
-        padding: 20px 40px !important;  /* Espaçamento interno */
+        padding: 12px 30px !important;  /* Espaçamento interno */
         font-weight: 700 !important;  /* Peso pesado */
-        font-size: 14px !important;  /* Tamanho médio */
+        font-size: 11px !important;  /* Tamanho pequeno */
         text-transform: uppercase !important;  /* Maiúsculas */
-        letter-spacing: 1px !important;  /* Espaçamento entre letras */
+        letter-spacing: 2px !important;  /* Espaçamento entre letras */
         transition: 0.3s !important;  /* Animação suave */
         text-decoration: none !important;  /* Remove sublinhado */
         cursor: pointer !important;  /* Cursor de clique */
@@ -147,121 +142,125 @@ st.markdown("""
         color: #fff !important;  /* Texto branco */
         text-decoration: none !important;  /* Remove sublinhado */
     }
+
+    /* ❌ NÃO ALTERE: Esconde o header padrão do Streamlit */
+    [data-testid="stHeader"] { 
+        display: none;  /* Oculta o header */
+    }
 </style>
 """, unsafe_allow_html=True)
 
 # ========== SEÇÃO 3: NAVEGAÇÃO (HEADER) ==========
-# ✅ ALTERE: Textos do header
+# ✅ ALTERE: Textos da navegação e nome
 st.markdown("""
-<div class="header-bf">
-    <!-- ✅ ALTERE: Nome da agência -->
-    <div>Breakfast.</div>
-    <!-- ✅ ALTERE: Tagline/descrição -->
-    <div>Design & Technology</div>
+<div class="header-daniel">
+    <!-- ✅ ALTERE: Nome do estúdio/artista -->
+    <div>Daniel Aristizábal</div>
+    <!-- ✅ ALTERE: Menu de navegação -->
+    <div style="display: flex; gap: 40px;">
+        <a href="#index" style="color: #fff; text-decoration: none; cursor: pointer;">Index</a>  <!-- ✅ ALTERE: Texto do menu -->
+        <a href="#studio" style="color: #fff; text-decoration: none; cursor: pointer;">Studio</a>  <!-- ✅ ALTERE: Texto do menu -->
+        <a href="#archive" style="color: #fff; text-decoration: none; cursor: pointer;">Archive</a>  <!-- ✅ ALTERE: Texto do menu -->
+        <a href="#shop" style="color: #fff; text-decoration: none; cursor: pointer;">Shop</a>  <!-- ✅ ALTERE: Texto do menu -->
+    </div>
 </div>
 """, unsafe_allow_html=True)
 
 # ========== SEÇÃO 4: HERO SECTION ==========
-# ✅ ALTERE: Título principal
+# ✅ ALTERE: Título, descrição e nome
 st.markdown("""
-<div class="hero-bf">
-    <!-- ✅ ALTERE: Título (quebrado em linhas) -->
-    <div class="hero-text">WE DESIGN<br>DIGITAL<br>EXPERIENCES</div>
+<div id="index" class="hero-section">
+    <!-- ✅ ALTERE: Título principal (quebrado em linhas) -->
+    <div class="hero-big-text">
+        DANIEL<br>ARISTI<br>ZÁBAL
+    </div>
+    <!-- ✅ ALTERE: Descrição do estúdio/artista -->
+    <p style="max-width: 600px; font-size: 14px; color: #888; line-height: 1.6;">
+        Digital Art Director and Motion Designer. Merging surrealism with CGI to explore new visual languages. 
+        Based in Medellín, working globally.
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
-# ========== SEÇÃO 5: PROJETOS (GRID COMPRIDA) ==========
+# ========== SEÇÃO 5: PROJETOS (GRID ASSIMÉTRICO) ==========
 # ❌ NÃO ALTERE: Função que renderiza os projetos
-def breakfast_project(col, img_url, name, client):
+def render_project(col, img_url, title, year, width="100%"):
     # ❌ NÃO ALTERE: Função que cria os cards de projeto
     with col:
         st.markdown(f"""
-        <div style="border-bottom: 1px solid #000;">
+        <div class="project-item">
             <!-- ✅ ALTERE: URL da imagem do projeto -->
-            <img src="{img_url}" style="width:100%; filter: grayscale(100%) contrast(1.1); display:block;">
-            <!-- ✅ ALTERE: Nome do projeto e cliente -->
+            <img src="{img_url}" class="project-img" style="width: {width};">
+            <!-- ✅ ALTERE: Título e ano do projeto -->
             <div class="project-info">
-                <span>{name}</span>  <!-- ✅ ALTERE: Nome do projeto -->
-                <span style="color: #888;">{client}</span>  <!-- ✅ ALTERE: Tipo/cliente do projeto -->
+                <span style="color:#fff;">{title}</span>  <!-- ✅ ALTERE: Nome do projeto -->
+                <span>[{year}]</span>  <!-- ✅ ALTERE: Ano do projeto -->
             </div>
         </div>
         """, unsafe_allow_html=True)
 
-# ❌ NÃO ALTERE: Primeira linha de projetos (2 colunas)
-c1, c2 = st.columns(2, gap="small")
-breakfast_project(c1, "https://images.unsplash.com/photo-1558655146-d09347e92766?w=800", "Solar System", "Editorial")  # ✅ ALTERE: Imagem, nome e cliente
-breakfast_project(c2, "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=800", "Neon Future", "Web Design")  # ✅ ALTERE: Imagem, nome e cliente
+# ❌ NÃO ALTERE: Linha 1 - Um grande e um pequeno
+c1, c2 = st.columns([2, 1])
+render_project(c1, "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?w=1200", "Digital Surrealism", "2024")  # ✅ ALTERE: Imagem, título e ano
+render_project(c2, "https://images.unsplash.com/photo-1550684848-fac1c5b4e853?w=600", "Chrome Study", "2023")  # ✅ ALTERE: Imagem, título e ano
 
-# ❌ NÃO ALTERE: Segunda linha de projetos (2 colunas)
-c3, c4 = st.columns(2, gap="small")
-breakfast_project(c3, "https://images.unsplash.com/photo-1525547719571-a2d4ac8945e2?w=800", "Cyber Identity", "Branding")  # ✅ ALTERE: Imagem, nome e cliente
-breakfast_project(c4, "https://images.unsplash.com/photo-1509343256512-d77a5cb3791b?w=800", "Monochrome Studio", "CGI")  # ✅ ALTERE: Imagem, nome e cliente
+# ❌ NÃO ALTERE: Linha 2 - Três imagens menores (estilo mosaico)
+c3, c4, c5 = st.columns(3)
+render_project(c3, "https://images.unsplash.com/photo-1633167606207-d840b5070fc2?w=600", "Organic Forms", "2024")  # ✅ ALTERE: Imagem, título e ano
+render_project(c4, "https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=600", "Color Theory", "2023")  # ✅ ALTERE: Imagem, título e ano
+render_project(c5, "https://images.unsplash.com/photo-1558591710-4b4a1ae0f04d?w=600", "Texture Flow", "2022")  # ✅ ALTERE: Imagem, título e ano
 
-# ========== SEÇÃO 6: SEÇÃO DE FILOSOFIA (TEXTO COMPRIDO) ==========
-# ✅ ALTERE: Descrição/filosofia da agência
+# ❌ NÃO ALTERE: Linha 3 - Um vertical e um horizontal
+c6, c7 = st.columns([1, 2])
+render_project(c6, "https://images.unsplash.com/photo-1574169208507-84376144848b?w=600", "CGI Sculpture", "2024")  # ✅ ALTERE: Imagem, título e ano
+render_project(c7, "https://images.unsplash.com/photo-1620641788421-7a1c342ea42e?w=1200", "Metaverse Landscapes", "2024")  # ✅ ALTERE: Imagem, título e ano
+
+# ========== SEÇÃO 6: SEÇÃO SOBRE (THE STUDIO) ==========
+# ✅ ALTERE: Título, descrição e conteúdo
 st.markdown("""
-<div class="text-section">
-    <!-- ✅ ALTERE: Texto de filosofia/descrição -->
-    Independent studio for strategy, design and code. We turn complex ideas into simple, functional and beautiful digital products.
+<div id="studio" style="padding: 150px 40px; background-color: #080808;">
+    <!-- ✅ ALTERE: Título da seção -->
+    <h2 style="font-family:'Inter'; font-size: 60px; font-weight: 900; letter-spacing: -2px;">THE STUDIO</h2>
+    <!-- ✅ ALTERE: Descrição do estúdio -->
+    <p style="font-size: 24px; max-width: 800px; color: #ccc; line-height: 1.2; margin-top: 30px;">
+        Nós operamos na intersecção entre o design clássico e o futurismo digital. 
+        Especializados em CGI, direção de arte e identidades visuais que desafiam a lógica.
+    </p>
 </div>
 """, unsafe_allow_html=True)
 
-# ========== SEÇÃO 7: SERVIÇOS EM LISTA ==========
-# ✅ ALTERE: Títulos e descrições dos serviços
-st.markdown('<div style="padding: 80px 5%; border-bottom: 1px solid #000;">', unsafe_allow_html=True)
-
-# ❌ NÃO ALTERE: Estrutura de 3 colunas
-col_s1, col_s2, col_s3 = st.columns(3)
-
-with col_s1:
-    st.markdown("### STRATEGY")  # ✅ ALTERE: Título do serviço
-    st.write("Product Discovery / User Research / Brand Positioning")  # ✅ ALTERE: Descrição do serviço
-
-with col_s2:
-    st.markdown("### DESIGN")  # ✅ ALTERE: Título do serviço
-    st.write("UI/UX Design / Visual Identity / Motion Graphics")  # ✅ ALTERE: Descrição do serviço
-
-with col_s3:
-    st.markdown("### CODE")  # ✅ ALTERE: Título do serviço
-    st.write("React / Webflow / Headless CMS / E-commerce")  # ✅ ALTERE: Descrição do serviço
-
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ========== SEÇÃO 8: CTA / CONTATO ==========
-# ✅ ALTERE: Título e texto do botão
-st.markdown('<div style="padding: 100px 5%;">', unsafe_allow_html=True)
-
-# ✅ ALTERE: Título da chamada para ação
-st.markdown("<h2 style='font-size: 80px; font-weight: 900; margin-bottom: 40px;'>LET'S TALK?</h2>", unsafe_allow_html=True)
-
-# ✅ ALTERE: Texto do botão e URL (use link em vez de st.button)
-st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">Start a Project</a>', unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ========== SEÇÃO 9: FOOTER (RODAPÉ) ==========
+# ========== SEÇÃO 7: FOOTER (RODAPÉ) ==========
 # ✅ ALTERE: Informações de contato, links e copyright
 st.markdown("""
-<div class="footer-bf">
+<div id="archive" class="footer-daniel">
     <!-- ❌ NÃO ALTERE: Grid de 2 colunas -->
-    <div style="display: flex; justify-content: space-between; align-items: flex-end;">
-        <!-- COLUNA 1: Informações da agência -->
+    <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+        <!-- COLUNA 1: Redes sociais -->
         <div>
-            <!-- ✅ ALTERE: Nome da agência -->
-            <h2 style="font-size: 40px; margin-bottom: 20px;">Breakfast.</h2>
-            <!-- ✅ ALTERE: Endereço e email -->
-            <p>Rua de Trás, Porto, Portugal<br>
-            <a href="mailto:hello@wearebreakfast.com" style="color: #fff; text-decoration: none;">hello@wearebreakfast.com</a></p>
-        </div>
-        <!-- COLUNA 2: Redes sociais e copyright -->
-        <div style="text-align: right; font-size: 12px; opacity: 0.6;">
+            <!-- ✅ ALTERE: Título da coluna -->
+            <p style="color: #fff; font-weight: 700;">CONNECT</p>
             <!-- ✅ ALTERE: Links de redes sociais -->
-            <a href="https://www.google.com/" target="_blank" style="color: #fff; text-decoration: none;">INSTAGRAM</a> / 
-            <a href="https://www.google.com/" target="_blank" style="color: #fff; text-decoration: none;">LINKEDIN</a> / 
-            <a href="https://www.google.com/" target="_blank" style="color: #fff; text-decoration: none;">TWITTER</a><br>
-            <!-- ✅ ALTERE: Texto de copyright -->
-            © 2026 ALL RIGHTS RESERVED
+            <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                <a href="https://www.google.com/" target="_blank" style="color: #666; text-decoration: none;">Instagram</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: #666; text-decoration: none;">Behance</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: #666; text-decoration: none;">LinkedIn</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: #666; text-decoration: none;">Vimeo</a>
+            </p>
         </div>
+        <!-- COLUNA 2: Contato -->
+        <div style="text-align: right;">
+            <!-- ✅ ALTERE: Título da coluna -->
+            <p style="color: #fff; font-weight: 700;">NEW BUSINESS</p>
+            <!-- ✅ ALTERE: Email de contato -->
+            <p style="color: #666; font-size: 14px; margin-top: 10px;">
+                <a href="mailto:studio@aristizabal.net" style="color: #666; text-decoration: none;">studio@aristizabal.net</a>
+            </p>
+        </div>
+    </div>
+    <!-- ❌ NÃO ALTERE: Linha divisória e copyright -->
+    <div style="margin-top: 80px; font-size: 10px; color: #333; letter-spacing: 2px;">
+        <!-- ✅ ALTERE: Texto de copyright -->
+        © 2026 DANIEL ARISTIZÁBAL STUDIO — ALL RIGHTS RESERVED
     </div>
 </div>
 """, unsafe_allow_html=True)
