@@ -232,7 +232,7 @@ with c2:
 st.markdown("""
 <div style="background-color: #f9f9f9; padding: 50px; margin-top: 50px; text-align: center; border-top: 1px solid #eee;">
     <!-- ✅ ALTERE: Nome da marca -->
-    <div style="font-family: 'Pacifico'; font-size: 24px; color: #333; margin-bottom: 20px;">pura vida</div>
+    <div style="font-family: 'Pacifico'; font-size: 24px; color: #333; margin-bottom: 20px;">Pura Vida</div>
     <!-- ✅ ALTERE: Copyright e redes sociais -->
     <p style="color: #999; font-size: 12px;">© 2026 Pura Vida Brackets. Siga-nos no Instagram <a href="https://www.google.com/" target="_blank" style="color: #999; text-decoration: none;">@puravida</a></p>
 </div>
