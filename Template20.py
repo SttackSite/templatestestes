@@ -214,7 +214,7 @@ def feast_card(col, title, flavor, img_url, price):
 # ✅ ALTERE: Títulos, sabores, URLs de imagens e preços dos produtos
 feast_card(p1, "MILK CRUNCH", "Com Arroz Crocante", "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400", "19,90")
 feast_card(p2, "ORIGINAL MILK", "Clássico e Cremoso", "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=400", "18,90")
-feast_card(p3, "PEANUT BUTTER", "Manteiga de Amendoim", "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?w=400", "22,90")
+feast_card(p3, "PEANUT BUTTER", "Manteiga de Amendoim", "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400", "22,90")
 
 # ========== SEÇÃO 4: SEÇÃO "POR QUE NÓS?" ==========
 # ✅ ALTERE: Título, descrição e ícones
