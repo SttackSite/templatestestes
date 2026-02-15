@@ -2,7 +2,7 @@ import streamlit as st
 
 # ❌ NÃO ALTERE: Configuração da página (define título, ícone e layout)
 st.set_page_config(
-    page_title="Feastables | O Chocolate do MrBeast",  # ✅ ALTERE: Nome da página
+    page_title="Feastables | O Chocolate do Mrmoon",  # ✅ ALTERE: Nome da página
     page_icon="🍫",  # ✅ ALTERE: Emoji do ícone
     layout="wide"  # ❌ NÃO ALTERE: Layout da página
 )
@@ -147,7 +147,7 @@ st.markdown("""
     <div style="display: flex; animation: marquee 20s linear infinite;">
         <span style="margin-right: 50px;">MELHOR QUE O SEU CHOCOLATE ATUAL 🔥</span>
         <span style="margin-right: 50px;">INGREDIENTES REAIS 🔥</span>
-        <span style="margin-right: 50px;">DO MR BEAST 🔥</span>
+        <span style="margin-right: 50px;">DO MR moon 🔥</span>
         <span style="margin-right: 50px;">PROVE A DIFERENÇA 🔥</span>
         <span style="margin-right: 50px;">MELHOR QUE O SEU CHOCOLATE ATUAL 🔥</span>
     </div>
@@ -245,7 +245,7 @@ st.markdown("""
     <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
         <div>
             <h2 style="font-size: 32px; text-shadow: 2px 2px 0px #ff00ff;">FEASTABLES</h2>
-            <p style="color: #aaa;">Inspirado pelo MrBeast.</p>
+            <p style="color: #aaa;">Inspirado pelo Mrmoon.</p>
         </div>
         <div style="line-height: 2;">
             <p><strong>RECURSOS</strong></p>
