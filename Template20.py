@@ -3,8 +3,8 @@ import streamlit as st  # ❌ NÃO ALTERE: Importa a biblioteca Streamlit para c
 # ========== SEÇÃO 1: CONFIGURAÇÃO DA PÁGINA ==========
 # ❌ NÃO ALTERE: Define as configurações básicas da página
 st.set_page_config(
-    page_title="Crehana Clone | Cursos Online",  # ✅ ALTERE: Título que aparece na aba do navegador
-    page_icon="🎓",  # ✅ ALTERE: Emoji que aparece na aba do navegador
+    page_title="ogreen | Valor que se renova",  # ✅ ALTERE: Título que aparece na aba do navegador
+    page_icon="🌲",  # ✅ ALTERE: Emoji que aparece na aba do navegador
     layout="wide"  # ❌ NÃO ALTERE: Define o layout como largura total
 )
 
@@ -14,110 +14,126 @@ st.set_page_config(
 st.markdown("""
 <style>
     /* ❌ NÃO ALTERE: Importa a fonte do Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
 
     /* ❌ NÃO ALTERE: Tipografia padrão */
     html, body, [class*="css"] {
-        font-family: 'Inter', sans-serif;  /* Fonte moderna */
-        color: #1b1c1e;  /* Texto preto */
+        font-family: 'Montserrat', sans-serif;  /* Fonte moderna */
+        color: #333;  /* Texto cinza escuro */
     }
 
-    /* ❌ NÃO ALTERE: Header estilo app */
-    .header-crehana {
+    /* ❌ NÃO ALTERE: Header */
+    .header-ogreen {
         display: flex;  /* Layout flexível */
         justify-content: space-between;  /* Espaça itens nas extremidades */
         align-items: center;  /* Alinha itens no centro verticalmente */
-        padding: 10px 0px;  /* Espaçamento interno */
+        padding: 20px 8%;  /* Espaçamento interno */
         background-color: white;  /* Fundo branco */
-        border-bottom: 1px solid #e0e0e0;  /* Borda inferior cinza clara */
-        margin-bottom: 30px;  /* Espaçamento inferior */
-    }
-    
-    /* ❌ NÃO ALTERE: Estilo do logo */
-    .logo {
-        font-size: 24px;  /* Tamanho grande */
-        font-weight: 800;  /* Peso muito pesado */
-        color: #4b22b4;  /* Roxo Crehana */
+        border-bottom: 2px solid #005a31;  /* Borda inferior verde */
+        margin: -5rem -5rem 0rem -5rem;  /* Margem negativa para ocupar tela toda */
     }
 
-    /* ❌ NÃO ALTERE: Estilo do título do hero */
-    .hero-title {
-        font-size: 42px;  /* Tamanho grande */
-        font-weight: 800;  /* Peso muito pesado */
-        line-height: 1.1;  /* Altura da linha compacta */
-        margin-bottom: 20px;  /* Espaçamento inferior */
-    }
-    
-    /* ❌ NÃO ALTERE: Destaque em roxo */
-    .highlight {
-        color: #4b22b4;  /* Roxo Crehana */
-    }
-
-    /* ❌ NÃO ALTERE: Estilo dos botões nativos do Streamlit */
-    .stButton > button {
-        border-radius: 8px;  /* Arredondamento suave */
-        font-weight: 600;  /* Peso pesado */
-        transition: all 0.2s;  /* Animação suave */
-        border: none;  /* Sem borda */
-    }
-    
-    /* ❌ NÃO ALTERE: Botão principal (roxo) */
-    div.stButton > button {
-        background-color: #4b22b4;  /* Fundo roxo */
+    /* ❌ NÃO ALTERE: Seção hero com imagem de fundo */
+    .hero-section {
+        background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80');  /* Imagem com overlay */
+        background-size: cover;  /* Imagem cobre toda a área */
+        background-position: center;  /* Imagem centralizada */
+        height: 550px;  /* Altura fixa */
+        display: flex;  /* Layout flexível */
+        flex-direction: column;  /* Itens em coluna */
+        justify-content: center;  /* Centraliza verticalmente */
+        align-items: center;  /* Centraliza horizontalmente */
         color: white;  /* Texto branco */
+        text-align: center;  /* Texto centralizado */
+        margin: 0 -5rem 50px -5rem;  /* Margem negativa e espaçamento inferior */
+    }
+    
+    /* ❌ NÃO ALTERE: Estilo do título do hero */
+    .hero-title { 
+        font-size: 56px;  /* Tamanho grande */
+        font-weight: 800;  /* Peso muito pesado */
+        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);  /* Sombra de texto */
     }
 
-    /* ❌ NÃO ALTERE: Cards de cursos */
-    .course-card {
-        background: white;  /* Fundo branco */
-        border-radius: 12px;  /* Arredondamento suave */
+    /* ❌ NÃO ALTERE: Seções de conteúdo */
+    .section-padding { 
+        padding: 80px 10%;  /* Espaçamento interno */
+    }
+    
+    /* ❌ NÃO ALTERE: Estilo dos títulos das seções */
+    .section-title { 
+        color: #005a31;  /* Cor verde */
+        font-weight: 800;  /* Peso muito pesado */
+        font-size: 32px;  /* Tamanho grande */
+        margin-bottom: 30px;  /* Espaçamento inferior */
+        border-left: 5px solid #005a31;  /* Borda esquerda verde */
+        padding-left: 15px;  /* Espaçamento interno esquerdo */
+    }
+
+    /* ❌ NÃO ALTERE: Cards de negócios */
+    .business-card {
+        background: #f8f9fa;  /* Fundo cinza claro */
+        border-radius: 10px;  /* Arredondamento */
         overflow: hidden;  /* Oculta conteúdo que sai da área */
-        border: 1px solid #efefef;  /* Borda cinza clara */
-        transition: transform 0.3s;  /* Animação suave */
-        margin-bottom: 20px;  /* Espaçamento inferior */
+        border-bottom: 4px solid #005a31;  /* Borda inferior verde */
+        transition: 0.3s;  /* Animação suave */
     }
     
     /* ❌ NÃO ALTERE: Efeito hover nos cards */
-    .course-card:hover {
-        transform: translateY(-5px);  /* Levanta o card */
-        box-shadow: 0 10px 20px rgba(0,0,0,0.05);  /* Sombra aumentada */
+    .business-card:hover { 
+        transform: translateY(-10px);  /* Levanta o card */
+        box-shadow: 0 20px 40px rgba(0,0,0,0.1);  /* Sombra aumentada */
     }
     
-    /* ❌ NÃO ALTERE: Tag de categoria */
-    .category-tag {
-        font-size: 11px;  /* Tamanho muito pequeno */
-        font-weight: 700;  /* Peso pesado */
-        text-transform: uppercase;  /* Maiúsculas */
-        color: #888;  /* Cor cinza */
-        margin-bottom: 5px;  /* Espaçamento inferior */
+    /* ❌ NÃO ALTERE: Conteúdo do card */
+    .card-label { 
+        padding: 25px;  /* Espaçamento interno */
+    }
+
+    /* ❌ NÃO ALTERE: Seção de estatísticas */
+    .stats-bg { 
+        background-color: #005a31;  /* Fundo verde */
+        color: white;  /* Texto branco */
+        padding: 60px 10%;  /* Espaçamento interno */
+        text-align: center;  /* Texto centralizado */
+        margin: 50px -5rem;  /* Margem negativa */
     }
     
-    /* ❌ NÃO ALTERE: Título do curso */
-    .course-title {
-        font-weight: 600;  /* Peso pesado */
-        font-size: 16px;  /* Tamanho médio */
-        margin-bottom: 8px;  /* Espaçamento inferior */
+    /* ❌ NÃO ALTERE: Número da estatística */
+    .stat-number { 
+        font-size: 48px;  /* Tamanho grande */
+        font-weight: 800;  /* Peso muito pesado */
+        color: #8ec641;  /* Verde limão */
     }
     
-    /* ❌ NÃO ALTERE: Avaliação do curso */
-    .rating {
-        color: #ffb400;  /* Cor amarela (estrela) */
+    /* ❌ NÃO ALTERE: Descrição da estatística */
+    .stat-desc { 
         font-size: 14px;  /* Tamanho pequeno */
-        font-weight: bold;  /* Peso pesado */
+        opacity: 0.9;  /* Opacidade */
+        text-transform: uppercase;  /* Maiúsculas */
+        letter-spacing: 1px;  /* Espaçamento entre letras */
+    }
+
+    /* ❌ NÃO ALTERE: Rodapé */
+    .footer-ogreen {
+        background-color: #222;  /* Fundo cinza escuro */
+        color: #ccc;  /* Texto cinza claro */
+        padding: 80px 10% 40px 10%;  /* Espaçamento interno */
+        margin: 50px -5rem -5rem -5rem;  /* Margem negativa */
     }
 
     /* ❌ NÃO ALTERE: Estilo dos botões em links */
     .action-button {
         display: inline-block !important;  /* Exibe como bloco inline */
-        background-color: #4b22b4 !important;  /* Fundo roxo */
+        background-color: #005a31 !important;  /* Fundo verde */
         color: white !important;  /* Texto branco */
         border: none !important;  /* Sem borda */
-        border-radius: 8px !important;  /* Arredondamento suave */
+        border-radius: 5px !important;  /* Arredondamento suave */
         padding: 12px 30px !important;  /* Espaçamento interno */
-        font-weight: 600 !important;  /* Peso pesado */
-        font-size: 14px !important;  /* Tamanho pequeno */
+        font-weight: 700 !important;  /* Peso pesado */
+        font-size: 13px !important;  /* Tamanho pequeno */
         text-transform: uppercase !important;  /* Maiúsculas */
-        letter-spacing: 0.5px !important;  /* Espaçamento entre letras */
+        letter-spacing: 1px !important;  /* Espaçamento entre letras */
         transition: 0.3s !important;  /* Animação suave */
         text-decoration: none !important;  /* Remove sublinhado */
         cursor: pointer !important;  /* Cursor de clique */
@@ -125,7 +141,7 @@ st.markdown("""
     
     /* ❌ NÃO ALTERE: Efeito hover nos botões em links */
     .action-button:hover {
-        background-color: #3a1a8a !important;  /* Fundo roxo escuro */
+        background-color: #004a26 !important;  /* Fundo verde escuro */
         color: white !important;  /* Texto branco */
         border: none !important;  /* Sem borda */
         text-decoration: none !important;  /* Remove sublinhado */
@@ -141,135 +157,223 @@ st.markdown("""
 
 # ========== SEÇÃO 3: NAVEGAÇÃO (HEADER) ==========
 # ✅ ALTERE: Logo e menu
-col_l, col_m, col_r = st.columns([1, 2, 2])
-
-with col_l:
-    # ✅ ALTERE: Nome da plataforma
-    st.markdown('<div class="logo">crehana</div>', unsafe_allow_html=True)
-
-with col_m:
-    # ✅ ALTERE: Menu de navegação
-    st.markdown("""
-    <div style="display: flex; gap: 20px; padding-top: 10px;">
-        <a href="#categories" style="font-weight:600; font-size:14px; color: #1b1c1e; text-decoration: none; cursor: pointer;">Categorias</a>  <!-- ✅ ALTERE: Texto do menu -->
-        <a href="#business" style="font-weight:600; font-size:14px; color: #1b1c1e; text-decoration: none; cursor: pointer;">Para Empresas</a>  <!-- ✅ ALTERE: Texto do menu -->
+st.markdown("""
+<div class="header-ogreen">
+    <!-- ✅ ALTERE: Nome da empresa -->
+    <div style="font-size: 30px; font-weight: 800; color: #005a31; letter-spacing: -1px;">ogreen</div>
+    <!-- ✅ ALTERE: Menu de navegação -->
+    <div style="display: flex; gap: 30px; font-size: 13px; font-weight: 700; color: #555;">
+        <a href="#about" style="color: #555; text-decoration: none; cursor: pointer;">A ogreen</a>  <!-- ✅ ALTERE: Texto do menu -->
+        <a href="#business" style="color: #555; text-decoration: none; cursor: pointer;">NOSSOS NEGÓCIOS</a>  <!-- ✅ ALTERE: Texto do menu -->
+        <a href="#sustainability" style="color: #555; text-decoration: none; cursor: pointer;">SUSTENTABILIDADE</a>  <!-- ✅ ALTERE: Texto do menu -->
+        <a href="#investors" style="color: #555; text-decoration: none; cursor: pointer;">INVESTIDORES</a>  <!-- ✅ ALTERE: Texto do menu -->
+        <a href="#products" style="color: #555; text-decoration: none; cursor: pointer;">PRODUTOS</a>  <!-- ✅ ALTERE: Texto do menu -->
     </div>
-    """, unsafe_allow_html=True)
+</div>
+""", unsafe_allow_html=True)
 
-# ========== SEÇÃO 4: HERO SECTION ==========
+# ========== SEÇÃO 4: HERO BANNER ==========
+# ✅ ALTERE: Título e descrição
+st.markdown("""
+<div class="hero-section">
+    <!-- ✅ ALTERE: Título principal -->
+    <div class="hero-title">O FUTURO É RENOVÁVEL</div>
+    <!-- ✅ ALTERE: Descrição do hero -->
+    <p style="font-size: 20px; font-weight: 400; max-width: 800px; margin-top: 20px;">
+        Líder na produção de papéis e cartões para embalagens, embalagens de papelão ondulado e sacos industriais.
+    </p>
+</div>
+""", unsafe_allow_html=True)
+
+# ========== SEÇÃO 5: QUEM SOMOS ==========
 # ✅ ALTERE: Título, descrição, imagem e botão
-c_hero1, c_hero2 = st.columns([1, 1])
+st.markdown('<div id="about" class="section-padding">', unsafe_allow_html=True)
 
-with c_hero1:
-    # ✅ ALTERE: Texto de destaque
-    st.markdown('<p style="color:#4b22b4; font-weight:700;">MAIS DE 1000 CURSOS ONLINE</p>', unsafe_allow_html=True)
-    
-    # ✅ ALTERE: Título principal (com destaque em roxo)
-    st.markdown('<h1 class="hero-title">Aumente suas <span class="highlight">oportunidades</span> profissionais</h1>', unsafe_allow_html=True)
-    
+# ❌ NÃO ALTERE: Estrutura de 2 colunas
+c_text, c_img = st.columns([1, 1], gap="large")
+
+with c_text:
+    # ✅ ALTERE: Título da seção
+    st.markdown('<div class="section-title">Sobre a ogreen</div>', unsafe_allow_html=True)
     # ✅ ALTERE: Descrição
-    st.write("Aprenda com especialistas as habilidades mais demandadas no mercado digital. Do zero ao avançado.")
-    st.write("")
-    
+    st.write("""
+    Com 125 anos de história, somos a maior produtora e exportadora de papéis para embalagens e soluções sustentáveis do Brasil. 
+    Nossa atuação é baseada no desenvolvimento sustentável, com florestas 100% plantadas e certificadas.
+    """)
     # ✅ ALTERE: Texto do botão e URL
-    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">🎯 Explorar cursos agora</a>', unsafe_allow_html=True)
+    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">CONHEÇA NOSSA HISTÓRIA</a>', unsafe_allow_html=True)
 
-with c_hero2:
-    # ✅ ALTERE: URL da imagem do hero
-    st.image("https://images.unsplash.com/photo-1522202176988-66273c2fd55f?auto=format&fit=crop&w=800&q=80", use_container_width=True)
+with c_img:
+    # ✅ ALTERE: URL da imagem e legenda
+    st.image("https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80", caption="Gestão Florestal Responsável")
 
-# ========== SEÇÃO 5: PERGUNTA ENGAJADORA ==========
-# ✅ ALTERE: Texto da pergunta
-st.write("### O que você quer estudar hoje?")
+st.markdown('</div>', unsafe_allow_html=True)
 
-# ========== SEÇÃO 6: CURSOS (GRID) ==========
-# ❌ NÃO ALTERE: Função que renderiza os cursos
-def course_item(col, img, category, title, rating, students):
-    # ❌ NÃO ALTERE: Função que cria os cards de curso
+# ========== SEÇÃO 6: NÚMEROS DE IMPACTO (STATS) ==========
+# ✅ ALTERE: Números, descrições e valores
+st.markdown('<div class="stats-bg">', unsafe_allow_html=True)
+
+# ❌ NÃO ALTERE: Estrutura de 4 colunas
+s1, s2, s3, s4 = st.columns(4)
+
+with s1:
+    # ✅ ALTERE: Número e descrição
+    st.markdown('<div class="stat-number">22</div><div class="stat-desc">Fábricas no Brasil e Argentina</div>', unsafe_allow_html=True)
+
+with s2:
+    # ✅ ALTERE: Número e descrição
+    st.markdown('<div class="stat-number">125</div><div class="stat-desc">Anos de Inovação</div>', unsafe_allow_html=True)
+
+with s3:
+    # ✅ ALTERE: Número e descrição
+    st.markdown('<div class="stat-number">719k</div><div class="stat-desc">Hectares de Florestas</div>', unsafe_allow_html=True)
+
+with s4:
+    # ✅ ALTERE: Número e descrição
+    st.markdown('<div class="stat-number">25k</div><div class="stat-desc">Colaboradores</div>', unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ========== SEÇÃO 7: NOSSOS NEGÓCIOS (GRID DE CARDS) ==========
+# ✅ ALTERE: Título da seção
+st.markdown('<div id="business" class="section-padding" style="padding-top: 20px;">', unsafe_allow_html=True)
+
+st.markdown('<div class="section-title" style="text-align: center; border-left: none;">Nossas Frentes de Atuação</div>', unsafe_allow_html=True)
+
+# ❌ NÃO ALTERE: Função que renderiza os negócios
+def business_item(col, img, title, desc):
+    # ❌ NÃO ALTERE: Função que cria os cards de negócio
     with col:
         st.markdown(f"""
-        <div class="course-card">
-            <!-- ✅ ALTERE: URL da imagem do curso -->
-            <img src="{img}" style="width:100%; height:150px; object-fit:cover;">
-            <!-- ✅ ALTERE: Categoria, título e avaliação -->
-            <div style="padding: 15px;">
-                <div class="category-tag">{category}</div>  <!-- ✅ ALTERE: Categoria -->
-                <div class="course-title">{title}</div>  <!-- ✅ ALTERE: Título do curso -->
-                <div class="rating">★ {rating} <span style="color:#888; font-weight:400; font-size:12px;">({students})</span></div>  <!-- ✅ ALTERE: Avaliação e alunos -->
+        <div class="business-card">
+            <!-- ✅ ALTERE: URL da imagem -->
+            <img src="{img}" style="width:100%; height:200px; object-fit:cover;">
+            <!-- ✅ ALTERE: Título e descrição -->
+            <div class="card-label">
+                <h4 style="color:#005a31; margin-bottom:10px;">{title}</h4>  <!-- ✅ ALTERE: Título -->
+                <p style="font-size:14px; color:#666;">{desc}</p>  <!-- ✅ ALTERE: Descrição -->
             </div>
         </div>
         """, unsafe_allow_html=True)
         # ✅ ALTERE: Texto do botão e URL
-        st.markdown(f'<a href="https://www.google.com/" target="_blank" class="action-button" style="width: 100%; text-align: center; display: block;">Ver detalhes</a>', unsafe_allow_html=True)
+        st.markdown(f'<a href="https://www.google.com/" target="_blank" class="action-button" style="width: 100%; text-align: center; display: block;">Saber mais sobre {title}</a>', unsafe_allow_html=True)
 
-# ❌ NÃO ALTERE: Primeira linha de cursos (4 colunas)
-col1, col2, col3, col4 = st.columns(4)
+# ❌ NÃO ALTERE: Primeira linha de negócios (3 colunas)
+cb1, cb2, cb3 = st.columns(3)
 
-course_item(col1, 
-            "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=400&q=80",
-            "Marketing Digital",  # ✅ ALTERE: Categoria
-            "Facebook Ads: Domine o Gerenciador",  # ✅ ALTERE: Título do curso
-            "4.8",  # ✅ ALTERE: Avaliação
-            "12k alunos")  # ✅ ALTERE: Número de alunos
+business_item(cb1, "https://images.unsplash.com/photo-1603484477859-abe6a73f9366?w=500", "Celulose", "Fibra curta, fibra longa e celulose fluff para diversas aplicações.")  # ✅ ALTERE: Imagem, título e descrição
+business_item(cb2, "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=500", "Embalagens", "Soluções inteligentes em papelão ondulado e sacos industriais.")  # ✅ ALTERE: Imagem, título e descrição
+business_item(cb3, "https://images.unsplash.com/photo-1603484477859-abe6a73f9366?w=500", "Papéis", "Papel-cartão e Kraftliner de alta performance para o mercado.")  # ✅ ALTERE: Imagem, título e descrição
 
-course_item(col2, 
-            "https://images.unsplash.com/photo-1561070791-2526d30994b5?auto=format&fit=crop&w=400&q=80",
-            "Design",  # ✅ ALTERE: Categoria
-            "Adobe Illustrator: Ilustração Vetorial",  # ✅ ALTERE: Título do curso
-            "4.9",  # ✅ ALTERE: Avaliação
-            "45k alunos")  # ✅ ALTERE: Número de alunos
+st.markdown('</div>', unsafe_allow_html=True)
 
-course_item(col3, 
-            "https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=400&q=80",
-            "Tecnologia",  # ✅ ALTERE: Categoria
-            "Introdução ao Desenvolvimento Web",  # ✅ ALTERE: Título do curso
-            "4.7",  # ✅ ALTERE: Avaliação
-            "30k alunos")  # ✅ ALTERE: Número de alunos
-
-course_item(col4, 
-            "https://images.unsplash.com/photo-1542744094-3a31f272c490?auto=format&fit=crop&w=400&q=80",
-            "Dados",  # ✅ ALTERE: Categoria
-            "Excel para Negócios: Avançado",  # ✅ ALTERE: Título do curso
-            "4.9",  # ✅ ALTERE: Avaliação
-            "18k alunos")  # ✅ ALTERE: Número de alunos
-
-# ========== SEÇÃO 7: CREHANA PARA EMPRESAS ==========
-# ✅ ALTERE: Título, descrição, imagem e botão
-st.write("")
+# ========== SEÇÃO 8: SUSTENTABILIDADE ==========
+# ✅ ALTERE: Título, descrição e informações
 st.write("---")
 
 with st.container():
+    st.markdown('<div id="sustainability" class="section-padding">', unsafe_allow_html=True)
+    
     # ❌ NÃO ALTERE: Estrutura de 2 colunas
-    ce1, ce2 = st.columns([1, 1])
+    sc1, sc2 = st.columns([2, 3])
     
-    with ce1:
-        # ✅ ALTERE: URL da imagem
-        st.image("https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=800&q=80", use_container_width=True)
-    
-    with ce2:
+    with sc1:
         # ✅ ALTERE: Título da seção
-        st.markdown("## Treine sua equipe com a Crehana")
-        
+        st.markdown('<div class="section-title">KODS - Objetivos ogreen para o Desenvolvimento Sustentável</div>', unsafe_allow_html=True)
         # ✅ ALTERE: Descrição
-        st.write("Soluções de SaaS e conteúdo para fechar a lacuna de habilidades na sua empresa.")
-        
-        # ✅ ALTERE: Features/benefícios
-        st.write("✅ Planos de aprendizado personalizados")
-        st.write("✅ Painel de controle para o RH")
-        
-        # ✅ ALTERE: Texto do botão e URL
-        st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">🚀 Solicitar Demo</a>', unsafe_allow_html=True)
+        st.write("Nossa agenda de sustentabilidade está alinhada aos ODS da ONU, com metas claras até 2030 para biodiversidade, clima e impacto social.")
+    
+    with sc2:
+        # ✅ ALTERE: Informações de sustentabilidade
+        st.info("🌳 Conservação da Biodiversidade")
+        st.success("♻️ Economia Circular e Resíduo Zero")
+        st.warning("💧 Gestão Eficiente de Recursos Hídricos")
+    
+    st.markdown('</div>', unsafe_allow_html=True)
 
-# ========== SEÇÃO 8: FOOTER (RODAPÉ) ==========
-# ✅ ALTERE: Logo, descrição e copyright
+# ========== SEÇÃO 9: INVESTIDORES E GOVERNANÇA ==========
+# ✅ ALTERE: Título, métricas e informações
+st.write("---")
+
+st.markdown('<div id="investors" style="background-color:#f4f7f9; padding: 60px 10%;">', unsafe_allow_html=True)
+
+# ✅ ALTERE: Título da seção
+st.subheader("Relações com Investidores")
+
+# ❌ NÃO ALTERE: Estrutura de 3 colunas
+col_ri1, col_ri2, col_ri3 = st.columns(3)
+
+with col_ri1:
+    # ✅ ALTERE: Métrica de ações
+    st.metric(label="KLBN11 (Units)", value="R$ 22,45", delta="+1.20%")
+
+with col_ri2:
+    # ✅ ALTERE: Título e descrição
+    st.write("**Central de Resultados**")
+    st.caption("Acesse os relatórios do 4T25 e demonstrações financeiras.")
+    # ✅ ALTERE: Texto do botão e URL
+    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">Acessar Central</a>', unsafe_allow_html=True)
+
+with col_ri3:
+    # ✅ ALTERE: Título e descrição
+    st.write("**Governança Corporativa**")
+    st.caption("Transparência e ética em todos os níveis da companhia.")
+    # ✅ ALTERE: Texto do botão e URL
+    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">Ver Diretoria</a>', unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ========== SEÇÃO 10: FOOTER (RODAPÉ) ==========
+# ✅ ALTERE: Informações da empresa, links e copyright
 st.markdown("""
-<div style="background-color: #1b1c1e; color: white; padding: 60px 20px; margin-top: 50px; text-align: center;">
-    <!-- ✅ ALTERE: Nome da plataforma -->
-    <div style="font-size: 24px; font-weight: 800; margin-bottom: 20px;">crehana</div>
-    <!-- ✅ ALTERE: Descrição e copyright -->
-    <div style="color: #888; font-size: 14px;">
-        Transformando o futuro através da educação. <br>
-        © 2026 Crehana Inc. Todos os direitos reservados.
+<div class="footer-ogreen">
+    <!-- ❌ NÃO ALTERE: Grid de 4 colunas -->
+    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap:50px;">
+        <!-- COLUNA 1: Sobre a empresa -->
+        <div>
+            <!-- ✅ ALTERE: Nome da empresa -->
+            <div style="font-size:24px; font-weight:800; color:white; margin-bottom:20px;">ogreen</div>
+            <!-- ✅ ALTERE: Descrição da empresa -->
+            <p style="font-size:13px;">Líder no mercado de papéis e embalagens, focada na inovação e na sustentabilidade do ciclo da floresta ao consumidor final.</p>
+        </div>
+        <!-- COLUNA 2: Nossos sites -->
+        <div>
+            <!-- ✅ ALTERE: Título da coluna -->
+            <h4 style="color:white; margin-bottom:15px;">NOSSOS SITES</h4>
+            <!-- ✅ ALTERE: Links -->
+            <p style="font-size:12px; line-height:2;">
+                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Relações com Investidores</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">ogreen ForYou</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Blog ogreen</a>
+            </p>
+        </div>
+        <!-- COLUNA 3: Contato -->
+        <div>
+            <!-- ✅ ALTERE: Título da coluna -->
+            <h4 style="color:white; margin-bottom:15px;">CONTATO</h4>
+            <!-- ✅ ALTERE: Links -->
+            <p style="font-size:12px; line-height:2;">
+                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Fale Conosco</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Imprensa</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Trabalhe Conosco</a>
+            </p>
+        </div>
+        <!-- COLUNA 4: Redes sociais -->
+        <div>
+            <!-- ✅ ALTERE: Título da coluna -->
+            <h4 style="color:white; margin-bottom:15px;">REDES SOCIAIS</h4>
+            <!-- ✅ ALTERE: Links de redes sociais -->
+            <p style="font-size:12px; line-height:2;">
+                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">LinkedIn</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Instagram</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">YouTube</a>
+            </p>
+        </div>
+    </div>
+    <!-- ❌ NÃO ALTERE: Linha divisória e copyright -->
+    <div style="text-align:center; border-top:1px solid #444; margin-top:50px; padding-top:20px; font-size:11px;">
+        <!-- ✅ ALTERE: Texto de copyright -->
+        © 2026 ogreen S.A. | Todos os direitos reservados.
     </div>
 </div>
 """, unsafe_allow_html=True)
