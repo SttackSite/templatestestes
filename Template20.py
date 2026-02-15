@@ -2,16 +2,16 @@ import streamlit as st
 
 # ❌ NÃO ALTERE: Configuração da página - Define o título da aba, ícone e layout
 st.set_page_config(
-    page_title="Inovação absoluta",  # ✅ ALTERE: Título da aba do navegador
-    page_icon="⚡",  # ✅ ALTERE: Ícone que aparece na aba
+    page_title="Bela Feminine - Elegância Absoluta",  # ✅ ALTERE: Título da aba do navegador
+    page_icon="✨",  # ✅ ALTERE: Ícone que aparece na aba
     layout="wide",  # ❌ NÃO ALTERE: Layout da página
     initial_sidebar_state="collapsed"  # ❌ NÃO ALTERE: Esconde a sidebar
 )
 
-# ❌ NÃO ALTERE: CSS ORIGINAL E INOVADOR - Estilos visuais da página inteira
+# ❌ NÃO ALTERE: CSS PREMIUM FEMININO - Estilos visuais da página inteira
 custom_css = """
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Poppins:wght@100;200;300;400;500;600;700;800;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800;900&family=Cormorant+Garamond:wght@300;400;500;600;700&family=Poppins:wght@300;400;500;600;700;800&display=swap');
     
     * {
         margin: 0;
@@ -20,10 +20,10 @@ custom_css = """
     }
     
     html, body, [data-testid="stAppViewContainer"] {
-        background: #000000;
-        font-family: 'Poppins', sans-serif;
-        color: #ffffff;
-        line-height: 1.6;
+        background: #faf8f5;
+        font-family: 'Cormorant Garamond', serif;
+        color: #2d2d2d;
+        line-height: 1.8;
         overflow-x: hidden;
     }
     
@@ -36,83 +36,77 @@ custom_css = """
         z-index: 1;
     }
     
-    /* ❌ NÃO ALTERE: Animações originais que fazem elementos morph, girar e brilhar */
-    @keyframes morphShape {
-        0% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
-        50% { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
-        100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+    /* ❌ NÃO ALTERE: Animações sofisticadas que fazem elementos flutuar e brilhar */
+    @keyframes petalFloat {
+        0% { transform: translateY(0px) rotateZ(-15deg); opacity: 0; }
+        50% { opacity: 1; }
+        100% { transform: translateY(-30px) rotateZ(15deg); opacity: 0; }
     }
     
-    @keyframes liquidSwirl {
-        0% { transform: rotate(0deg) scale(1); }
-        50% { transform: rotate(180deg) scale(1.1); }
-        100% { transform: rotate(360deg) scale(1); }
+    @keyframes shimmerGold {
+        0% { background-position: -1000px 0; }
+        100% { background-position: 1000px 0; }
     }
     
-    @keyframes textReveal {
-        0% { clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%); }
-        100% { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); }
+    @keyframes softGlow {
+        0%, 100% { box-shadow: 0 0 20px rgba(212, 175, 130, 0.3); }
+        50% { box-shadow: 0 0 40px rgba(212, 175, 130, 0.6); }
     }
     
-    @keyframes floatRotate {
-        0% { transform: translateY(0px) rotateZ(0deg); }
-        33% { transform: translateY(-20px) rotateZ(120deg); }
-        66% { transform: translateY(10px) rotateZ(240deg); }
-        100% { transform: translateY(0px) rotateZ(360deg); }
-    }
-    
-    @keyframes neonGlow {
-        0%, 100% { text-shadow: 0 0 10px #00FF88, 0 0 20px #00FF88, 0 0 40px #00FF88; }
-        50% { text-shadow: 0 0 20px #00FF88, 0 0 40px #00FF88, 0 0 80px #00FF88; }
-    }
-    
-    @keyframes slideAndFade {
-        0% { transform: translateX(-100px) rotateY(90deg); opacity: 0; }
+    @keyframes elegantSlide {
+        0% { transform: translateX(-50px) rotateY(20deg); opacity: 0; }
         100% { transform: translateX(0) rotateY(0deg); opacity: 1; }
     }
     
-    @keyframes pulseRing {
-        0% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0.7); }
-        70% { box-shadow: 0 0 0 40px rgba(0, 255, 136, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(0, 255, 136, 0); }
+    @keyframes fadeInScale {
+        0% { transform: scale(0.95); opacity: 0; }
+        100% { transform: scale(1); opacity: 1; }
     }
     
-    @keyframes colorCycle {
-        0% { color: #00FF88; }
-        25% { color: #FF00FF; }
-        50% { color: #00D9FF; }
-        75% { color: #FFD700; }
-        100% { color: #00FF88; }
+    @keyframes floatDelicate {
+        0%, 100% { transform: translateY(0px); }
+        50% { transform: translateY(-15px); }
     }
     
-    @keyframes gridFlow {
-        0% { background-position: 0 0; }
-        100% { background-position: 40px 40px; }
+    @keyframes borderFlow {
+        0% { border-color: rgba(212, 175, 130, 0.3); }
+        50% { border-color: rgba(212, 175, 130, 0.8); }
+        100% { border-color: rgba(212, 175, 130, 0.3); }
     }
     
-    /* ❌ NÃO ALTERE: Navbar futurista com backdrop blur e borda neon */
+    @keyframes textGradientShift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+    }
+    
+    /* ❌ NÃO ALTERE: Navbar elegante com backdrop blur e gradiente */
     .navbar {
-        background: linear-gradient(90deg, rgba(0, 0, 0, 0.95) 0%, rgba(0, 20, 40, 0.95) 100%);
-        backdrop-filter: blur(30px);
+        background: linear-gradient(135deg, rgba(250, 248, 245, 0.98) 0%, rgba(245, 240, 235, 0.98) 100%);
+        backdrop-filter: blur(20px);
         padding: 25px 80px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        border-bottom: 2px solid #00FF88;
+        border-bottom: 2px solid rgba(212, 175, 130, 0.3);
         position: sticky;
         top: 0;
         z-index: 100;
-        box-shadow: 0 0 30px rgba(0, 255, 136, 0.2);
+        box-shadow: 0 8px 32px rgba(212, 175, 130, 0.1);
     }
     
-    /* ✅ ALTERE: Logo - Mude o texto "CHAMPION" na navbar */
+    /* ✅ ALTERE: Logo - Mude o texto "Bela" na navbar */
     .navbar-logo {
         font-size: 32px;
         font-weight: 900;
-        color: #00FF88;
+        background: linear-gradient(135deg, #d4af82, #c99a6e, #d4af82);
+        background-size: 200% 200%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         letter-spacing: 3px;
-        font-family: 'Space Mono', monospace;
-        animation: neonGlow 2s ease-in-out infinite;
+        font-family: 'Playfair Display', serif;
+        animation: textGradientShift 3s ease infinite;
     }
     
     /* ❌ NÃO ALTERE: Container dos links da navbar */
@@ -124,7 +118,7 @@ custom_css = """
     
     /* ✅ ALTERE: Links da navbar - Mude cor, tamanho e espaçamento */
     .navbar-link {
-        color: #ffffff;
+        color: #2d2d2d;
         text-decoration: none !important;
         font-weight: 500;
         font-size: 13px;
@@ -132,70 +126,55 @@ custom_css = """
         text-transform: uppercase;
         letter-spacing: 2px;
         position: relative;
-        font-family: 'Space Mono', monospace;
+        font-family: 'Poppins', sans-serif;
     }
     
     /* ❌ NÃO ALTERE: Underline animado dos links - Aparece ao passar o mouse */
-    .navbar-link::before {
+    .navbar-link::after {
         content: '';
         position: absolute;
-        bottom: -5px;
+        bottom: -8px;
         left: 0;
         width: 0;
-        height: 3px;
-        background: linear-gradient(90deg, #00FF88, #FF00FF);
+        height: 2px;
+        background: linear-gradient(90deg, #d4af82, #c99a6e);
         transition: width 0.3s ease;
     }
     
-    .navbar-link:hover::before {
+    .navbar-link:hover::after {
         width: 100%;
     }
     
     .navbar-link:hover {
-        color: #00FF88;
+        color: #d4af82;
     }
     
     /* ✅ ALTERE: Botão CTA da navbar - Mude cor, texto e tamanho */
     .navbar-cta {
-        background: linear-gradient(135deg, #00FF88, #00D9FF);
-        color: #000000;
+        background: linear-gradient(135deg, #d4af82, #c99a6e);
+        color: white;
         padding: 12px 32px;
         border-radius: 50px;
         text-decoration: none !important;
         font-weight: 700;
         font-size: 12px;
         transition: all 0.3s ease;
-        border: 2px solid #00FF88;
+        border: 2px solid #d4af82;
         cursor: pointer;
         text-transform: uppercase;
         letter-spacing: 1px;
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.3);
-        font-family: 'Space Mono', monospace;
+        box-shadow: 0 4px 15px rgba(212, 175, 130, 0.3);
+        font-family: 'Poppins', sans-serif;
     }
     
     .navbar-cta:hover {
         transform: translateY(-3px);
-        box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+        box-shadow: 0 8px 25px rgba(212, 175, 130, 0.5);
     }
     
-    /* ❌ NÃO ALTERE: Hero section - Seção principal com fundo gradiente e grid */
+    /* ❌ NÃO ALTERE: Hero section - Seção principal com fundo gradiente */
     .hero-section {
-        background: linear-gradient(135deg, #000000 0%, #001a33 50%, #000000 100%);
-        background-image: 
-            repeating-linear-gradient(
-                0deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 255, 136, 0.03) 2px,
-                rgba(0, 255, 136, 0.03) 4px
-            ),
-            repeating-linear-gradient(
-                90deg,
-                transparent,
-                transparent 2px,
-                rgba(0, 255, 136, 0.03) 2px,
-                rgba(0, 255, 136, 0.03) 4px
-            );
+        background: linear-gradient(135deg, #faf8f5 0%, #f5f0eb 50%, #faf8f5 100%);
         min-height: 800px;
         display: flex;
         align-items: center;
@@ -210,11 +189,11 @@ custom_css = """
         position: absolute;
         width: 800px;
         height: 800px;
-        background: radial-gradient(circle, rgba(0, 255, 136, 0.1) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(212, 175, 130, 0.08) 0%, transparent 70%);
         border-radius: 50%;
         top: -200px;
         right: -200px;
-        animation: liquidSwirl 8s ease-in-out infinite;
+        animation: floatDelicate 6s ease-in-out infinite;
     }
     
     .hero-section::after {
@@ -222,18 +201,18 @@ custom_css = """
         position: absolute;
         width: 600px;
         height: 600px;
-        background: radial-gradient(circle, rgba(255, 0, 255, 0.08) 0%, transparent 70%);
+        background: radial-gradient(circle, rgba(201, 154, 110, 0.06) 0%, transparent 70%);
         border-radius: 50%;
         bottom: -150px;
         left: -150px;
-        animation: liquidSwirl 10s ease-in-out infinite reverse;
+        animation: floatDelicate 8s ease-in-out infinite reverse;
     }
     
     .hero-content {
         text-align: center;
         z-index: 2;
         position: relative;
-        max-width: 1000px;
+        max-width: 900px;
     }
     
     /* ✅ ALTERE: Título do hero - Mude o texto principal */
@@ -241,11 +220,15 @@ custom_css = """
         font-size: 80px;
         font-weight: 900;
         margin-bottom: 20px;
-        color: #00FF88;
+        background: linear-gradient(135deg, #d4af82, #c99a6e, #b8860b, #d4af82);
+        background-size: 300% 300%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         letter-spacing: -2px;
         line-height: 1.1;
-        font-family: 'Space Mono', monospace;
-        animation: neonGlow 2s ease-in-out infinite;
+        font-family: 'Playfair Display', serif;
+        animation: textGradientShift 4s ease infinite;
     }
     
     /* ✅ ALTERE: Subtítulo do hero - Mude o texto secundário */
@@ -253,9 +236,10 @@ custom_css = """
         font-size: 24px;
         font-weight: 300;
         margin-bottom: 50px;
-        color: #00D9FF;
+        color: #c99a6e;
         letter-spacing: 2px;
-        animation: slideAndFade 1s ease-out;
+        font-family: 'Cormorant Garamond', serif;
+        animation: elegantSlide 1s ease-out;
     }
     
     .hero-cta-group {
@@ -267,63 +251,78 @@ custom_css = """
     
     /* ✅ ALTERE: Botão primário do hero - Mude cor, texto e tamanho */
     .hero-cta-primary {
-        background: linear-gradient(135deg, #00FF88, #00D9FF);
-        color: #000000;
+        background: linear-gradient(135deg, #d4af82, #c99a6e);
+        color: white;
         padding: 18px 50px;
         border-radius: 50px;
         font-weight: 700;
         font-size: 14px;
         text-decoration: none !important;
         transition: all 0.3s ease;
-        border: 2px solid #00FF88;
+        border: 2px solid #d4af82;
         cursor: pointer;
         display: inline-block;
         text-transform: uppercase;
         letter-spacing: 1px;
-        box-shadow: 0 0 30px rgba(0, 255, 136, 0.4);
-        font-family: 'Space Mono', monospace;
-        animation: slideAndFade 1.2s ease-out;
+        box-shadow: 0 8px 30px rgba(212, 175, 130, 0.4);
+        font-family: 'Poppins', sans-serif;
+        animation: elegantSlide 1.2s ease-out;
     }
     
     .hero-cta-primary:hover {
         transform: translateY(-5px);
-        box-shadow: 0 0 50px rgba(0, 255, 136, 0.7);
+        box-shadow: 0 12px 40px rgba(212, 175, 130, 0.6);
     }
     
     /* ✅ ALTERE: Botão secundário do hero - Mude cor, texto e tamanho */
     .hero-cta-secondary {
         background: transparent;
-        color: #00FF88;
+        color: #d4af82;
         padding: 18px 50px;
         border-radius: 50px;
         font-weight: 700;
         font-size: 14px;
         text-decoration: none !important;
         transition: all 0.3s ease;
-        border: 2px solid #00FF88;
+        border: 2px solid #d4af82;
         cursor: pointer;
         display: inline-block;
         text-transform: uppercase;
         letter-spacing: 1px;
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
-        font-family: 'Space Mono', monospace;
-        animation: slideAndFade 1.4s ease-out;
+        box-shadow: 0 0 20px rgba(212, 175, 130, 0.2);
+        font-family: 'Poppins', sans-serif;
+        animation: elegantSlide 1.4s ease-out;
     }
     
     .hero-cta-secondary:hover {
-        background: #00FF88;
-        color: #000000;
-        box-shadow: 0 0 40px rgba(0, 255, 136, 0.6);
+        background: #d4af82;
+        color: white;
+        box-shadow: 0 8px 30px rgba(212, 175, 130, 0.4);
     }
     
-    /* ❌ NÃO ALTERE: Features section - Container com grid de cards */
-    .features-section {
+    /* ❌ NÃO ALTERE: Seção de benefícios - Container com padding e fundo */
+    .benefits-section {
         padding: 120px 80px;
-        background: #000000;
+        background: linear-gradient(135deg, #f5f0eb 0%, #faf8f5 100%);
         position: relative;
     }
     
-    .features-grid {
+    /* ✅ ALTERE: Título da seção - Mude o texto "Por Que Escolher" */
+    .section-title {
+        font-size: 56px;
+        font-weight: 900;
+        margin-bottom: 100px;
+        text-align: center;
+        background: linear-gradient(135deg, #d4af82, #c99a6e);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -1px;
+        font-family: 'Playfair Display', serif;
+        animation: fadeInScale 0.8s ease-out;
+    }
+    
+    .benefits-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
         gap: 40px;
@@ -331,162 +330,231 @@ custom_css = """
         margin: 0 auto;
     }
     
-    .feature-card {
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.05), rgba(0, 217, 255, 0.05));
-        border: 2px solid #00FF88;
+    .benefit-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(245, 240, 235, 0.9));
+        border: 2px solid rgba(212, 175, 130, 0.3);
         padding: 50px 40px;
         border-radius: 20px;
         transition: all 0.4s ease;
         position: relative;
         overflow: hidden;
-        animation: slideAndFade 0.8s ease-out;
+        animation: elegantSlide 0.8s ease-out;
         animation-fill-mode: both;
+        box-shadow: 0 8px 32px rgba(212, 175, 130, 0.08);
     }
     
-    .feature-card:nth-child(1) { animation-delay: 0.1s; }
-    .feature-card:nth-child(2) { animation-delay: 0.2s; }
-    .feature-card:nth-child(3) { animation-delay: 0.3s; }
-    .feature-card:nth-child(4) { animation-delay: 0.4s; }
-    .feature-card:nth-child(5) { animation-delay: 0.5s; }
-    .feature-card:nth-child(6) { animation-delay: 0.6s; }
+    .benefit-card:nth-child(1) { animation-delay: 0.1s; }
+    .benefit-card:nth-child(2) { animation-delay: 0.2s; }
+    .benefit-card:nth-child(3) { animation-delay: 0.3s; }
     
-    .feature-card::before {
+    .benefit-card::before {
         content: '';
         position: absolute;
         top: 0;
         left: -100%;
         width: 100%;
         height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.2), transparent);
+        background: linear-gradient(90deg, transparent, rgba(212, 175, 130, 0.15), transparent);
         transition: left 0.5s ease;
     }
     
-    .feature-card:hover::before {
+    .benefit-card:hover::before {
         left: 100%;
     }
     
-    .feature-card:hover {
-        transform: translateY(-20px) rotateX(5deg);
-        border-color: #00D9FF;
-        box-shadow: 0 30px 60px rgba(0, 255, 136, 0.2);
+    .benefit-card:hover {
+        transform: translateY(-15px);
+        border-color: #d4af82;
+        box-shadow: 0 20px 50px rgba(212, 175, 130, 0.2);
     }
     
-    .feature-icon {
+    .benefit-icon {
         font-size: 48px;
         margin-bottom: 20px;
-        animation: floatRotate 4s ease-in-out infinite;
+        animation: floatDelicate 3s ease-in-out infinite;
     }
     
-    .feature-title {
+    .benefit-title {
         font-size: 24px;
-        font-weight: 800;
+        font-weight: 700;
         margin-bottom: 15px;
-        background: linear-gradient(135deg, #00FF88, #00D9FF);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-        background-clip: text;
-        letter-spacing: 1px;
-        font-family: 'Space Mono', monospace;
+        color: #d4af82;
+        letter-spacing: 0.5px;
+        font-family: 'Playfair Display', serif;
     }
     
-    .feature-desc {
+    .benefit-desc {
         font-size: 15px;
-        color: #aaaaaa;
+        color: #666666;
         line-height: 1.8;
         font-weight: 300;
     }
     
-    /* ❌ NÃO ALTERE: Showcase section - Container com cards de números */
-    .showcase-section {
+    /* ❌ NÃO ALTERE: Seção de preços - Container com tabela */
+    .pricing-section {
         padding: 120px 80px;
-        background: linear-gradient(135deg, #001a33 0%, #000000 100%);
-        position: relative;
+        background: linear-gradient(135deg, #faf8f5 0%, #f5f0eb 100%);
     }
     
-    /* ✅ ALTERE: Título showcase - Mude o texto "NÚMEROS QUE FALAM" */
-    .showcase-title {
+    /* ✅ ALTERE: Título de preços - Mude o texto "Nossos Planos" */
+    .pricing-title {
         font-size: 56px;
         font-weight: 900;
         margin-bottom: 100px;
         text-align: center;
-        color: #00FF88;
+        background: linear-gradient(135deg, #d4af82, #c99a6e);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
         letter-spacing: -1px;
-        font-family: 'Space Mono', monospace;
-        animation: neonGlow 2s ease-in-out infinite;
+        font-family: 'Playfair Display', serif;
     }
     
-    .showcase-grid {
+    .pricing-table-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 240, 235, 0.95));
+        border: 2px solid rgba(212, 175, 130, 0.3);
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0 20px 60px rgba(212, 175, 130, 0.15);
+        animation: fadeInScale 0.8s ease-out;
+    }
+    
+    .pricing-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    
+    .pricing-table thead {
+        background: linear-gradient(135deg, #d4af82, #c99a6e);
+        color: white;
+    }
+    
+    .pricing-table th {
+        padding: 25px;
+        text-align: left;
+        font-weight: 700;
+        font-size: 16px;
+        letter-spacing: 1px;
+        font-family: 'Playfair Display', serif;
+        border-right: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .pricing-table th:last-child {
+        border-right: none;
+    }
+    
+    .pricing-table td {
+        padding: 20px 25px;
+        border-bottom: 1px solid rgba(212, 175, 130, 0.2);
+        font-size: 14px;
+        color: #2d2d2d;
+    }
+    
+    .pricing-table tbody tr:hover {
+        background: rgba(212, 175, 130, 0.05);
+    }
+    
+    .pricing-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+    
+    .price-value {
+        font-size: 28px;
+        font-weight: 700;
+        color: #d4af82;
+        font-family: 'Playfair Display', serif;
+    }
+    
+    .feature-check {
+        color: #d4af82;
+        font-weight: 700;
+        font-size: 18px;
+    }
+    
+    .feature-cross {
+        color: #999999;
+        font-weight: 700;
+        font-size: 18px;
+    }
+    
+    /* ❌ NÃO ALTERE: Seção de comparação - Container com cards de números */
+    .comparison-section {
+        padding: 120px 80px;
+        background: linear-gradient(135deg, #f5f0eb 0%, #faf8f5 100%);
+    }
+    
+    /* ✅ ALTERE: Título de comparação - Mude o texto "Números que Falam" */
+    .comparison-title {
+        font-size: 56px;
+        font-weight: 900;
+        margin-bottom: 100px;
+        text-align: center;
+        background: linear-gradient(135deg, #d4af82, #c99a6e);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        letter-spacing: -1px;
+        font-family: 'Playfair Display', serif;
+    }
+    
+    .comparison-grid {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-        gap: 30px;
+        gap: 40px;
         max-width: 1400px;
         margin: 0 auto;
     }
     
-    .showcase-card {
-        background: linear-gradient(135deg, rgba(0, 255, 136, 0.1), rgba(255, 0, 255, 0.05));
-        border: 2px solid #00D9FF;
+    .comparison-card {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(245, 240, 235, 0.95));
+        border: 2px solid rgba(212, 175, 130, 0.3);
         border-radius: 20px;
-        padding: 40px;
+        padding: 50px 40px;
         text-align: center;
         transition: all 0.4s ease;
-        cursor: pointer;
         position: relative;
         overflow: hidden;
-        animation: slideAndFade 0.8s ease-out;
+        animation: elegantSlide 0.8s ease-out;
         animation-fill-mode: both;
+        box-shadow: 0 8px 32px rgba(212, 175, 130, 0.08);
     }
     
-    .showcase-card:nth-child(1) { animation-delay: 0.1s; }
-    .showcase-card:nth-child(2) { animation-delay: 0.2s; }
-    .showcase-card:nth-child(3) { animation-delay: 0.3s; }
-    .showcase-card:nth-child(4) { animation-delay: 0.4s; }
+    .comparison-card:nth-child(1) { animation-delay: 0.1s; }
+    .comparison-card:nth-child(2) { animation-delay: 0.2s; }
+    .comparison-card:nth-child(3) { animation-delay: 0.3s; }
     
-    .showcase-card::after {
-        content: '';
-        position: absolute;
-        top: 0;
-        left: -100%;
-        width: 100%;
-        height: 100%;
-        background: linear-gradient(90deg, transparent, rgba(0, 255, 136, 0.15), transparent);
-        transition: left 0.5s ease;
+    .comparison-card:hover {
+        transform: translateY(-15px);
+        border-color: #d4af82;
+        box-shadow: 0 20px 50px rgba(212, 175, 130, 0.2);
     }
     
-    .showcase-card:hover::after {
-        left: 100%;
-    }
-    
-    .showcase-card:hover {
-        transform: translateY(-15px) scale(1.05);
-        border-color: #00FF88;
-        box-shadow: 0 0 40px rgba(0, 255, 136, 0.3);
-    }
-    
-    .showcase-number {
+    .comparison-number {
         font-size: 48px;
         font-weight: 900;
-        background: linear-gradient(135deg, #00FF88, #FF00FF);
+        background: linear-gradient(135deg, #d4af82, #c99a6e);
         -webkit-background-clip: text;
         -webkit-text-fill-color: transparent;
         background-clip: text;
         margin-bottom: 15px;
-        font-family: 'Space Mono', monospace;
+        font-family: 'Playfair Display', serif;
     }
     
-    .showcase-label {
+    .comparison-label {
         font-size: 18px;
         font-weight: 700;
-        color: #00D9FF;
+        color: #2d2d2d;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        font-family: 'Space Mono', monospace;
+        letter-spacing: 1px;
+        font-family: 'Poppins', sans-serif;
     }
     
-    /* ❌ NÃO ALTERE: CTA final - Seção com fundo gradiente colorido */
+    /* ❌ NÃO ALTERE: CTA final - Seção com fundo gradiente dourado */
     .cta-final-section {
         padding: 150px 80px;
-        background: linear-gradient(135deg, #00FF88 0%, #00D9FF 50%, #FF00FF 100%);
+        background: linear-gradient(135deg, #d4af82 0%, #c99a6e 50%, #b8860b 100%);
         background-size: 400% 400%;
         text-align: center;
         position: relative;
@@ -500,7 +568,7 @@ custom_css = """
         left: 0;
         right: 0;
         bottom: 0;
-        background: rgba(0, 0, 0, 0.3);
+        background: rgba(255, 255, 255, 0.1);
     }
     
     .cta-final-content {
@@ -508,33 +576,34 @@ custom_css = """
         z-index: 2;
     }
     
-    /* ✅ ALTERE: Título final - Mude o texto "Pronto para Revolucionar?" */
+    /* ✅ ALTERE: Título final - Mude o texto "Pronta para Brilhar?" */
     .cta-final-title {
         font-size: 56px;
         font-weight: 900;
         margin-bottom: 20px;
-        color: #000000;
+        color: white;
         letter-spacing: -1px;
-        font-family: 'Space Mono', monospace;
+        font-family: 'Playfair Display', serif;
     }
     
     /* ✅ ALTERE: Descrição final - Mude o texto descritivo */
     .cta-final-desc {
         font-size: 20px;
         margin-bottom: 50px;
-        color: rgba(0, 0, 0, 0.9);
+        color: rgba(255, 255, 255, 0.95);
         max-width: 700px;
         margin-left: auto;
         margin-right: auto;
         font-weight: 300;
+        font-family: 'Cormorant Garamond', serif;
     }
     
     /* ✅ ALTERE: Botão final - Mude cor, texto e tamanho */
     .cta-final-button {
-        background: #000000;
-        color: #00FF88;
+        background: white;
+        color: #d4af82;
         padding: 18px 60px;
-        border: 3px solid #00FF88;
+        border: 3px solid white;
         border-radius: 50px;
         font-weight: 700;
         font-size: 14px;
@@ -544,25 +613,23 @@ custom_css = """
         display: inline-block;
         text-transform: uppercase;
         letter-spacing: 1px;
-        box-shadow: 0 0 30px rgba(0, 0, 0, 0.4);
-        font-family: 'Space Mono', monospace;
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+        font-family: 'Poppins', sans-serif;
     }
     
     .cta-final-button:hover {
         transform: translateY(-5px);
-        box-shadow: 0 0 50px rgba(0, 0, 0, 0.6);
-        background: #00FF88;
-        color: #000000;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
     }
     
     /* ❌ NÃO ALTERE: Footer - Rodapé com informações de contato */
     .footer {
-        background: #000000;
+        background: #2d2d2d;
         color: #888888;
         padding: 80px;
         text-align: center;
-        border-top: 2px solid #00FF88;
-        box-shadow: 0 0 20px rgba(0, 255, 136, 0.1);
+        border-top: 2px solid rgba(212, 175, 130, 0.3);
+        box-shadow: 0 -8px 32px rgba(212, 175, 130, 0.1);
     }
     
     /* ✅ ALTERE: Texto do footer - Mude email, telefone e endereço */
@@ -570,18 +637,18 @@ custom_css = """
         font-size: 14px;
         margin-bottom: 12px;
         font-weight: 300;
-        font-family: 'Space Mono', monospace;
+        font-family: 'Poppins', sans-serif;
     }
     
     /* ✅ ALTERE: Copyright - Mude o ano e nome da empresa */
     .footer-copyright {
-        border-top: 1px solid rgba(0, 255, 136, 0.2);
+        border-top: 1px solid rgba(212, 175, 130, 0.2);
         padding-top: 40px;
         margin-top: 40px;
         font-size: 12px;
         text-transform: uppercase;
         letter-spacing: 2px;
-        font-family: 'Space Mono', monospace;
+        font-family: 'Poppins', sans-serif;
     }
     
     /* ❌ NÃO ALTERE: Responsividade - Ajusta layout para telas menores */
@@ -607,18 +674,27 @@ custom_css = """
             font-size: 42px;
         }
         
-        .features-section,
-        .showcase-section,
+        .benefits-section,
+        .pricing-section,
+        .comparison-section,
         .cta-final-section {
             padding: 80px 20px;
         }
         
-        .showcase-title {
+        .section-title,
+        .pricing-title,
+        .comparison-title,
+        .cta-final-title {
             font-size: 36px;
         }
         
-        .cta-final-title {
-            font-size: 36px;
+        .pricing-table {
+            font-size: 12px;
+        }
+        
+        .pricing-table th,
+        .pricing-table td {
+            padding: 15px;
         }
     }
 </style>
@@ -630,101 +706,146 @@ st.markdown(custom_css, unsafe_allow_html=True)
 # ==================== NAVBAR ====================
 # ✅ ALTERE: Navbar - Mude os textos dos links e URLs das seções
 navbar_html = '''<div class="navbar">
-    <div class="navbar-logo">CHAMPION</div>
+    <div class="navbar-logo">Bela</div>
     <div class="navbar-links">
-        <a href="#recursos" class="navbar-link">Recursos</a>
-        <a href="#portfolio" class="navbar-link">Portfólio</a>
-        <a href="#sobre" class="navbar-link">Sobre</a>
+        <a href="#colecao" class="navbar-link">Coleção</a>
+        <a href="#beneficios" class="navbar-link">Benefícios</a>
+        <a href="#precos" class="navbar-link">Preços</a>
         <a href="#contato" class="navbar-link">Contato</a>
-        <a href="https://www.google.com/" target="_blank" class="navbar-cta">Começar</a>
+        <a href="https://www.google.com/" target="_blank" class="navbar-cta">Começar Agora</a>
     </div>
 </div>'''
 st.markdown(navbar_html, unsafe_allow_html=True)
 
 # ==================== HERO SECTION ====================
 # ✅ ALTERE: Hero - Mude os textos dos botões e URLs
-hero_html = '''<div class="hero-section" id="recursos">
+hero_html = '''<div class="hero-section" id="colecao">
     <div class="hero-content">
-        <div class="hero-title">INOVAÇÃO ABSOLUTA</div>
-        <div class="hero-subtitle">Design que transcende limites</div>
+        <div class="hero-title">Elegância Absoluta</div>
+        <div class="hero-subtitle">Experiência Premium para Mulheres Sofisticadas</div>
         <div class="hero-cta-group">
-            <a href="https://www.google.com/" target="_blank" class="hero-cta-primary">Explorar Agora</a>
+            <a href="https://www.google.com/" target="_blank" class="hero-cta-primary">Descobrir Agora</a>
             <a href="https://www.google.com/" target="_blank" class="hero-cta-secondary">Saiba Mais</a>
         </div>
     </div>
 </div>'''
 st.markdown(hero_html, unsafe_allow_html=True)
 
-# ==================== FEATURES SECTION ====================
-# ✅ ALTERE: Recursos - Mude os títulos, descrições e emojis dos cards
-features_html = '''<div class="features-section">
-    <div class="features-grid">
-        <div class="feature-card">
-            <div class="feature-icon">⚡</div>
-            <div class="feature-title">Velocidade</div>
-            <div class="feature-desc">Performance extrema com carregamento instantâneo em qualquer dispositivo.</div>
+# ==================== BENEFITS SECTION ====================
+# ✅ ALTERE: Benefícios - Mude os títulos, descrições e emojis dos cards
+benefits_html = '''<div class="benefits-section" id="beneficios">
+    <div class="section-title">Por Que Escolher</div>
+    <div class="benefits-grid">
+        <div class="benefit-card">
+            <div class="benefit-icon">💎</div>
+            <div class="benefit-title">Qualidade Premium</div>
+            <div class="benefit-desc">Produtos de luxo selecionados com rigor absoluto para sua satisfação.</div>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon">🎨</div>
-            <div class="feature-title">Design</div>
-            <div class="feature-desc">Interface visual revolucionária com animações que impressionam.</div>
+        <div class="benefit-card">
+            <div class="benefit-icon">✨</div>
+            <div class="benefit-title">Exclusividade</div>
+            <div class="benefit-desc">Acesso a coleções limitadas e edições especiais para você.</div>
         </div>
-        <div class="feature-card">
-            <div class="feature-icon">🔧</div>
-            <div class="feature-title">Flexível</div>
-            <div class="feature-desc">Totalmente customizável para qualquer tipo de negócio ou projeto.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">📱</div>
-            <div class="feature-title">Responsivo</div>
-            <div class="feature-desc">Funciona perfeitamente em todos os dispositivos e tamanhos de tela.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">🚀</div>
-            <div class="feature-title">Conversão</div>
-            <div class="feature-desc">Design estratégico focado em maximizar taxas de conversão.</div>
-        </div>
-        <div class="feature-card">
-            <div class="feature-icon">✨</div>
-            <div class="feature-title">Premium</div>
-            <div class="feature-desc">Experiência de luxo em cada interação e detalhe visual.</div>
+        <div class="benefit-card">
+            <div class="benefit-icon">🌸</div>
+            <div class="benefit-title">Sofisticação</div>
+            <div class="benefit-desc">Design elegante que reflete sua personalidade e estilo único.</div>
         </div>
     </div>
 </div>'''
-st.markdown(features_html, unsafe_allow_html=True)
+st.markdown(benefits_html, unsafe_allow_html=True)
 
-# ==================== SHOWCASE SECTION ====================
+# ==================== PRICING TABLE ====================
+# ✅ ALTERE: Preços - Mude os valores, nomes dos planos e features
+pricing_html = '''<div class="pricing-section" id="precos">
+    <div class="pricing-title">Nossos Planos</div>
+    <div class="pricing-table-wrapper">
+        <table class="pricing-table">
+            <thead>
+                <tr>
+                    <th>Recurso</th>
+                    <th>Essencial</th>
+                    <th>Premium</th>
+                    <th>Bela</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Preço Mensal</strong></td>
+                    <td><span class="price-value">R$ 99</span></td>
+                    <td><span class="price-value">R$ 199</span></td>
+                    <td><span class="price-value">R$ 399</span></td>
+                </tr>
+                <tr>
+                    <td>Acesso à Coleção Base</td>
+                    <td><span class="feature-check">✓</span></td>
+                    <td><span class="feature-check">✓</span></td>
+                    <td><span class="feature-check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Coleções Exclusivas</td>
+                    <td><span class="feature-cross">✗</span></td>
+                    <td><span class="feature-check">✓</span></td>
+                    <td><span class="feature-check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Atendimento Prioritário</td>
+                    <td><span class="feature-cross">✗</span></td>
+                    <td><span class="feature-check">✓</span></td>
+                    <td><span class="feature-check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Consultoria Pessoal</td>
+                    <td><span class="feature-cross">✗</span></td>
+                    <td><span class="feature-cross">✗</span></td>
+                    <td><span class="feature-check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Frete Grátis</td>
+                    <td><span class="feature-cross">✗</span></td>
+                    <td><span class="feature-check">✓</span></td>
+                    <td><span class="feature-check">✓</span></td>
+                </tr>
+                <tr>
+                    <td>Eventos Exclusivos</td>
+                    <td><span class="feature-cross">✗</span></td>
+                    <td><span class="feature-cross">✗</span></td>
+                    <td><span class="feature-check">✓</span></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>'''
+st.markdown(pricing_html, unsafe_allow_html=True)
+
+# ==================== COMPARISON SECTION ====================
 # ✅ ALTERE: Números - Mude os valores e labels dos cards
-showcase_html = '''<div class="showcase-section" id="portfolio">
-    <div class="showcase-title">NÚMEROS QUE FALAM</div>
-    <div class="showcase-grid">
-        <div class="showcase-card">
-            <div class="showcase-number">500%</div>
-            <div class="showcase-label">Mais Engajamento</div>
+comparison_html = '''<div class="comparison-section">
+    <div class="comparison-title">Números que Falam</div>
+    <div class="comparison-grid">
+        <div class="comparison-card">
+            <div class="comparison-number">50K+</div>
+            <div class="comparison-label">Clientes Satisfeitas</div>
         </div>
-        <div class="showcase-card">
-            <div class="showcase-number">100K+</div>
-            <div class="showcase-label">Usuários Ativos</div>
+        <div class="comparison-card">
+            <div class="comparison-number">1000+</div>
+            <div class="comparison-label">Produtos Premium</div>
         </div>
-        <div class="showcase-card">
-            <div class="showcase-number">99.9%</div>
-            <div class="showcase-label">Uptime</div>
-        </div>
-        <div class="showcase-card">
-            <div class="showcase-number">24/7</div>
-            <div class="showcase-label">Suporte Premium</div>
+        <div class="comparison-card">
+            <div class="comparison-number">98%</div>
+            <div class="comparison-label">Taxa de Satisfação</div>
         </div>
     </div>
 </div>'''
-st.markdown(showcase_html, unsafe_allow_html=True)
+st.markdown(comparison_html, unsafe_allow_html=True)
 
 # ==================== CTA FINAL ====================
 # ✅ ALTERE: CTA Final - Mude o texto e URL do botão
-cta_final_html = '''<div class="cta-final-section" id="sobre">
+cta_final_html = '''<div class="cta-final-section">
     <div class="cta-final-content">
-        <div class="cta-final-title">Pronto para Revolucionar?</div>
-        <div class="cta-final-desc">Junte-se aos líderes que já transformaram seus negócios com design de campeão.</div>
-        <a href="https://www.google.com/" target="_blank" class="cta-final-button">Começar Sua Revolução</a>
+        <div class="cta-final-title">Pronta para Brilhar?</div>
+        <div class="cta-final-desc">Junte-se a milhares de mulheres que já descobriram a verdadeira elegância.</div>
+        <a href="https://www.google.com/" target="_blank" class="cta-final-button">Acessar Agora</a>
     </div>
 </div>'''
 st.markdown(cta_final_html, unsafe_allow_html=True)
@@ -732,8 +853,8 @@ st.markdown(cta_final_html, unsafe_allow_html=True)
 # ==================== FOOTER ====================
 # ✅ ALTERE: Footer - Mude email, telefone, endereço e copyright
 footer_html = '''<div class="footer" id="contato">
-    <div class="footer-text">Email: hello@champion.com | Telefone: +55 (99) 99999-9999</div>
-    <div class="footer-text">Endereço: Av. Inovação, 1000 - São Paulo, SP</div>
-    <div class="footer-copyright">© 2025 Champion Design. Todos os direitos reservados. Design que vence campeonatos.</div>
+    <div class="footer-text">Email: hello@Bela.com.br | Telefone: +55 (99) 99999-9999</div>
+    <div class="footer-text">Endereço: Av. Paulista, 1000 - São Paulo, SP</div>
+    <div class="footer-copyright">© 2025 Bela Feminine. Todos os direitos reservados. Elegância é um estilo de vida.</div>
 </div>'''
 st.markdown(footer_html, unsafe_allow_html=True)
