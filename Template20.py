@@ -202,7 +202,7 @@ product_item(col1, "Pack Shoreline", "45,00", "https://images.unsplash.com/photo
 product_item(col2, "Ocean Blue", "32,00", "https://images.unsplash.com/photo-1573408301185-9146fe634ad0?auto=format&fit=crop&w=400&q=80")
 
 # ✅ ALTERE: Produto 3 - Imagem, nome e preço
-product_item(col3, "Sunset Vibes", "38,00", "https://images.unsplash.com/photo-1535632066927-ab7c9ab60908?auto=format&fit=crop&w=400&q=80")
+product_item(col3, "Sunset Vibes", "38,00", "https://images.unsplash.com/photo-1611591437281-460bfbe1220a?auto=format&fit=crop&w=400&q=80")
 
 # ✅ ALTERE: Produto 4 - Imagem, nome e preço
 product_item(col4, "Sand & Salt", "29,00", "https://images.unsplash.com/photo-1515562141207-7a88fb7ce338?auto=format&fit=crop&w=400&q=80")
