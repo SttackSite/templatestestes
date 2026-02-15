@@ -1,268 +1,296 @@
 import streamlit as st
 
-# ❌ NÃO ALTERE: Configuração da página (define título, ícone e layout)
+# ❌ NÃO ALTERE: Importações necessárias para o funcionamento do Streamlit
+# Estas linhas carregam as bibliotecas essenciais para a aplicação rodar
+
+# ✅ ALTERE: Configuração da Página (Título, Ícone, Layout)
+# Você pode mudar o "page_title" para o nome do seu projeto
+# Você pode mudar o "page_icon" para o emoji que preferir
 st.set_page_config(
-    page_title="Feastables | O Chocolate do MrMoon",  # ✅ ALTERE: Nome da página
-    page_icon="🍫",  # ✅ ALTERE: Emoji do ícone
-    layout="wide"  # ❌ NÃO ALTERE: Layout da página
+    page_title="Zajno Motion | Estúdio de Design Digital",  # ✅ ALTERE: Nome da página (aparece na aba do navegador)
+    page_icon="🎬",  # ✅ ALTERE: Emoji do ícone
+    layout="wide"  # ❌ NÃO ALTERE: Define o layout da página como largura total
 )
 
-# ❌ NÃO ALTERE: Bloco CSS - Define todas as cores, fontes e efeitos visuais
+# ❌ NÃO ALTERE: Bloco de CSS (Estilos Visuais)
+# Este bloco define todas as cores, fontes, animações e efeitos visuais da página
 # Alterar aqui pode quebrar completamente o design
 st.markdown("""
 <style>
-    @import url('https://fonts.googleapis.com/css2?family=Bungee&family=Inter:wght@700;900&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap');
 
-    /* ✅ ALTERE: Cores da marca */
-    :root {
-        --feast-blue: #0047ff;      /* Cor azul principal */
-        --feast-pink: #ff00ff;      /* Cor rosa/magenta */
-        --feast-yellow: #ffff00;    /* Cor amarela */
-    }
-
-    /* ❌ NÃO ALTERE: Fundo da aplicação */
     .stApp {
-        background-color: var(--feast-blue);
-    }
-
-    /* ❌ NÃO ALTERE: Tipografia dos títulos */
-    h1, h2, .font-heavy {
-        font-family: 'Inter', sans-serif;
-        font-weight: 900;
-        text-transform: uppercase;
-        color: white;
-        letter-spacing: -2px;
-    }
-
-    /* ❌ NÃO ALTERE: Banner animado (marquee) */
-    .marquee {
-        background: var(--feast-yellow);
-        color: black;
-        padding: 10px 0;
-        font-family: 'Inter', sans-serif;
-        font-weight: 900;
-        white-space: nowrap;
-        overflow: hidden;
-        display: flex;
-        font-size: 20px;
-        border-bottom: 4px solid black;
-    }
-
-    /* ❌ NÃO ALTERE: Seção hero */
-    .hero-feast {
-        padding: 60px 5%;
-        text-align: center;
-    }
-
-    /* ❌ NÃO ALTERE: Cards de produto */
-    .product-card {
-        background: white;
-        border: 4px solid black;
-        border-radius: 20px;
-        padding: 20px;
-        text-align: center;
-        transition: transform 0.2s;
-        box-shadow: 8px 8px 0px 0px rgba(0,0,0,1);
-        margin-bottom: 30px;
-    }
-    .product-card:hover {
-        transform: translate(-4px, -4px);
-        box-shadow: 12px 12px 0px 0px rgba(255, 0, 255, 0.8);
-    }
-
-    /* ✅ ALTERE: Estilo da tag de preço */
-    .price-tag {
-        background: var(--feast-pink);
-        color: white;
-        padding: 5px 15px;
-        border-radius: 50px;
-        display: inline-block;
-        font-weight: 900;
-        margin-top: 10px;
-    }
-
-    /* ❌ NÃO ALTERE: Estilo dos botões nativos do Streamlit */
-    div.stButton > button {
-        background-color: var(--feast-yellow);
-        color: black;
-        border: 4px solid black;
-        border-radius: 12px;
-        font-weight: 900;
-        font-size: 24px;
-        padding: 20px 40px;
-        box-shadow: 6px 6px 0px 0px rgba(0,0,0,1);
-        transition: 0.1s;
-        width: 100%;
-        text-transform: uppercase;
-    }
-    div.stButton > button:hover {
-        background-color: var(--feast-pink);
-        color: white;
-        transform: translate(2px, 2px);
-        box-shadow: 2px 2px 0px 0px rgba(0,0,0,1);
-    }
-
-    /* ❌ NÃO ALTERE: Estilo dos botões em links */
-    .action-button {
-        display: inline-block !important;
-        background-color: var(--feast-yellow) !important;
-        color: black !important;
-        border: 4px solid black !important;
-        border-radius: 12px !important;
-        font-weight: 900 !important;
-        font-size: 24px !important;
-        padding: 20px 40px !important;
-        box-shadow: 6px 6px 0px 0px rgba(0,0,0,1) !important;
-        transition: 0.1s !important;
-        text-transform: uppercase !important;
-        text-decoration: none !important;
-        cursor: pointer !important;
-    }
-    .action-button:hover {
-        background-color: var(--feast-pink) !important;
-        color: white !important;
-        transform: translate(2px, 2px) !important;
-        box-shadow: 2px 2px 0px 0px rgba(0,0,0,1) !important;
-        text-decoration: none !important;
-    }
-    .action-button:visited {
-        color: black !important;
-        text-decoration: none !important;
-    }
-
-    /* ❌ NÃO ALTERE: Rodapé */
-    .footer-feast {
-        background: black;
-        color: white;
-        padding: 60px 5%;
-        margin-top: 100px;
+        background-color: #0b0b0b;  /* ✅ ALTERE: Cor de fundo (preto profundo) */
+        color: #ffffff;  /* ✅ ALTERE: Cor do texto principal */
     }
     
-    /* ❌ NÃO ALTERE: Esconde header padrão do Streamlit */
     [data-testid="stHeader"] { display: none; }
-</style>
+    .block-container { padding: 0 !important; max-width: 100% !important; }
 
-<!-- ❌ NÃO ALTERE: Banner animado (marquee) -->
-<div class="marquee">
-    <div style="display: flex; animation: marquee 20s linear infinite;">
-        <span style="margin-right: 50px;">MELHOR QUE O SEU CHOCOLATE ATUAL 🔥</span>
-        <span style="margin-right: 50px;">INGREDIENTES REAIS 🔥</span>
-        <span style="margin-right: 50px;">DO MR MOON 🔥</span>
-        <span style="margin-right: 50px;">PROVE A DIFERENÇA 🔥</span>
-        <span style="margin-right: 50px;">MELHOR QUE O SEU CHOCOLATE ATUAL 🔥</span>
-    </div>
-</div>
+    html, body, [class*="css"] {
+        font-family: 'Inter', sans-serif;
+        -webkit-font-smoothing: antialiased;
+    }
 
-<style>
-@keyframes marquee {
-    0% { transform: translateX(0); }
-    100% { transform: translateX(-50%); }
-}
-</style>
-""", unsafe_allow_html=True)
+    .nav-zajno {
+        display: flex;
+        justify-content: space-between;
+        padding: 40px 60px;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        position: fixed;
+        width: 100%;
+        top: 0;
+        z-index: 1000;
+        background: linear-gradient(180deg, rgba(11,11,11,1) 0%, rgba(11,11,11,0) 100%);
+    }
 
-# ========== SEÇÃO 1: HEADER / LOGO ==========
-# ✅ ALTERE: Título principal e texto
-st.markdown("""
-<div style="text-align: center; padding: 40px 0;">
-    <h1 style="font-size: 80px; text-shadow: 4px 4px 0px #ff00ff;">FEASTABLES</h1>
-</div>
-""", unsafe_allow_html=True)
+    .nav-link {
+        color: #ffffff;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        background: none;
+        border: none;
+        padding: 0;
+        font-size: 12px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        font-weight: 700;
+        font-family: 'Inter', sans-serif;
+    }
 
-# ========== SEÇÃO 2: HERO IMAGE & CTA ==========
-# ❌ NÃO ALTERE: Estrutura de colunas
-col_hero_1, col_hero_2 = st.columns([1, 1])
+    .nav-link:hover {
+        opacity: 0.6;
+    }
 
-with col_hero_1:
-    # ✅ ALTERE: Título e descrição do hero
-    st.markdown("""
-    <div style="padding-top: 50px;">
-        <h2 style="font-size: 60px;">O CHOCOLATE<br>QUE DETONA.</h2>
-        <p style="color: white; font-size: 20px; font-weight: 700;">Zero porcaria. Apenas sabor épico.</p>
-    </div>
-    """, unsafe_allow_html=True)
+    .hero-container {
+        padding: 200px 60px 100px 60px;
+    }
     
-    # ❌ NÃO ALTERE: Botão com funcionalidade
-    # Usa link em vez de st.button para ter controle total do estilo
-    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">COMPRE AGORA</a>', unsafe_allow_html=True)  # ✅ ALTERE: Texto do botão e URL
+    .hero-title {
+        font-size: clamp(40px, 12vw, 180px);
+        font-weight: 900;
+        line-height: 0.8;
+        letter-spacing: -0.05em;
+        text-transform: uppercase;
+        margin-bottom: 60px;
+    }
 
-with col_hero_2:
-    # ✅ ALTERE: URL da imagem do hero
-    st.image("https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=800", use_container_width=True)
+    .project-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2px;
+        background-color: #1a1a1a;
+        border-top: 1px solid #1a1a1a;
+        border-bottom: 1px solid #1a1a1a;
+    }
 
-# ========== SEÇÃO 3: PRODUTOS (LOJA) ==========
-# ✅ ALTERE: Título da seção
-st.markdown("<br><br><h2 style='text-align: center; font-size: 45px;'>ESCOLHA SEU TIME</h2>", unsafe_allow_html=True)
+    .project-item {
+        background-color: #0b0b0b;
+        padding: 40px;
+        position: relative;
+        overflow: hidden;
+        aspect-ratio: 16 / 9;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-end;
+    }
 
-# ❌ NÃO ALTERE: Estrutura de colunas para produtos
-p1, p2, p3 = st.columns(3)
+    .project-thumb {
+        position: absolute;
+        top: 0; left: 0;
+        width: 100%; height: 100%;
+        object-fit: cover;
+        opacity: 0.4;
+        transition: opacity 0.5s ease, transform 0.8s ease;
+    }
 
-def feast_card(col, title, flavor, img_url, price):
-    # ❌ NÃO ALTERE: Função que renderiza os cards de produto
-    with col:
-        st.markdown(f"""
-        <div class="product-card">
-            <img src="{img_url}" style="width:100%; border-radius:10px;">
-            <h3 style="color: black; margin-top: 15px; font-weight: 900; font-size: 24px;">{title}</h3>
-            <p style="color: #555; font-weight: 700;">{flavor}</p>
-            <div class="price-tag">R$ {price}</div>
-        </div>
-        """, unsafe_allow_html=True)
-        # ✅ ALTERE: Texto do botão e URL
-        st.markdown(f'<a href="https://www.google.com/" target="_blank" class="action-button">ADICIONAR {title}</a>', unsafe_allow_html=True)
+    .project-item:hover .project-thumb {
+        opacity: 0.8;
+        transform: scale(1.05);
+    }
 
-# ✅ ALTERE: Títulos, sabores, URLs de imagens e preços dos produtos
-feast_card(p1, "MILK CRUNCH", "Com Arroz Crocante", "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400", "19,90")
-feast_card(p2, "ORIGINAL MILK", "Clássico e Cremoso", "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=400", "18,90")
-feast_card(p3, "PEANUT BUTTER", "Manteiga de Amendoim", "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400", "22,90")
+    .project-meta {
+        position: relative;
+        z-index: 2;
+    }
 
-# ========== SEÇÃO 4: SEÇÃO "POR QUE NÓS?" ==========
-# ✅ ALTERE: Título, descrição e ícones
+    .project-category {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: #888;
+        margin-bottom: 10px;
+    }
+
+    .footer-zajno {
+        padding: 100px 60px;
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-end;
+        border-top: 1px solid #1a1a1a;
+    }
+
+    .big-footer-text {
+        font-size: clamp(30px, 6vw, 80px);
+        font-weight: 900;
+        text-transform: uppercase;
+        line-height: 0.9;
+    }
+
+    /* Botão Customizado */
+    .btn-zajno {
+        background: transparent !important;
+        border: 1px solid #ffffff !important;
+        color: #ffffff !important;
+        border-radius: 0 !important;
+        padding: 15px 40px !important;
+        text-transform: uppercase !important;
+        font-size: 12px !important;
+        font-weight: 700 !important;
+        letter-spacing: 2px !important;
+        transition: 0.3s !important;
+        cursor: pointer !important;
+        font-family: 'Inter', sans-serif !important;
+        text-decoration: none !important;
+    }
+    
+    .btn-zajno:hover {
+        background: #ffffff !important;
+        color: #0b0b0b !important;
+        text-decoration: none !important;
+    }
+
+    .btn-zajno:visited {
+        color: #ffffff !important;
+        text-decoration: none !important;
+    }
+</style>
+""", unsafe_allow_html=True)
+
+# ========== SEÇÃO 1: NAVEGAÇÃO ==========
+# ❌ NÃO ALTERE: Estrutura de navegação fixa
+# ✅ ALTERE: Logo e textos de navegação
 st.markdown("""
-<div style="background-color: #ff00ff; padding: 100px 10%; margin-top: 80px; border-top: 5px solid black; border-bottom: 5px solid black;">
-    <h2 style="color: white; font-size: 50px; text-align: center;">O QUE TEM DENTRO IMPORTA.</h2>
-    <div style="display: flex; justify-content: space-around; margin-top: 50px; text-align: center; flex-wrap: wrap;">
-        <div style="max-width: 250px;">
-            <h1 style="font-size: 60px;">🌾</h1>
-            <h3 style="color: white;">SEM GLÚTEN</h3>
-        </div>
-        <div style="max-width: 250px;">
-            <h1 style="font-size: 60px;">🌱</h1>
-            <h3 style="color: white;">INGREDIENTES SIMPLES</h3>
-        </div>
-        <div style="max-width: 250px;">
-            <h1 style="font-size: 60px;">👅</h1>
-            <h3 style="color: white;">SABOR INCRÍVEL</h3>
-        </div>
+<div class="nav-zajno">
+    <div>Zajno / Motion</div>
+    <div style="display: flex; gap: 40px;">
+        <a href="#trabalhos" class="nav-link" style="text-decoration: none; color: #ffffff;">Trabalhos</a>
+        <a href="#estudio" class="nav-link" style="text-decoration: none; color: #ffffff;">Estúdio</a>
+        <a href="#contato" class="nav-link" style="text-decoration: none; color: #ffffff;">Contato</a>
     </div>
 </div>
 """, unsafe_allow_html=True)
 
-# ========== SEÇÃO 5: FOOTER ==========
-# ✅ ALTERE: Informações do rodapé, links e copyright
+# ========== SEÇÃO 2: HERO SECTION ==========
+# ✅ ALTERE: Conteúdo principal do hero
 st.markdown("""
-<div class="footer-feast">
-    <div style="display: flex; justify-content: space-between; flex-wrap: wrap;">
-        <div>
-            <h2 style="font-size: 32px; text-shadow: 2px 2px 0px #ff00ff;">FEASTABLES</h2>
-            <p style="color: #aaa;">Inspirado pelo MrMoon.</p>
-        </div>
-        <div style="line-height: 2;">
-            <p><strong>RECURSOS</strong></p>
-            <a href="https://www.google.com/" target="_blank" style="color: #aaa; text-decoration: none;">Onde Comprar</a><br>
-            <a href="https://www.google.com/" target="_blank" style="color: #aaa; text-decoration: none;">Perguntas Frequentes</a><br>
-            <a href="https://www.google.com/" target="_blank" style="color: #aaa; text-decoration: none;">Termos de Uso</a>
-        </div>
-        <div>
-            <p><strong>NOS SIGA</strong></p>
-            <a href="https://www.google.com/" target="_blank" style="color: #aaa; text-decoration: none;">TikTok</a> / 
-            <a href="https://www.google.com/" target="_blank" style="color: #aaa; text-decoration: none;">Instagram</a> / 
-            <a href="https://www.google.com/" target="_blank" style="color: #aaa; text-decoration: none;">YouTube</a>
+<div class="hero-container">
+    <div class="hero-title">
+        MOVIMENTO<br>É A NOSSA<br>LINGUAGEM
+    </div>
+    <div style="max-width: 500px; color: #888; font-size: 16px; line-height: 1.6;">
+        Somos um estúdio de design focado em criar experiências digitais que ganham vida através do movimento e da tecnologia de ponta.
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# ========== SEÇÃO 3: SHOWCASE DE PROJETOS (GRID DUPLO) ==========
+# ❌ NÃO ALTERE: Estrutura de grid
+st.markdown('<div id="trabalhos" class="project-grid">', unsafe_allow_html=True)
+
+col1, col2 = st.columns(2, gap="small")
+
+with col1:
+    st.markdown("""
+    <div class="project-item">
+        <img src="https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=800" class="project-thumb">
+        <div class="project-meta">
+            <p class="project-category">Motion Graphics / 2024</p>
+            <h3 style="font-size: 30px; font-weight: 900; text-transform: uppercase;">Cyber Identity</h3>
         </div>
     </div>
-    <div style="margin-top: 50px; border-top: 1px solid #333; padding-top: 20px; font-size: 12px; color: #666; text-align: center;">
-        © 2026 FEASTABLES INC. TODOS OS DIREITOS RESERVADOS.
+    """, unsafe_allow_html=True)  # ✅ ALTERE: Categoria, ano, título e imagem do projeto 1
+    
+    st.markdown("""
+    <div class="project-item">
+        <img src="https://images.unsplash.com/photo-1614850523296-d8c1af93d400?w=800" class="project-thumb">
+        <div class="project-meta">
+            <p class="project-category">Interface Design / 2023</p>
+            <h3 style="font-size: 30px; font-weight: 900; text-transform: uppercase;">Liquid UI</h3>
+        </div>
     </div>
+    """, unsafe_allow_html=True)  # ✅ ALTERE: Categoria, ano, título e imagem do projeto 2
+
+with col2:
+    st.markdown("""
+    <div class="project-item">
+        <img src="https://images.unsplash.com/photo-1633167606207-d840b5070fc2?w=800" class="project-thumb">
+        <div class="project-meta">
+            <p class="project-category">Art Direction / 2024</p>
+            <h3 style="font-size: 30px; font-weight: 900; text-transform: uppercase;">Astro Forms</h3>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)  # ✅ ALTERE: Categoria, ano, título e imagem do projeto 3
+    
+    st.markdown("""
+    <div class="project-item">
+        <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=800" class="project-thumb">
+        <div class="project-meta">
+            <p class="project-category">3D Animation / 2024</p>
+            <h3 style="font-size: 30px; font-weight: 900; text-transform: uppercase;">Glass Echo</h3>
+        </div>
+    </div>
+    """, unsafe_allow_html=True)  # ✅ ALTERE: Categoria, ano, título e imagem do projeto 4
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ========== SEÇÃO 4: SEÇÃO DE TEXTO MANIFESTO ==========
+# ✅ ALTERE: Conteúdo do manifesto
+st.markdown("""
+<div id="estudio" style="padding: 150px 60px; border-bottom: 1px solid #1a1a1a;">
+    <div style="max-width: 900px;">
+        <h2 style="font-size: 50px; font-weight: 900; text-transform: uppercase; line-height: 1;">
+            Nós não apenas movemos pixels. Nós contamos histórias que definem o futuro das marcas.
+        </h2>
+        <p style="margin-top: 40px; color: #888; font-size: 20px;">
+            Trabalhamos com marcas audaciosas para transformar ideias complexas em interações digitais simples, memoráveis e impactantes.
+        </p>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+# ========== SEÇÃO 5: FOOTER (CALL TO ACTION) ==========
+# ✅ ALTERE: Conteúdo do footer
+st.markdown("""
+<div id="contato" class="footer-zajno">
+    <div>
+        <p style="color: #888; text-transform: uppercase; font-size: 10px; letter-spacing: 2px; margin-bottom: 20px;">Pronto para elevar sua marca?</p>
+        <div class="big-footer-text">VAMOS<br>CRIAR JUNTOS</div>
+    </div>
+    <div style="text-align: right;">
+        <p style="margin-bottom: 30px; color: #888;">studio@zajno.com</p>
+    </div>
+</div>
+""", unsafe_allow_html=True)
+
+st.markdown('<div style="padding-left: 60px; padding-bottom: 100px;">', unsafe_allow_html=True)
+# ✅ ALTERE: Texto do botão e URL de destino
+st.markdown('''
+<a href="https://www.google.com/" target="_blank" class="btn-zajno" style="display: inline-block; text-decoration: none;">
+    Iniciar Projeto
+</a>
+''', unsafe_allow_html=True)
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ========== SEÇÃO 6: COPYRIGHT ==========
+# ✅ ALTERE: Informações de copyright
+st.markdown("""
+<div style="padding: 40px 60px; font-size: 10px; color: #444; border-top: 1px solid #1a1a1a; text-transform: uppercase; letter-spacing: 1px;">
+    © 2026 Zajno Studio — São Francisco / Remoto
 </div>
 """, unsafe_allow_html=True)
 
