@@ -3,8 +3,8 @@ import streamlit as st  # ❌ NÃO ALTERE: Importa a biblioteca Streamlit para c
 # ========== SEÇÃO 1: CONFIGURAÇÃO DA PÁGINA ==========
 # ❌ NÃO ALTERE: Define as configurações básicas da página
 st.set_page_config(
-    page_title="ogreen | Valor que se renova",  # ✅ ALTERE: Título que aparece na aba do navegador
-    page_icon="🌲",  # ✅ ALTERE: Emoji que aparece na aba do navegador
+    page_title="Memphis Zoo | Experience the Wild",  # ✅ ALTERE: Título que aparece na aba do navegador
+    page_icon="🦁",  # ✅ ALTERE: Emoji que aparece na aba do navegador
     layout="wide"  # ❌ NÃO ALTERE: Define o layout como largura total
 )
 
@@ -14,124 +14,133 @@ st.set_page_config(
 st.markdown("""
 <style>
     /* ❌ NÃO ALTERE: Importa a fonte do Google Fonts */
-    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap');
+    @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;900&display=swap');
 
     /* ❌ NÃO ALTERE: Tipografia padrão */
     html, body, [class*="css"] {
         font-family: 'Montserrat', sans-serif;  /* Fonte moderna */
-        color: #333;  /* Texto cinza escuro */
     }
 
-    /* ❌ NÃO ALTERE: Header */
-    .header-ogreen {
+    /* ❌ NÃO ALTERE: Remove padding padrão do Streamlit */
+    .block-container {
+        padding: 0 !important;  /* Remove espaçamento interno */
+        max-width: 100% !important;  /* Ocupa 100% da largura */
+    }
+
+    /* ❌ NÃO ALTERE: Header sobreposto (overlay) */
+    .zoo-header {
+        position: absolute;  /* Posicionamento absoluto */
+        top: 0;  /* Posição no topo */
+        width: 100%;  /* Largura total */
+        z-index: 1000;  /* Fica acima de outros elementos */
+        padding: 20px 50px;  /* Espaçamento interno */
         display: flex;  /* Layout flexível */
         justify-content: space-between;  /* Espaça itens nas extremidades */
         align-items: center;  /* Alinha itens no centro verticalmente */
-        padding: 20px 8%;  /* Espaçamento interno */
-        background-color: white;  /* Fundo branco */
-        border-bottom: 2px solid #005a31;  /* Borda inferior verde */
-        margin: -5rem -5rem 0rem -5rem;  /* Margem negativa para ocupar tela toda */
+        background: rgba(0,0,0,0.2);  /* Fundo preto semi-transparente */
+    }
+    
+    /* ❌ NÃO ALTERE: Estilo do logo */
+    .logo-zoo {
+        color: white;  /* Texto branco */
+        font-weight: 900;  /* Peso muito pesado */
+        font-size: 32px;  /* Tamanho grande */
+        letter-spacing: -1px;  /* Espaçamento negativo entre letras */
     }
 
     /* ❌ NÃO ALTERE: Seção hero com imagem de fundo */
-    .hero-section {
-        background-image: linear-gradient(rgba(0,0,0,0.3), rgba(0,0,0,0.3)), url('https://images.unsplash.com/photo-1441974231531-c6227db76b6e?auto=format&fit=crop&w=1600&q=80');  /* Imagem com overlay */
+    .hero-video-bg {
+        height: 100vh;  /* Altura = 100% da altura da tela */
+        background-image: linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.4)), url('https://images.unsplash.com/photo-1546182990-dffeafbe841d?auto=format&fit=crop&w=1600&q=80');  /* Imagem com overlay */
         background-size: cover;  /* Imagem cobre toda a área */
         background-position: center;  /* Imagem centralizada */
-        height: 550px;  /* Altura fixa */
         display: flex;  /* Layout flexível */
         flex-direction: column;  /* Itens em coluna */
         justify-content: center;  /* Centraliza verticalmente */
         align-items: center;  /* Centraliza horizontalmente */
         color: white;  /* Texto branco */
         text-align: center;  /* Texto centralizado */
-        margin: 0 -5rem 50px -5rem;  /* Margem negativa e espaçamento inferior */
-    }
-    
-    /* ❌ NÃO ALTERE: Estilo do título do hero */
-    .hero-title { 
-        font-size: 56px;  /* Tamanho grande */
-        font-weight: 800;  /* Peso muito pesado */
-        text-shadow: 2px 2px 10px rgba(0,0,0,0.5);  /* Sombra de texto */
     }
 
-    /* ❌ NÃO ALTERE: Seções de conteúdo */
-    .section-padding { 
-        padding: 80px 10%;  /* Espaçamento interno */
+    /* ❌ NÃO ALTERE: Barra de ações flutuante */
+    .action-bar {
+        display: flex;  /* Layout flexível */
+        gap: 10px;  /* Espaçamento entre itens */
+        margin-top: 30px;  /* Espaçamento superior */
     }
     
-    /* ❌ NÃO ALTERE: Estilo dos títulos das seções */
-    .section-title { 
-        color: #005a31;  /* Cor verde */
-        font-weight: 800;  /* Peso muito pesado */
-        font-size: 32px;  /* Tamanho grande */
-        margin-bottom: 30px;  /* Espaçamento inferior */
-        border-left: 5px solid #005a31;  /* Borda esquerda verde */
-        padding-left: 15px;  /* Espaçamento interno esquerdo */
-    }
-
-    /* ❌ NÃO ALTERE: Cards de negócios */
-    .business-card {
-        background: #f8f9fa;  /* Fundo cinza claro */
-        border-radius: 10px;  /* Arredondamento */
-        overflow: hidden;  /* Oculta conteúdo que sai da área */
-        border-bottom: 4px solid #005a31;  /* Borda inferior verde */
-        transition: 0.3s;  /* Animação suave */
-    }
-    
-    /* ❌ NÃO ALTERE: Efeito hover nos cards */
-    .business-card:hover { 
-        transform: translateY(-10px);  /* Levanta o card */
-        box-shadow: 0 20px 40px rgba(0,0,0,0.1);  /* Sombra aumentada */
-    }
-    
-    /* ❌ NÃO ALTERE: Conteúdo do card */
-    .card-label { 
-        padding: 25px;  /* Espaçamento interno */
-    }
-
-    /* ❌ NÃO ALTERE: Seção de estatísticas */
-    .stats-bg { 
-        background-color: #005a31;  /* Fundo verde */
-        color: white;  /* Texto branco */
-        padding: 60px 10%;  /* Espaçamento interno */
-        text-align: center;  /* Texto centralizado */
-        margin: 50px -5rem;  /* Margem negativa */
-    }
-    
-    /* ❌ NÃO ALTERE: Número da estatística */
-    .stat-number { 
-        font-size: 48px;  /* Tamanho grande */
-        font-weight: 800;  /* Peso muito pesado */
-        color: #8ec641;  /* Verde limão */
-    }
-    
-    /* ❌ NÃO ALTERE: Descrição da estatística */
-    .stat-desc { 
-        font-size: 14px;  /* Tamanho pequeno */
-        opacity: 0.9;  /* Opacidade */
+    /* ❌ NÃO ALTERE: Estilo dos botões nativos do Streamlit */
+    div.stButton > button {
+        border-radius: 0px;  /* Sem arredondamento */
+        font-weight: 700;  /* Peso pesado */
         text-transform: uppercase;  /* Maiúsculas */
+        padding: 15px 30px;  /* Espaçamento interno */
+        border: none;  /* Sem borda */
         letter-spacing: 1px;  /* Espaçamento entre letras */
     }
+    
+    /* ❌ NÃO ALTERE: Botão laranja (tickets) */
+    .ticket-btn > div > button {
+        background-color: #f37021 !important;  /* Fundo laranja */
+        color: white !important;  /* Texto branco */
+    }
+    
+    /* ❌ NÃO ALTERE: Seções de conteúdo */
+    .info-section {
+        padding: 80px 10%;  /* Espaçamento interno */
+        text-align: center;  /* Texto centralizado */
+    }
+    
+    /* ✅ ALTERE: Fundos de cores */
+    .green-bg { 
+        background-color: #004a26;  /* Fundo verde */
+        color: white;  /* Texto branco */
+    }
+    
+    .sand-bg { 
+        background-color: #f9f7f2;  /* Fundo bege */
+        color: #333;  /* Texto escuro */
+    }
 
+    /* ❌ NÃO ALTERE: Cards de animais */
+    .animal-card {
+        background: white;  /* Fundo branco */
+        border-radius: 0px;  /* Sem arredondamento */
+        overflow: hidden;  /* Oculta conteúdo que sai da área */
+        margin-bottom: 20px;  /* Espaçamento inferior */
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);  /* Sombra suave */
+    }
+    
+    /* ❌ NÃO ALTERE: Imagem do animal */
+    .animal-card img { 
+        width: 100%;  /* Largura total */
+        height: 250px;  /* Altura fixa */
+        object-fit: cover;  /* Cobre a área sem distorcer */
+    }
+    
+    /* ❌ NÃO ALTERE: Informações do animal */
+    .animal-info { 
+        padding: 20px;  /* Espaçamento interno */
+        text-align: left;  /* Texto alinhado à esquerda */
+    }
+    
     /* ❌ NÃO ALTERE: Rodapé */
-    .footer-ogreen {
-        background-color: #222;  /* Fundo cinza escuro */
-        color: #ccc;  /* Texto cinza claro */
-        padding: 80px 10% 40px 10%;  /* Espaçamento interno */
-        margin: 50px -5rem -5rem -5rem;  /* Margem negativa */
+    .footer-zoo {
+        background-color: #1a1a1a;  /* Fundo preto */
+        color: white;  /* Texto branco */
+        padding: 60px 10%;  /* Espaçamento interno */
     }
 
     /* ❌ NÃO ALTERE: Estilo dos botões em links */
     .action-button {
         display: inline-block !important;  /* Exibe como bloco inline */
-        background-color: #005a31 !important;  /* Fundo verde */
+        background-color: #f37021 !important;  /* Fundo laranja */
         color: white !important;  /* Texto branco */
         border: none !important;  /* Sem borda */
-        border-radius: 5px !important;  /* Arredondamento suave */
-        padding: 12px 30px !important;  /* Espaçamento interno */
+        border-radius: 0px !important;  /* Sem arredondamento */
+        padding: 15px 30px !important;  /* Espaçamento interno */
         font-weight: 700 !important;  /* Peso pesado */
-        font-size: 13px !important;  /* Tamanho pequeno */
+        font-size: 14px !important;  /* Tamanho médio */
         text-transform: uppercase !important;  /* Maiúsculas */
         letter-spacing: 1px !important;  /* Espaçamento entre letras */
         transition: 0.3s !important;  /* Animação suave */
@@ -141,7 +150,7 @@ st.markdown("""
     
     /* ❌ NÃO ALTERE: Efeito hover nos botões em links */
     .action-button:hover {
-        background-color: #004a26 !important;  /* Fundo verde escuro */
+        background-color: #d4571a !important;  /* Fundo laranja escuro */
         color: white !important;  /* Texto branco */
         border: none !important;  /* Sem borda */
         text-decoration: none !important;  /* Remove sublinhado */
@@ -155,225 +164,192 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-# ========== SEÇÃO 3: NAVEGAÇÃO (HEADER) ==========
-# ✅ ALTERE: Logo e menu
+# ========== SEÇÃO 3: NAVEGAÇÃO (HEADER) E HERO ==========
+# ✅ ALTERE: Logo, menu e título do hero
 st.markdown("""
-<div class="header-ogreen">
-    <!-- ✅ ALTERE: Nome da empresa -->
-    <div style="font-size: 30px; font-weight: 800; color: #005a31; letter-spacing: -1px;">ogreen</div>
+<div class="zoo-header">
+    <!-- ✅ ALTERE: Nome do zoológico/marca -->
+    <div class="logo-zoo">MEMPHIS ZOO</div>
     <!-- ✅ ALTERE: Menu de navegação -->
-    <div style="display: flex; gap: 30px; font-size: 13px; font-weight: 700; color: #555;">
-        <a href="#about" style="color: #555; text-decoration: none; cursor: pointer;">A ogreen</a>  <!-- ✅ ALTERE: Texto do menu -->
-        <a href="#business" style="color: #555; text-decoration: none; cursor: pointer;">NOSSOS NEGÓCIOS</a>  <!-- ✅ ALTERE: Texto do menu -->
-        <a href="#sustainability" style="color: #555; text-decoration: none; cursor: pointer;">SUSTENTABILIDADE</a>  <!-- ✅ ALTERE: Texto do menu -->
-        <a href="#investors" style="color: #555; text-decoration: none; cursor: pointer;">INVESTIDORES</a>  <!-- ✅ ALTERE: Texto do menu -->
-        <a href="#products" style="color: #555; text-decoration: none; cursor: pointer;">PRODUTOS</a>  <!-- ✅ ALTERE: Texto do menu -->
+    <div style="display: flex; gap: 20px; color: white; font-weight: 700; font-size: 14px;">
+        <a href="#animals" style="color: white; text-decoration: none; cursor: pointer;">ANIMALS</a>  <!-- ✅ ALTERE: Texto do menu -->
+        <a href="#exhibits" style="color: white; text-decoration: none; cursor: pointer;">EXHIBITS</a>  <!-- ✅ ALTERE: Texto do menu -->
+        <a href="#education" style="color: white; text-decoration: none; cursor: pointer;">EDUCATION</a>  <!-- ✅ ALTERE: Texto do menu -->
+        <a href="#conservation" style="color: white; text-decoration: none; cursor: pointer;">CONSERVATION</a>  <!-- ✅ ALTERE: Texto do menu -->
     </div>
 </div>
-""", unsafe_allow_html=True)
-
-# ========== SEÇÃO 4: HERO BANNER ==========
-# ✅ ALTERE: Título e descrição
-st.markdown("""
-<div class="hero-section">
+<div class="hero-video-bg">
     <!-- ✅ ALTERE: Título principal -->
-    <div class="hero-title">O FUTURO É RENOVÁVEL</div>
+    <h1 style="font-size: 80px; font-weight: 900; margin-bottom: 0;">ADVENTURE AWAITS</h1>
     <!-- ✅ ALTERE: Descrição do hero -->
-    <p style="font-size: 20px; font-weight: 400; max-width: 800px; margin-top: 20px;">
-        Líder na produção de papéis e cartões para embalagens, embalagens de papelão ondulado e sacos industriais.
-    </p>
+    <p style="font-size: 24px; font-weight: 400;">Explore o mundo selvagem no coração de Memphis.</p>
 </div>
 """, unsafe_allow_html=True)
 
-# ========== SEÇÃO 5: QUEM SOMOS ==========
-# ✅ ALTERE: Título, descrição, imagem e botão
-st.markdown('<div id="about" class="section-padding">', unsafe_allow_html=True)
+# ========== SEÇÃO 4: BARRA DE BOTÕES RÁPIDOS ==========
+# ✅ ALTERE: Textos e URLs dos botões
+c_btn1, c_btn2, c_btn3 = st.columns(3)
 
-# ❌ NÃO ALTERE: Estrutura de 2 colunas
-c_text, c_img = st.columns([1, 1], gap="large")
-
-with c_text:
-    # ✅ ALTERE: Título da seção
-    st.markdown('<div class="section-title">Sobre a ogreen</div>', unsafe_allow_html=True)
-    # ✅ ALTERE: Descrição
-    st.write("""
-    Com 125 anos de história, somos a maior produtora e exportadora de papéis para embalagens e soluções sustentáveis do Brasil. 
-    Nossa atuação é baseada no desenvolvimento sustentável, com florestas 100% plantadas e certificadas.
-    """)
+with c_btn1:
     # ✅ ALTERE: Texto do botão e URL
-    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">CONHEÇA NOSSA HISTÓRIA</a>', unsafe_allow_html=True)
+    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button" style="width: 100%; text-align: center; display: block;">BUY TICKETS</a>', unsafe_allow_html=True)
 
-with c_img:
-    # ✅ ALTERE: URL da imagem e legenda
-    st.image("https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80", caption="Gestão Florestal Responsável")
+with c_btn2:
+    # ✅ ALTERE: Texto do botão e URL
+    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button" style="width: 100%; text-align: center; display: block;">BECOME A MEMBER</a>', unsafe_allow_html=True)
 
-st.markdown('</div>', unsafe_allow_html=True)
+with c_btn3:
+    # ✅ ALTERE: Texto do botão e URL
+    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button" style="width: 100%; text-align: center; display: block;">DONATE TODAY</a>', unsafe_allow_html=True)
 
-# ========== SEÇÃO 6: NÚMEROS DE IMPACTO (STATS) ==========
-# ✅ ALTERE: Números, descrições e valores
-st.markdown('<div class="stats-bg">', unsafe_allow_html=True)
+# ========== SEÇÃO 5: PLANEJE SUA VISITA ==========
+# ✅ ALTERE: Título, descrição e informações
+st.markdown('<div id="animals" class="info-section sand-bg">', unsafe_allow_html=True)
 
-# ❌ NÃO ALTERE: Estrutura de 4 colunas
-s1, s2, s3, s4 = st.columns(4)
-
-with s1:
-    # ✅ ALTERE: Número e descrição
-    st.markdown('<div class="stat-number">22</div><div class="stat-desc">Fábricas no Brasil e Argentina</div>', unsafe_allow_html=True)
-
-with s2:
-    # ✅ ALTERE: Número e descrição
-    st.markdown('<div class="stat-number">125</div><div class="stat-desc">Anos de Inovação</div>', unsafe_allow_html=True)
-
-with s3:
-    # ✅ ALTERE: Número e descrição
-    st.markdown('<div class="stat-number">719k</div><div class="stat-desc">Hectares de Florestas</div>', unsafe_allow_html=True)
-
-with s4:
-    # ✅ ALTERE: Número e descrição
-    st.markdown('<div class="stat-number">25k</div><div class="stat-desc">Colaboradores</div>', unsafe_allow_html=True)
-
-st.markdown('</div>', unsafe_allow_html=True)
-
-# ========== SEÇÃO 7: NOSSOS NEGÓCIOS (GRID DE CARDS) ==========
 # ✅ ALTERE: Título da seção
-st.markdown('<div id="business" class="section-padding" style="padding-top: 20px;">', unsafe_allow_html=True)
+st.markdown("<h2 style='font-weight:900; color:#004a26;'>PLANEJE SUA VISITA</h2>", unsafe_allow_html=True)
 
-st.markdown('<div class="section-title" style="text-align: center; border-left: none;">Nossas Frentes de Atuação</div>', unsafe_allow_html=True)
+# ✅ ALTERE: Descrição
+st.write("Estamos abertos diariamente das 9h às 17h. Venha ver nossos novos filhotes!")
 
-# ❌ NÃO ALTERE: Função que renderiza os negócios
-def business_item(col, img, title, desc):
-    # ❌ NÃO ALTERE: Função que cria os cards de negócio
+# ❌ NÃO ALTERE: Estrutura de 3 colunas
+col_v1, col_v2, col_v3 = st.columns(3)
+
+with col_v1:
+    # ✅ ALTERE: Título e informação
+    st.markdown("### 🕒 Horários")
+    st.write("Seg - Dom: 09:00 - 17:00")
+
+with col_v2:
+    # ✅ ALTERE: Título e informação
+    st.markdown("### 📍 Localização")
+    st.write("2000 Prentiss Pl, Memphis, TN")
+
+with col_v3:
+    # ✅ ALTERE: Título e botão
+    st.markdown("### 🗺️ Mapa do Zoo")
+    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">BAIXAR MAPA</a>', unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ========== SEÇÃO 6: NOSSOS ANIMAIS (CARDS) ==========
+# ✅ ALTERE: Título da seção
+st.markdown('<div id="exhibits" class="info-section">', unsafe_allow_html=True)
+
+st.markdown("<h2 style='font-weight:900; margin-bottom:40px;'>CONHEÇA OS RESIDENTES</h2>", unsafe_allow_html=True)
+
+# ❌ NÃO ALTERE: Função que renderiza os animais
+def animal_card(col, img, name, category):
+    # ❌ NÃO ALTERE: Função que cria os cards de animal
     with col:
         st.markdown(f"""
-        <div class="business-card">
-            <!-- ✅ ALTERE: URL da imagem -->
-            <img src="{img}" style="width:100%; height:200px; object-fit:cover;">
-            <!-- ✅ ALTERE: Título e descrição -->
-            <div class="card-label">
-                <h4 style="color:#005a31; margin-bottom:10px;">{title}</h4>  <!-- ✅ ALTERE: Título -->
-                <p style="font-size:14px; color:#666;">{desc}</p>  <!-- ✅ ALTERE: Descrição -->
+        <div class="animal-card">
+            <!-- ✅ ALTERE: URL da imagem do animal -->
+            <img src="{img}">
+            <!-- ✅ ALTERE: Nome e categoria do animal -->
+            <div class="animal-info">
+                <span style="color:#f37021; font-weight:700; font-size:12px;">{category}</span>  <!-- ✅ ALTERE: Categoria -->
+                <h3 style="margin:5px 0;">{name}</h3>  <!-- ✅ ALTERE: Nome do animal -->
             </div>
         </div>
         """, unsafe_allow_html=True)
         # ✅ ALTERE: Texto do botão e URL
-        st.markdown(f'<a href="https://www.google.com/" target="_blank" class="action-button" style="width: 100%; text-align: center; display: block;">Saber mais sobre {title}</a>', unsafe_allow_html=True)
+        st.markdown(f'<a href="https://www.google.com/" target="_blank" class="action-button">Saber mais sobre {name}</a>', unsafe_allow_html=True)
 
-# ❌ NÃO ALTERE: Primeira linha de negócios (3 colunas)
-cb1, cb2, cb3 = st.columns(3)
+# ❌ NÃO ALTERE: Primeira linha de animais (3 colunas)
+ca1, ca2, ca3 = st.columns(3)
 
-business_item(cb1, "https://images.unsplash.com/photo-1603484477859-abe6a73f9366?w=500", "Celulose", "Fibra curta, fibra longa e celulose fluff para diversas aplicações.")  # ✅ ALTERE: Imagem, título e descrição
-business_item(cb2, "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=500", "Embalagens", "Soluções inteligentes em papelão ondulado e sacos industriais.")  # ✅ ALTERE: Imagem, título e descrição
-business_item(cb3, "https://images.unsplash.com/photo-1603484477859-abe6a73f9366?w=500", "Papéis", "Papel-cartão e Kraftliner de alta performance para o mercado.")  # ✅ ALTERE: Imagem, título e descrição
+animal_card(ca1, "https://images.unsplash.com/photo-1517685352821-92cf88aee5a5?w=500", "Leão Africano", "FELINOS")  # ✅ ALTERE: Imagem, nome e categoria
+animal_card(ca2, "https://images.unsplash.com/photo-1544860707-c352cc5a92e3?w=500", "Panda Gigante", "ÁSIA")  # ✅ ALTERE: Imagem, nome e categoria
+animal_card(ca3, "https://images.unsplash.com/photo-1557008075-7f2c5efa4cfd?w=500", "Girafa Reticulada", "SAVANA")  # ✅ ALTERE: Imagem, nome e categoria
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# ========== SEÇÃO 8: SUSTENTABILIDADE ==========
-# ✅ ALTERE: Título, descrição e informações
-st.write("---")
-
-with st.container():
-    st.markdown('<div id="sustainability" class="section-padding">', unsafe_allow_html=True)
-    
-    # ❌ NÃO ALTERE: Estrutura de 2 colunas
-    sc1, sc2 = st.columns([2, 3])
-    
-    with sc1:
-        # ✅ ALTERE: Título da seção
-        st.markdown('<div class="section-title">KODS - Objetivos ogreen para o Desenvolvimento Sustentável</div>', unsafe_allow_html=True)
-        # ✅ ALTERE: Descrição
-        st.write("Nossa agenda de sustentabilidade está alinhada aos ODS da ONU, com metas claras até 2030 para biodiversidade, clima e impacto social.")
-    
-    with sc2:
-        # ✅ ALTERE: Informações de sustentabilidade
-        st.info("🌳 Conservação da Biodiversidade")
-        st.success("♻️ Economia Circular e Resíduo Zero")
-        st.warning("💧 Gestão Eficiente de Recursos Hídricos")
-    
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# ========== SEÇÃO 9: INVESTIDORES E GOVERNANÇA ==========
-# ✅ ALTERE: Título, métricas e informações
-st.write("---")
-
-st.markdown('<div id="investors" style="background-color:#f4f7f9; padding: 60px 10%;">', unsafe_allow_html=True)
+# ========== SEÇÃO 7: CONSERVAÇÃO ==========
+# ✅ ALTERE: Título, descrição e botão
+st.markdown('<div id="conservation" class="info-section green-bg">', unsafe_allow_html=True)
 
 # ✅ ALTERE: Título da seção
-st.subheader("Relações com Investidores")
+st.markdown("""
+    <h2 style='font-weight:900;'>SALVANDO ESPÉCIES NO MUNDO TODO</h2>
+    <!-- ✅ ALTERE: Descrição da conservação -->
+    <p style='max-width:800px; margin: 20px auto; font-size:18px;'>
+        O Memphis Zoo é líder em pesquisa e conservação. Desde a reintrodução de sapos raros até a proteção de habitats na África, seu ingresso faz a diferença.
+    </p>
+""", unsafe_allow_html=True)
 
-# ❌ NÃO ALTERE: Estrutura de 3 colunas
-col_ri1, col_ri2, col_ri3 = st.columns(3)
-
-with col_ri1:
-    # ✅ ALTERE: Métrica de ações
-    st.metric(label="KLBN11 (Units)", value="R$ 22,45", delta="+1.20%")
-
-with col_ri2:
-    # ✅ ALTERE: Título e descrição
-    st.write("**Central de Resultados**")
-    st.caption("Acesse os relatórios do 4T25 e demonstrações financeiras.")
-    # ✅ ALTERE: Texto do botão e URL
-    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">Acessar Central</a>', unsafe_allow_html=True)
-
-with col_ri3:
-    # ✅ ALTERE: Título e descrição
-    st.write("**Governança Corporativa**")
-    st.caption("Transparência e ética em todos os níveis da companhia.")
-    # ✅ ALTERE: Texto do botão e URL
-    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">Ver Diretoria</a>', unsafe_allow_html=True)
+# ✅ ALTERE: Texto do botão e URL
+st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">VEJA NOSSO IMPACTO</a>', unsafe_allow_html=True)
 
 st.markdown('</div>', unsafe_allow_html=True)
 
-# ========== SEÇÃO 10: FOOTER (RODAPÉ) ==========
-# ✅ ALTERE: Informações da empresa, links e copyright
+# ========== SEÇÃO 8: EVENTOS E NOTÍCIAS ==========
+# ✅ ALTERE: Título, descrição e imagem
+st.markdown('<div id="education" class="info-section sand-bg">', unsafe_allow_html=True)
+
+# ❌ NÃO ALTERE: Estrutura de 2 colunas
+col_e1, col_e2 = st.columns(2)
+
+with col_e1:
+    # ✅ ALTERE: URL da imagem
+    st.image("https://images.unsplash.com/photo-1502675135487-e971002a6adb?w=600")
+
+with col_e2:
+    st.markdown("<div style='text-align:left; padding-top:20px;'>", unsafe_allow_html=True)
+    
+    # ✅ ALTERE: Título do evento
+    st.markdown("<h2 style='font-weight:900;'>NOITE NO ZOO</h2>", unsafe_allow_html=True)
+    
+    # ✅ ALTERE: Descrição do evento
+    st.write("Participe de nossos eventos noturnos exclusivos para famílias. Jantares temáticos, tours guiados sob o luar e muito mais.")
+    
+    # ✅ ALTERE: Texto do botão e URL
+    st.markdown('<a href="https://www.google.com/" target="_blank" class="action-button">VER CALENDÁRIO DE EVENTOS</a>', unsafe_allow_html=True)
+    
+    st.markdown("</div>", unsafe_allow_html=True)
+
+st.markdown('</div>', unsafe_allow_html=True)
+
+# ========== SEÇÃO 9: FOOTER (RODAPÉ) ==========
+# ✅ ALTERE: Informações do footer, links e copyright
 st.markdown("""
-<div class="footer-ogreen">
-    <!-- ❌ NÃO ALTERE: Grid de 4 colunas -->
-    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap:50px;">
-        <!-- COLUNA 1: Sobre a empresa -->
+<div class="footer-zoo">
+    <!-- ❌ NÃO ALTERE: Grid de 3 colunas -->
+    <div style="display:grid; grid-template-columns: 2fr 1fr 1fr; gap:50px;">
+        <!-- COLUNA 1: Sobre o zoológico -->
         <div>
-            <!-- ✅ ALTERE: Nome da empresa -->
-            <div style="font-size:24px; font-weight:800; color:white; margin-bottom:20px;">ogreen</div>
-            <!-- ✅ ALTERE: Descrição da empresa -->
-            <p style="font-size:13px;">Líder no mercado de papéis e embalagens, focada na inovação e na sustentabilidade do ciclo da floresta ao consumidor final.</p>
+            <!-- ✅ ALTERE: Nome do zoológico -->
+            <h2 style="font-weight:900;">MEMPHIS ZOO</h2>
+            <!-- ✅ ALTERE: Descrição -->
+            <p>Conectando pessoas aos animais através de experiências memoráveis.</p>
         </div>
-        <!-- COLUNA 2: Nossos sites -->
+        <!-- COLUNA 2: Explorar -->
         <div>
             <!-- ✅ ALTERE: Título da coluna -->
-            <h4 style="color:white; margin-bottom:15px;">NOSSOS SITES</h4>
+            <h4>EXPLORE</h4>
             <!-- ✅ ALTERE: Links -->
-            <p style="font-size:12px; line-height:2;">
-                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Relações com Investidores</a><br>
-                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">ogreen ForYou</a><br>
-                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Blog ogreen</a>
+            <p style="font-size:13px; line-height:2;">
+                <a href="https://www.google.com/" target="_blank" style="color: white; text-decoration: none;">Animais</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: white; text-decoration: none;">Experiências</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: white; text-decoration: none;">Membros</a>
             </p>
         </div>
-        <!-- COLUNA 3: Contato -->
+        <!-- COLUNA 3: Suporte -->
         <div>
             <!-- ✅ ALTERE: Título da coluna -->
-            <h4 style="color:white; margin-bottom:15px;">CONTATO</h4>
+            <h4>SUPORTE</h4>
             <!-- ✅ ALTERE: Links -->
-            <p style="font-size:12px; line-height:2;">
-                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Fale Conosco</a><br>
-                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Imprensa</a><br>
-                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Trabalhe Conosco</a>
-            </p>
-        </div>
-        <!-- COLUNA 4: Redes sociais -->
-        <div>
-            <!-- ✅ ALTERE: Título da coluna -->
-            <h4 style="color:white; margin-bottom:15px;">REDES SOCIAIS</h4>
-            <!-- ✅ ALTERE: Links de redes sociais -->
-            <p style="font-size:12px; line-height:2;">
-                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">LinkedIn</a><br>
-                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">Instagram</a><br>
-                <a href="https://www.google.com/" target="_blank" style="color: #ccc; text-decoration: none;">YouTube</a>
+            <p style="font-size:13px; line-height:2;">
+                <a href="https://www.google.com/" target="_blank" style="color: white; text-decoration: none;">Doar</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: white; text-decoration: none;">Voluntários</a><br>
+                <a href="https://www.google.com/" target="_blank" style="color: white; text-decoration: none;">Trabalhe Conosco</a>
             </p>
         </div>
     </div>
     <!-- ❌ NÃO ALTERE: Linha divisória e copyright -->
-    <div style="text-align:center; border-top:1px solid #444; margin-top:50px; padding-top:20px; font-size:11px;">
+    <div style="text-align:center; margin-top:50px; border-top: 1px solid #444; padding-top:20px; font-size:12px; color:#888;">
         <!-- ✅ ALTERE: Texto de copyright -->
-        © 2026 ogreen S.A. | Todos os direitos reservados.
+        © 2026 Memphis Zoo. Todos os direitos reservados.
     </div>
 </div>
 """, unsafe_allow_html=True)
