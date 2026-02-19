@@ -1,6 +1,7 @@
 import streamlit as st
 import json
 from datetime import datetime
+import base64
 
 # ========== CONFIGURAÇÃO DA PÁGINA ==========
 st.set_page_config(
@@ -60,57 +61,212 @@ if "customizations" not in st.session_state:
 if "selected_section" not in st.session_state:
     st.session_state.selected_section = "hero"
 
-# ========== ESTILOS CSS ==========
-st.markdown("""
-<style>
-    .section-button {
-        padding: 12px 20px;
-        margin: 8px 0;
-        border: 2px solid #ddd;
-        border-radius: 8px;
-        cursor: pointer;
-        background: white;
-        width: 100%;
-        text-align: left;
-        font-weight: 500;
-        transition: all 0.3s;
-    }
-    
-    .section-button:hover {
-        border-color: #000;
-        background: #f5f5f5;
-    }
-    
-    .section-button.active {
-        border-color: #000;
-        background: #000;
-        color: white;
-    }
-    
-    .preview-container {
-        background: #000;
-        color: #fff;
-        padding: 40px;
-        border-radius: 12px;
-        min-height: 600px;
-        overflow-y: auto;
-    }
-    
-    .preview-section {
-        margin-bottom: 60px;
-        padding: 30px;
-        border: 1px solid rgba(255,255,255,0.2);
-        border-radius: 8px;
-    }
-    
-    .edit-panel {
-        background: #f9f9f9;
-        padding: 30px;
-        border-radius: 12px;
-        border: 1px solid #e0e0e0;
-    }
-</style>
-""", unsafe_allow_html=True)
+# ========== FUNÇÃO PARA GERAR HTML DO PREVIEW ==========
+def generate_preview_html():
+    """Gera o HTML completo do preview"""
+    html = f"""
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Preview Template 28</title>
+        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;1,300&family=Inter:wght@200;300&display=swap" rel="stylesheet">
+        <style>
+            * {{
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+            }}
+            
+            body {{
+                background-color: {st.session_state.customizations['colors']['background']};
+                color: {st.session_state.customizations['colors']['text']};
+                font-family: 'Inter', sans-serif;
+                font-weight: 200;
+                line-height: 1.6;
+            }}
+            
+            h1, h2, h3 {{
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                font-weight: 300;
+                letter-spacing: 1px;
+            }}
+            
+            .container {{
+                padding: 60px 40px;
+                max-width: 1200px;
+                margin: 0 auto;
+            }}
+            
+            .hero {{
+                text-align: center;
+                padding: 80px 40px;
+                margin-bottom: 40px;
+            }}
+            
+            .hero h1 {{
+                font-size: 48px;
+                margin-bottom: 20px;
+                line-height: 1.2;
+            }}
+            
+            .hero p {{
+                font-size: 20px;
+                opacity: 0.7;
+            }}
+            
+            .divider {{
+                border: none;
+                border-top: 1px solid rgba(255,255,255,0.2);
+                margin: 40px 0;
+            }}
+            
+            .manifesto {{
+                text-align: center;
+                margin: 60px 0;
+            }}
+            
+            .manifesto h2 {{
+                font-size: 36px;
+                margin-bottom: 30px;
+                line-height: 1.3;
+            }}
+            
+            .manifesto p {{
+                font-size: 16px;
+                opacity: 0.8;
+                max-width: 900px;
+                margin: 0 auto;
+                line-height: 1.8;
+            }}
+            
+            .stats {{
+                display: flex;
+                gap: 40px;
+                margin: 60px 0;
+                text-align: center;
+            }}
+            
+            .stat {{
+                flex: 1;
+            }}
+            
+            .stat-number {{
+                font-size: 56px;
+                font-family: 'Cormorant Garamond', serif;
+                font-style: italic;
+                margin-bottom: 15px;
+            }}
+            
+            .stat-text {{
+                font-size: 13px;
+                text-transform: uppercase;
+                letter-spacing: 2px;
+                opacity: 0.7;
+            }}
+            
+            .cta {{
+                text-align: center;
+                margin: 60px 0;
+                padding: 60px 40px;
+                background: rgba(255,255,255,0.05);
+                border-radius: 8px;
+            }}
+            
+            .cta h2 {{
+                font-size: 42px;
+                margin-bottom: 25px;
+            }}
+            
+            .cta p {{
+                font-size: 16px;
+                opacity: 0.8;
+                max-width: 800px;
+                margin: 0 auto 40px auto;
+                line-height: 1.8;
+            }}
+            
+            .cta-button {{
+                display: inline-block;
+                background: white;
+                color: black;
+                padding: 14px 35px;
+                border-radius: 6px;
+                text-decoration: none;
+                font-weight: bold;
+                font-size: 14px;
+                cursor: pointer;
+                transition: all 0.3s;
+            }}
+            
+            .cta-button:hover {{
+                background: rgba(255,255,255,0.9);
+                transform: translateY(-2px);
+            }}
+            
+            .footer {{
+                text-align: center;
+                padding: 40px;
+                font-size: 12px;
+                opacity: 0.5;
+                letter-spacing: 1px;
+                border-top: 1px solid rgba(255,255,255,0.2);
+                margin-top: 60px;
+            }}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <!-- HERO -->
+            <div class="hero">
+                <h1>{st.session_state.customizations['hero']['title']}</h1>
+                <p>{st.session_state.customizations['hero']['subtitle']}</p>
+            </div>
+            
+            <hr class="divider">
+            
+            <!-- MANIFESTO -->
+            <div class="manifesto">
+                <h2>{st.session_state.customizations['manifesto']['title']}</h2>
+                <p>{st.session_state.customizations['manifesto']['description']}</p>
+            </div>
+            
+            <hr class="divider">
+            
+            <!-- STATS -->
+            <div class="stats">
+                <div class="stat">
+                    <div class="stat-number">{st.session_state.customizations['stats']['stat1_number']}</div>
+                    <div class="stat-text">{st.session_state.customizations['stats']['stat1_text']}</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-number">{st.session_state.customizations['stats']['stat2_number']}</div>
+                    <div class="stat-text">{st.session_state.customizations['stats']['stat2_text']}</div>
+                </div>
+            </div>
+            
+            <hr class="divider">
+            
+            <!-- CTA -->
+            <div class="cta">
+                <h2>{st.session_state.customizations['cta']['title']}</h2>
+                <p>{st.session_state.customizations['cta']['description']}</p>
+                <a href="{st.session_state.customizations['cta']['button_url']}" target="_blank" class="cta-button">
+                    {st.session_state.customizations['cta']['button_text']}
+                </a>
+            </div>
+            
+            <!-- FOOTER -->
+            <div class="footer">
+                {st.session_state.customizations['footer']['text']}
+            </div>
+        </div>
+    </body>
+    </html>
+    """
+    return html
 
 # ========== LAYOUT PRINCIPAL ==========
 col_nav, col_preview, col_edit = st.columns([1, 1.5, 1.5])
@@ -145,62 +301,11 @@ with col_preview:
     st.markdown("### 👁️ Preview")
     st.markdown("---")
     
-    with st.container():
-        # Hero Preview
-        if st.session_state.selected_section in ["hero", "manifesto", "stats", "timeline", "cta", "footer", "colors"]:
-            preview_html = f"""
-            <div style="background: {st.session_state.customizations['colors']['background']}; color: {st.session_state.customizations['colors']['text']}; padding: 30px; border-radius: 8px; min-height: 500px; font-family: 'Inter', sans-serif;">
-                <h2 style="text-align: center; font-size: 32px; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif; font-style: italic;">
-                    {st.session_state.customizations['hero']['title']}
-                </h2>
-                <p style="text-align: center; font-size: 18px; opacity: 0.7; margin-bottom: 40px;">
-                    {st.session_state.customizations['hero']['subtitle']}
-                </p>
-                
-                <hr style="border: 1px solid rgba(255,255,255,0.2);">
-                
-                <h3 style="text-align: center; font-size: 24px; margin: 40px 0 20px 0; font-family: 'Cormorant Garamond', serif; font-style: italic;">
-                    {st.session_state.customizations['manifesto']['title']}
-                </h3>
-                <p style="text-align: center; font-size: 14px; opacity: 0.8; line-height: 1.6;">
-                    {st.session_state.customizations['manifesto']['description']}
-                </p>
-                
-                <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 40px 0;">
-                
-                <div style="display: flex; gap: 20px; margin: 40px 0;">
-                    <div style="flex: 1; text-align: center;">
-                        <h2 style="font-size: 48px; margin: 0; font-family: 'Cormorant Garamond', serif; font-style: italic;">{st.session_state.customizations['stats']['stat1_number']}</h2>
-                        <p style="font-size: 12px; opacity: 0.7; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;">{st.session_state.customizations['stats']['stat1_text']}</p>
-                    </div>
-                    <div style="flex: 1; text-align: center;">
-                        <h2 style="font-size: 48px; margin: 0; font-family: 'Cormorant Garamond', serif; font-style: italic;">{st.session_state.customizations['stats']['stat2_number']}</h2>
-                        <p style="font-size: 12px; opacity: 0.7; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;">{st.session_state.customizations['stats']['stat2_text']}</p>
-                    </div>
-                </div>
-                
-                <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 40px 0;">
-                
-                <h3 style="text-align: center; font-size: 20px; margin: 40px 0; font-family: 'Cormorant Garamond', serif; font-style: italic;">
-                    {st.session_state.customizations['cta']['title']}
-                </h3>
-                <p style="text-align: center; font-size: 14px; opacity: 0.8; margin: 20px 0 30px 0;">
-                    {st.session_state.customizations['cta']['description']}
-                </p>
-                <div style="text-align: center;">
-                    <a href="{st.session_state.customizations['cta']['button_url']}" target="_blank" style="display: inline-block; background: white; color: black; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; cursor: pointer;">
-                        {st.session_state.customizations['cta']['button_text']}
-                    </a>
-                </div>
-                
-                <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 40px 0;">
-                
-                <p style="text-align: center; font-size: 11px; opacity: 0.5; letter-spacing: 1px;">
-                    {st.session_state.customizations['footer']['text']}
-                </p>
-            </div>
-            """
-            st.markdown(preview_html, unsafe_allow_html=True)
+    # Gerar HTML e renderizar em iframe
+    preview_html = generate_preview_html()
+    
+    # Usar components.html para renderizar
+    st.components.v1.html(preview_html, height=700, scrolling=True)
 
 # ========== COLUNA 3: PAINEL DE EDIÇÃO ==========
 with col_edit:
