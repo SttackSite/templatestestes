@@ -146,64 +146,61 @@ with col_preview:
     st.markdown("---")
     
     with st.container():
-        preview_container = st.empty()
-        
-        with preview_container.container():
-            # Hero Preview
-            if st.session_state.selected_section in ["hero", "manifesto", "stats", "timeline", "cta", "footer", "colors"]:
-                st.markdown(f"""
-                <div style="background: {st.session_state.customizations['colors']['background']}; color: {st.session_state.customizations['colors']['text']}; padding: 30px; border-radius: 8px; min-height: 500px;">
-                    <h2 style="text-align: center; font-size: 32px; margin-bottom: 20px;">
-                        {st.session_state.customizations['hero']['title']}
-                    </h2>
-                    <p style="text-align: center; font-size: 18px; opacity: 0.7; margin-bottom: 40px;">
-                        {st.session_state.customizations['hero']['subtitle']}
-                    </p>
-                    
-                    <hr style="border: 1px solid rgba(255,255,255,0.2);">
-                    
-                    <h3 style="text-align: center; font-size: 24px; margin: 40px 0 20px 0;">
-                        {st.session_state.customizations['manifesto']['title']}
-                    </h3>
-                    <p style="text-align: center; font-size: 14px; opacity: 0.8; line-height: 1.6;">
-                        {st.session_state.customizations['manifesto']['description']}
-                    </p>
-                    
-                    <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 40px 0;">
-                    
-                    <div style="display: flex; gap: 20px; margin: 40px 0;">
-                        <div style="flex: 1; text-align: center;">
-                            <h2 style="font-size: 48px; margin: 0;">{st.session_state.customizations['stats']['stat1_number']}</h2>
-                            <p style="font-size: 12px; opacity: 0.7; margin-top: 10px;">{st.session_state.customizations['stats']['stat1_text']}</p>
-                        </div>
-                        <div style="flex: 1; text-align: center;">
-                            <h2 style="font-size: 48px; margin: 0;">{st.session_state.customizations['stats']['stat2_number']}</h2>
-                            <p style="font-size: 12px; opacity: 0.7; margin-top: 10px;">{st.session_state.customizations['stats']['stat2_text']}</p>
-                        </div>
+        # Hero Preview
+        if st.session_state.selected_section in ["hero", "manifesto", "stats", "timeline", "cta", "footer", "colors"]:
+            preview_html = f"""
+            <div style="background: {st.session_state.customizations['colors']['background']}; color: {st.session_state.customizations['colors']['text']}; padding: 30px; border-radius: 8px; min-height: 500px; font-family: 'Inter', sans-serif;">
+                <h2 style="text-align: center; font-size: 32px; margin-bottom: 20px; font-family: 'Cormorant Garamond', serif; font-style: italic;">
+                    {st.session_state.customizations['hero']['title']}
+                </h2>
+                <p style="text-align: center; font-size: 18px; opacity: 0.7; margin-bottom: 40px;">
+                    {st.session_state.customizations['hero']['subtitle']}
+                </p>
+                
+                <hr style="border: 1px solid rgba(255,255,255,0.2);">
+                
+                <h3 style="text-align: center; font-size: 24px; margin: 40px 0 20px 0; font-family: 'Cormorant Garamond', serif; font-style: italic;">
+                    {st.session_state.customizations['manifesto']['title']}
+                </h3>
+                <p style="text-align: center; font-size: 14px; opacity: 0.8; line-height: 1.6;">
+                    {st.session_state.customizations['manifesto']['description']}
+                </p>
+                
+                <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 40px 0;">
+                
+                <div style="display: flex; gap: 20px; margin: 40px 0;">
+                    <div style="flex: 1; text-align: center;">
+                        <h2 style="font-size: 48px; margin: 0; font-family: 'Cormorant Garamond', serif; font-style: italic;">{st.session_state.customizations['stats']['stat1_number']}</h2>
+                        <p style="font-size: 12px; opacity: 0.7; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;">{st.session_state.customizations['stats']['stat1_text']}</p>
                     </div>
-                    
-                    <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 40px 0;">
-                    
-                    <h3 style="text-align: center; font-size: 20px; margin: 40px 0;">CTA</h3>
-                    <h2 style="text-align: center; font-size: 28px; margin: 20px 0;">
-                        {st.session_state.customizations['cta']['title']}
-                    </h2>
-                    <p style="text-align: center; font-size: 14px; opacity: 0.8; margin: 20px 0 30px 0;">
-                        {st.session_state.customizations['cta']['description']}
-                    </p>
-                    <div style="text-align: center;">
-                        <a href="{st.session_state.customizations['cta']['button_url']}" target="_blank" style="display: inline-block; background: white; color: black; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold;">
-                            {st.session_state.customizations['cta']['button_text']}
-                        </a>
+                    <div style="flex: 1; text-align: center;">
+                        <h2 style="font-size: 48px; margin: 0; font-family: 'Cormorant Garamond', serif; font-style: italic;">{st.session_state.customizations['stats']['stat2_number']}</h2>
+                        <p style="font-size: 12px; opacity: 0.7; margin-top: 10px; text-transform: uppercase; letter-spacing: 1px;">{st.session_state.customizations['stats']['stat2_text']}</p>
                     </div>
-                    
-                    <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 40px 0;">
-                    
-                    <p style="text-align: center; font-size: 11px; opacity: 0.5;">
-                        {st.session_state.customizations['footer']['text']}
-                    </p>
                 </div>
-                """, unsafe_allow_html=True)
+                
+                <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 40px 0;">
+                
+                <h3 style="text-align: center; font-size: 20px; margin: 40px 0; font-family: 'Cormorant Garamond', serif; font-style: italic;">
+                    {st.session_state.customizations['cta']['title']}
+                </h3>
+                <p style="text-align: center; font-size: 14px; opacity: 0.8; margin: 20px 0 30px 0;">
+                    {st.session_state.customizations['cta']['description']}
+                </p>
+                <div style="text-align: center;">
+                    <a href="{st.session_state.customizations['cta']['button_url']}" target="_blank" style="display: inline-block; background: white; color: black; padding: 12px 30px; border-radius: 6px; text-decoration: none; font-weight: bold; cursor: pointer;">
+                        {st.session_state.customizations['cta']['button_text']}
+                    </a>
+                </div>
+                
+                <hr style="border: 1px solid rgba(255,255,255,0.2); margin: 40px 0;">
+                
+                <p style="text-align: center; font-size: 11px; opacity: 0.5; letter-spacing: 1px;">
+                    {st.session_state.customizations['footer']['text']}
+                </p>
+            </div>
+            """
+            st.markdown(preview_html, unsafe_allow_html=True)
 
 # ========== COLUNA 3: PAINEL DE EDIÇÃO ==========
 with col_edit:
