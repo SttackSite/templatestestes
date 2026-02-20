@@ -433,11 +433,18 @@ template_css = """
 
 # ========== RENDERIZAR PREVIEW ==========
 def render_preview():
-    from streamlit.components.v1 import html as st_html
+    import base64
     
     preview_html = f"""
-    {template_css}
-    
+    <!DOCTYPE html>
+    <html lang="pt-BR">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Preview</title>
+        {template_css}
+    </head>
+    <body>
     <div class="navbar">
         <div class="navbar-logo">{st.session_state.customizations['navbar_logo']}</div>
         <div class="navbar-links">
@@ -532,9 +539,14 @@ def render_preview():
     <div id="footer" class="footer">
         <p>{st.session_state.customizations['footer_text']}</p>
     </div>
+    </body>
+    </html>
     """
     
-    st_html(preview_html, height=2000)
+    # Usar iframe para renderizar
+    b64 = base64.b64encode(preview_html.encode()).decode()
+    iframe_html = f'<iframe src="data:text/html;base64,{b64}" width="100%" height="2000" frameborder="0" style="border: none; border-radius: 8px;"></iframe>'
+    st.markdown(iframe_html, unsafe_allow_html=True)
 
 # ========== INTERFACE ==========
 st.markdown("# 🚀 Customizador - Template 1: Agência Digital")
