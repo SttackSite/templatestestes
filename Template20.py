@@ -722,9 +722,9 @@ def render_preview():
         <div class="navbar">
             <div class="navbar-logo">{st.session_state.customizations['navbar_logo']}</div>
             <div class="navbar-links">
-                <a href="#" class="navbar-link">{st.session_state.customizations['navbar_link1']}</a>
-                <a href="#" class="navbar-link">{st.session_state.customizations['navbar_link2']}</a>
-                <a href="#" class="navbar-link">{st.session_state.customizations['navbar_link3']}</a>
+                <a class="navbar-link">{st.session_state.customizations['navbar_link1']}</a>
+                <a class="navbar-link">{st.session_state.customizations['navbar_link2']}</a>
+                <a class="navbar-link">{st.session_state.customizations['navbar_link3']}</a>
                 <a href="{st.session_state.customizations['navbar_cta_url']}" class="navbar-cta">{st.session_state.customizations['navbar_cta_text']}</a>
             </div>
         </div>
