@@ -1,215 +1,147 @@
 import streamlit as st
 import json
 
-# Configuração inicial da página (Isso aqui o cliente não muda na hora, só você)
-st.set_page_config(layout="wide", page_title="Dockyard Configurator", page_icon="⚙️")
+st.set_page_config(layout="wide", page_title="Dockyard Configurator Pro", page_icon="🛠️")
 
-def render_configurator():
-    st.sidebar.title("🎨 Personalize seu Site")
-    st.sidebar.markdown("Altere os campos abaixo e veja o resultado ao lado.")
+def render_configurator_pro():
+    st.sidebar.title("🛠️ Editor Dinâmico")
+    st.sidebar.info("Adicione ou remova itens nas tabelas abaixo.")
 
-    #Dict que guardará todas as configs
     config = {}
 
-    # ==============================
-    # 1. CORES E ESTILO (Sidebar)
-    # ==============================
-    st.sidebar.header("1. Cores da Marca")
-    config['cor_destaque'] = st.sidebar.color_picker("Cor Destaque (Amarelo)", "#ffcc00")
-    config['cor_principal'] = st.sidebar.color_picker("Cor Principal (Preto)", "#111111")
-    config['cor_fundo'] = st.sidebar.color_picker("Cor Fundo (Branco/Cinza)", "#f4f4f4")
+    # --- 1. CONFIGURAÇÕES GERAIS (Igual antes) ---
+    with st.sidebar.expander("1. Cores e Textos Principais", expanded=False):
+        config['cor_destaque'] = st.color_picker("Cor Destaque", "#ffcc00")
+        config['cor_principal'] = st.color_picker("Cor Principal", "#111111")
+        config['cor_fundo'] = st.color_picker("Cor Fundo", "#f4f4f4")
+        config['nome_site'] = st.text_input("Nome do Site", "DOCKYARD SOCIAL")
+        config['hero_titulo'] = st.text_area("Título Hero", "COMIDA DE RUA.<br>BOAS VIBES.")
 
-    # ==============================
-    # 2. CONTEÚDO HERO (Sidebar)
-    # ==============================
-    st.sidebar.header("2. Topo do Site (Hero)")
-    config['titulo_aba'] = st.sidebar.text_input("Título da Aba do Navegador", "Dockyard Social | Comida & Vibe")
-    config['aviso_topo'] = st.sidebar.text_input("Texto do Aviso (Faixa Preta)", "ABERTO NESTE FINAL DE SEMANA • GARANTA SEU INGRESSO")
-    config['nome_site'] = st.sidebar.text_input("Nome/Logo do Site", "DOCKYARD SOCIAL")
-    
-    config['hero_titulo'] = st.sidebar.text_area("Título Principal (Use <br> para pular linha)", "COMIDA DE RUA.<br>BOAS VIBES.<br>PARA TODOS.")
-    config['hero_subtitulo'] = st.sidebar.text_area("Subtítulo", "O melhor mercado de comida de rua de Glasgow, agora na sua tela.")
+    # --- 2. CARDS DINÂMICOS (A MÁGICA AQUI) ---
+    st.sidebar.markdown("### 2. Gerenciar Cards (Grid)")
+    st.sidebar.caption("Adicione linhas para criar novos cards. Delete para remover.")
 
-    # ==============================
-    # 3. CARDS (Sidebar)
-    # ==============================
-    st.sidebar.header("3. Destaques (Cards)")
-    
-    # Card 1
-    st.sidebar.markdown("---")
-    st.sidebar.markdown("**Card 1 (Esquerda)**")
-    config['c1_titulo'] = st.sidebar.text_input("Card 1 - Título", "COMIDA")
-    config['c1_sub'] = st.sidebar.text_input("Card 1 - Subtítulo", "10+ VENDEDORES")
-    config['c1_img'] = st.sidebar.text_input("Card 1 - URL Imagem", "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600")
-    
-    # Card 2
-    st.sidebar.markdown("**Card 2 (Centro)**")
-    config['c2_titulo'] = st.sidebar.text_input("Card 2 - Título", "BEBIDA")
-    config['c2_sub'] = st.sidebar.text_input("Card 2 - Subtítulo", "CRAFT BEER & COCKTAILS")
-    config['c2_img'] = st.sidebar.text_input("Card 2 - URL Imagem", "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600")
+    # Dados iniciais (padrão) para não vir vazio
+    default_cards = [
+        {"titulo": "COMIDA", "sub": "10+ VENDEDORES", "img": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"},
+        {"titulo": "BEBIDA", "sub": "CRAFT BEER", "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600"},
+        {"titulo": "EVENTOS", "sub": "MÚSICA AO VIVO", "img": "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600"},
+    ]
 
-    # Card 3
-    st.sidebar.markdown("**Card 3 (Direita)**")
-    config['c3_titulo'] = st.sidebar.text_input("Card 3 - Título", "EVENTOS")
-    config['c3_sub'] = st.sidebar.text_input("Card 3 - Subtítulo", "MÚSICA AO VIVO")
-    config['c3_img'] = st.sidebar.text_input("Card 3 - URL Imagem", "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600")
-
-    # ==============================
-    # 4. BOTÃO DE AÇÃO (Sidebar)
-    # ==============================
-    st.sidebar.header("4. Chamada para Ação")
-    config['cta_titulo'] = st.sidebar.text_input("Título CTA", "PRONTO PARA VIVER A EXPERIÊNCIA?")
-    config['cta_texto'] = st.sidebar.text_input("Texto CTA", "Garanta seu ingresso agora e venha fazer parte da melhor vibe.")
-    config['cta_btn_texto'] = st.sidebar.text_input("Texto do Botão", "RESERVAR AGORA")
-    config['cta_link'] = st.sidebar.text_input("Link do Botão", "https://www.google.com/")
-
-    # ==============================
-    # 5. GERAR JSON (Sidebar Final)
-    # ==============================
-    st.sidebar.markdown("---")
-    st.sidebar.success("Tudo pronto?")
-    json_string = json.dumps(config, indent=4, ensure_ascii=False)
-    
-    st.sidebar.download_button(
-        label="📥 BAIXAR ARQUIVO DE CONFIGURAÇÃO",
-        data=json_string,
-        file_name="meu_site_config.json",
-        mime="application/json"
+    # O Editor de Dados (Permite adicionar/remover linhas)
+    edited_cards = st.sidebar.data_editor(
+        default_cards,
+        num_rows="dynamic", # Isso permite adicionar/remover
+        column_config={
+            "titulo": st.column_config.TextColumn("Título"),
+            "sub": st.column_config.TextColumn("Subtítulo"),
+            "img": st.column_config.TextColumn("URL da Imagem", help="Cole o link da imagem aqui"),
+        },
+        key="editor_cards"
     )
-
-    # ==============================================================================
-    # AREA DE PREVIEW (O TEMPLATE ORIGINAL APLICANDO AS VARIÁVEIS)
-    # ==============================================================================
     
-    # Injeção de CSS Dinâmico
+    # Salva no config
+    config['cards'] = edited_cards
+
+    # --- 3. BOTÕES EXTRAS (Exemplo de lista dinâmica também) ---
+    st.sidebar.markdown("### 3. Botões de Ação")
+    
+    default_buttons = [
+        {"texto": "RESERVAR AGORA", "link": "https://google.com", "cor": "#111", "texto_cor": "#ffcc00"}
+    ]
+
+    edited_buttons = st.sidebar.data_editor(
+        default_buttons,
+        num_rows="dynamic",
+        column_config={
+            "texto": "Texto do Botão",
+            "link": "Link de Destino",
+            "cor": "Cor do Fundo",
+            "texto_cor": "Cor da Letra"
+        },
+        key="editor_buttons"
+    )
+    config['botoes'] = edited_buttons
+
+    # --- GERAR JSON ---
+    st.sidebar.markdown("---")
+    json_string = json.dumps(config, indent=4, ensure_ascii=False)
+    st.sidebar.download_button("📥 BAIXAR CONFIGURAÇÃO", json_string, "site_dinamico.json", "application/json")
+
+    # =========================================================
+    # PREVIEW DO SITE (RENDERIZAÇÃO DO ARRAY DINÂMICO)
+    # =========================================================
+    
+    # CSS Dinâmico (usando as variáveis)
     st.markdown(f"""
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Oswald:wght@700&display=swap');
-
-        :root {{
-            --dock-yellow: {config['cor_destaque']}; 
-            --dock-black: {config['cor_principal']};
-            --dock-white: {config['cor_fundo']};
-        }}
-
-        .stApp {{ background-color: var(--dock-white); }}
-
-        h1, h2, h3, .impact-font {{
-            font-family: 'Oswald', sans-serif;
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: -1px;
-            line-height: 0.9;
-        }}
-
-        .nav-dock {{
-            background-color: var(--dock-black);
-            color: var(--dock-yellow);
-            padding: 15px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }}
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&display=swap');
+        :root {{ --main: {config['cor_destaque']}; --dark: {config['cor_principal']}; --bg: {config['cor_fundo']}; }}
+        .stApp {{ background-color: var(--bg); }}
+        .card {{ border: 4px solid var(--dark); background: var(--dark); color: white; margin-bottom: 20px; }}
+        .card img {{ width: 100%; height: 200px; object-fit: cover; filter: grayscale(20%); }}
+        .card-content {{ padding: 15px; }}
+        h1, h2 {{ font-family: 'Oswald', sans-serif; text-transform: uppercase; }}
         
-        /* ... (O resto do CSS original pode ficar aqui, omiti para não ficar gigante) ... */
-        
-        .hero-dock {{
-            background-color: var(--dock-yellow);
-            padding: 80px 5%;
-            border-bottom: 8px solid var(--dock-black);
-            text-align: left;
-        }}
-
-        .hero-h1 {{
-            font-size: clamp(60px, 12vw, 150px);
-            color: var(--dock-black);
-        }}
-
-        .dock-card {{
-            background: var(--dock-black);
-            color: white;
-            padding: 0;
-            border-radius: 0px;
+        /* Estilo dos Botões Dinâmicos */
+        .dynamic-btn {{
+            padding: 15px 30px; 
+            font-family: 'Oswald'; 
+            text-decoration: none; 
+            display: inline-block; 
+            margin: 5px;
+            font-size: 18px;
             transition: 0.3s;
-            height: 100%;
-            border: 4px solid var(--dock-black);
         }}
-        
-        .card-content {{ padding: 25px; }}
-        
-        .announcement {{
-            background: var(--dock-black);
-            color: white;
-            padding: 10px;
-            font-weight: bold;
-            text-align: center;
-            letter-spacing: 2px;
-        }}
-
-        .action-button {{
-            display: inline-block !important;
-            background: var(--dock-black) !important;
-            color: var(--dock-yellow) !important;
-            border: none !important;
-            padding: 15px 40px !important;
-            font-family: 'Oswald', sans-serif !important;
-            font-size: 14px !important;
-            text-transform: uppercase !important;
-            text-decoration: none !important;
-            transition: 0.3s !important;
-            cursor: pointer !important;
-        }}
-        
-        [data-testid="stHeader"] {{ display: none; }}
+        .dynamic-btn:hover {{ opacity: 0.8; }}
     </style>
     """, unsafe_allow_html=True)
 
-    # Renderização HTML usando as variáveis do config
-    st.markdown(f'<div class="announcement">{config["aviso_topo"]}</div>', unsafe_allow_html=True)
+    # Hero
+    st.markdown(f'<h1 style="font-size: 80px; color: {config["cor_principal"]}">{config["hero_titulo"]}</h1>', unsafe_allow_html=True)
 
-    st.markdown(f"""
-    <div class="nav-dock">
-        <div style="font-size: 32px; font-family: 'Oswald'; font-weight: 700;">{config['nome_site']}</div>
-        <div style="display: flex; gap: 30px;">
-            <span style="font-size:12px;">PREVIEW MODE</span>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
+    # --- RENDERIZAÇÃO INTELIGENTE DOS CARDS (GRID) ---
+    st.write("---")
+    
+    # Lógica: Se o usuário colocar 5 cards, precisamos quebrar linha a cada 3
+    cols_per_row = 3
+    cards = config['cards']
+    
+    # Loop pulando de 3 em 3
+    for i in range(0, len(cards), cols_per_row):
+        # Cria as colunas para essa linha
+        cols = st.columns(cols_per_row)
+        
+        # Preenche as colunas
+        for j in range(cols_per_row):
+            if i + j < len(cards): # Verifica se o card existe
+                card = cards[i + j]
+                with cols[j]:
+                    st.markdown(f"""
+                    <div class="card">
+                        <img src="{card['img']}">
+                        <div class="card-content">
+                            <h2>{card['titulo']}</h2>
+                            <p style="color: var(--main); font-weight: bold;">{card['sub']}</p>
+                        </div>
+                    </div>
+                    """, unsafe_allow_html=True)
 
-    st.markdown('<div class="hero-dock">', unsafe_allow_html=True)
-    st.markdown(f'<h1 class="hero-h1">{config["hero_titulo"]}</h1>', unsafe_allow_html=True)
-    st.markdown(f'<p style="font-size: 20px; font-weight: 900; color: #111; margin-top: 20px;">{config["hero_subtitulo"]}</p>', unsafe_allow_html=True)
-    st.markdown('</div>', unsafe_allow_html=True)
-
-    st.write("")
-    col1, col2, col3 = st.columns(3)
-
-    def render_dock_card(col, title, subtitle, img_url):
-        with col:
-            st.markdown(f"""
-            <div class="dock-card">
-                <img src="{img_url}" style="width:100%; filter: grayscale(20%); object-fit: cover; height: 300px;">
-                <div class="card-content">
-                    <h2 style="font-size: 40px; margin-bottom: 5px;">{title}</h2>
-                    <p style="color: var(--dock-yellow); font-weight: bold; letter-spacing: 1px;">{subtitle}</p>
-                </div>
-            </div>
-            """, unsafe_allow_html=True)
-
-    render_dock_card(col1, config['c1_titulo'], config['c1_sub'], config['c1_img'])
-    render_dock_card(col2, config['c2_titulo'], config['c2_sub'], config['c2_img'])
-    render_dock_card(col3, config['c3_titulo'], config['c3_sub'], config['c3_img'])
-
-    st.markdown(f"""
-    <div id="reservar" style="background-color: var(--dock-yellow); color: #111; padding: 100px 5%; text-align: center;">
-        <h2 style="font-size: 60px; margin-bottom: 30px;">{config['cta_titulo']}</h2>
-        <p style="font-size: 20px; margin-bottom: 40px;">{config['cta_texto']}</p>
-        <a href="{config['cta_link']}" target="_blank" class="action-button" style="background: #111; color: var(--dock-yellow);">{config['cta_btn_texto']}</a>
-    </div>
-    """, unsafe_allow_html=True)
+    # --- RENDERIZAÇÃO DOS BOTÕES DINÂMICOS ---
+    st.write("---")
+    st.markdown("<div style='text-align: center; padding: 50px;'>", unsafe_allow_html=True)
+    st.markdown("<h2>PRONTO PARA AÇÃO?</h2>", unsafe_allow_html=True)
+    
+    # Loop pelos botões
+    for btn in config['botoes']:
+        st.markdown(f"""
+        <a href="{btn['link']}" class="dynamic-btn" 
+           style="background-color: {btn['cor']}; color: {btn['texto_cor']};">
+           {btn['texto']}
+        </a>
+        """, unsafe_allow_html=True)
+        
+    st.markdown("</div>", unsafe_allow_html=True)
 
 if __name__ == "__main__":
-    render_configurator()
+    render_configurator_pro()
