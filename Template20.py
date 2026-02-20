@@ -61,6 +61,15 @@ if "customizations" not in st.session_state:
 if "selected_section" not in st.session_state:
     st.session_state.selected_section = "hero"
 
+if "user_email" not in st.session_state:
+    st.session_state.user_email = ""
+
+if "user_url_text" not in st.session_state:
+    st.session_state.user_url_text = ""
+
+if "preview_html" not in st.session_state:
+    st.session_state.preview_html = None
+
 # ========== FUNÇÃO PARA GERAR HTML DO PREVIEW ==========
 def generate_preview_html():
     """Gera o HTML completo do preview"""
@@ -301,11 +310,16 @@ with col_preview:
     st.markdown("### 👁️ Preview")
     st.markdown("---")
     
-    # Gerar HTML e renderizar em iframe
-    preview_html = generate_preview_html()
+    # Botão para atualizar preview
+    if st.button("🔄 Atualizar Preview", use_container_width=True, key="update_preview"):
+        st.session_state.preview_html = generate_preview_html()
     
-    # Usar components.html para renderizar
-    st.components.v1.html(preview_html, height=700, scrolling=True)
+    # Se não tiver preview gerado ainda, gerar
+    if st.session_state.preview_html is None:
+        st.session_state.preview_html = generate_preview_html()
+    
+    # Renderizar preview
+    st.components.v1.html(st.session_state.preview_html, height=700, scrolling=True)
 
 # ========== COLUNA 3: PAINEL DE EDIÇÃO ==========
 with col_edit:
@@ -337,7 +351,7 @@ with col_edit:
             key="hero_keep"
         )
         
-        st.info("💡 Edite o título e subtítulo do topo da página. O preview atualiza em tempo real!")
+        st.info("💡 Edite o título e subtítulo do topo da página. Clique em 'Atualizar Preview' para ver as mudanças!")
     
     # ========== MANIFESTO ==========
     elif section == "manifesto":
@@ -530,102 +544,110 @@ with col_edit:
         
         st.info("💡 Customize as cores principais da página.")
 
+# ========== SEÇÃO DE IDENTIFICAÇÃO E DOWNLOAD ==========
+st.markdown("---")
+st.markdown("### 📌 Sua Identificação e URL")
+
+col_email, col_url = st.columns([1, 1.5])
+
+with col_email:
+    st.markdown("**📧 Email**")
+    st.session_state.user_email = st.text_input(
+        "Insira seu email (para identificação)",
+        value=st.session_state.user_email,
+        placeholder="seu.email@example.com",
+        key="user_email_input",
+        label_visibility="collapsed"
+    )
+    st.caption("Usaremos isso para identificar seu projeto")
+
+with col_url:
+    st.markdown("**🌐 URL do seu site**")
+    st.session_state.user_url_text = st.text_input(
+        "Insira o texto da URL",
+        value=st.session_state.user_url_text,
+        placeholder="meusite",
+        key="user_url_input",
+        label_visibility="collapsed"
+    )
+    
+    # Mostrar preview da URL
+    if st.session_state.user_url_text:
+        full_url = f"https://{st.session_state.user_url_text}.streamlit.app"
+        st.success(f"✅ Sua URL será: `{full_url}`")
+    else:
+        st.info("Sua URL será: `https://inserirtextoaqui.streamlit.app`")
+
 # ========== SEÇÃO DE DOWNLOAD ==========
 st.markdown("---")
-st.markdown("### 💾 Salvar Customizações")
+st.markdown("### 💾 Baixar Customizações")
 
-col_download, col_reset = st.columns(2)
+# Preparar dados para download
+customization_data = {
+    "template_id": 28,
+    "template_name": "What Is Missing? - Memorial Global",
+    "user_email": st.session_state.user_email if st.session_state.user_email else "não informado",
+    "user_url": f"https://{st.session_state.user_url_text}.streamlit.app" if st.session_state.user_url_text else "https://inserirtextoaqui.streamlit.app",
+    "created_at": datetime.now().isoformat(),
+    "customizations": st.session_state.customizations
+}
+
+json_str = json.dumps(customization_data, indent=2, ensure_ascii=False)
+
+col_download, col_info = st.columns([1.5, 2])
 
 with col_download:
-    # Preparar JSON para download
-    customization_data = {
-        "template_id": 28,
-        "template_name": "What Is Missing? - Memorial Global",
-        "user_email": "cliente@example.com",
-        "created_at": datetime.now().isoformat(),
-        "customizations": st.session_state.customizations
-    }
-    
-    json_str = json.dumps(customization_data, indent=2, ensure_ascii=False)
-    
     st.download_button(
-        label="📥 Baixar Customizações (JSON)",
+        label="📥 Baixar JSON",
         data=json_str,
-        file_name=f"customization_template28_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
+        file_name=f"template28_customizacao_{datetime.now().strftime('%Y%m%d_%H%M%S')}.json",
         mime="application/json",
         use_container_width=True
     )
 
-with col_reset:
-    if st.button("🔄 Resetar para Padrão", use_container_width=True):
-        st.session_state.customizations = {
-            "hero": {
-                "title": "O que está desaparecendo?",
-                "subtitle": "Um memorial para a sexta extinção em massa.",
-                "keep_default": False
-            },
-            "manifesto": {
-                "title": "Nós não podemos proteger o que não lembramos.",
-                "description": '"What Is Missing?" é um memorial permanente dedicado às espécies e habitats que já perdemos e àqueles que ainda podemos salvar. Ao contrário de um memorial físico estático, ele vive no espaço digital, conectando histórias de extinção com soluções para o futuro.',
-                "keep_default": False
-            },
-            "stats": {
-                "stat1_number": "70%",
-                "stat1_text": "Da vida selvagem do planeta desapareceu nos últimos 50 anos.",
-                "stat2_number": "1 Milhão",
-                "stat2_text": "De espécies estão atualmente sob risco de extinção.",
-                "keep_default": False
-            },
-            "timeline": {
-                "items": [
-                    {"year": "1900s", "title": "O Céu Escurecido", "description": "Relatos de quando os bandos de pombos-passageiros eram tão vastos que bloqueavam o sol por horas em sua passagem."},
-                    {"year": "1950s", "title": "Silêncio nos Rios", "description": "O desaparecimento gradual do esturjão e de outras espécies migratórias que antes fervilhavam nas águas doces."},
-                    {"year": "2024", "title": "O Canto Solitário", "description": "O último registro sonoro de espécies de pássaros em florestas tropicais que não encontram mais pares para acasalamento."}
-                ],
-                "keep_default": False
-            },
-            "cta": {
-                "title": "Ainda há tempo.",
-                "description": "O projeto também destaca planos de conservação e visões de um mundo onde a humanidade e a natureza coexistem em equilíbrio. Proteja um habitat. Restaure uma floresta. Reduza sua pegada.",
-                "button_text": "Saiba Mais",
-                "button_url": "https://www.google.com/",
-                "keep_default": False
-            },
-            "footer": {
-                "text": "WHAT IS MISSING? FOUNDATION © 2026 <br> CIÊNCIA / ARTE / ATIVISMO",
-                "keep_default": False
-            },
-            "colors": {
-                "background": "#000000",
-                "text": "#ffffff",
-                "accent": "#ffffff",
-                "keep_default": False
-            }
-        }
-        st.rerun()
+with col_info:
+    st.info("""
+    **📤 Próximos passos:**
+    
+    1. Clique em "Baixar JSON"
+    2. Envie o arquivo para: **sttacksite@gmail.com**
+    3. Você receberá um email de confirmação
+    4. Informaremos os prazos e próximas etapas
+    """)
 
-# ========== INFORMAÇÕES ==========
+# ========== INSTRUÇÕES FINAIS ==========
+st.markdown("---")
+st.markdown("### 📖 Informações Importantes")
+
+col_info1, col_info2 = st.columns(2)
+
+with col_info1:
+    st.markdown("""
+    #### ✏️ Você pode mudar:
+    
+    - ✅ O template (cores, textos, layout)
+    - ✅ A URL do seu site
+    - ✅ Seu email de identificação
+    
+    **Quantas vezes quiser!**
+    """)
+
+with col_info2:
+    st.markdown("""
+    #### 📧 Como funciona:
+    
+    1. Customize tudo aqui
+    2. Baixe o JSON
+    3. Envie para sttacksite@gmail.com
+    4. Receba confirmação por email
+    5. Nós criamos seu site!
+    """)
+
 st.markdown("---")
 st.markdown("""
-### 📌 Como Funciona
+### 🎯 Dúvidas?
 
-1. **Selecione uma seção** no painel esquerdo
-2. **Edite os campos** no painel de edição
-3. **Veja o preview** atualizar em tempo real
-4. **Baixe o JSON** quando terminar
-5. **Envie para o designer** para implementação final
-
-### ✅ Seções Disponíveis
-
-- **Hero**: Título e subtítulo do topo
-- **Manifesto**: Conteúdo principal
-- **Estatísticas**: Números e descrições
-- **Linha do Tempo**: Eventos e marcos
-- **CTA**: Chamada para ação
-- **Rodapé**: Informações finais
-- **Cores**: Paleta de cores
-
-### 💡 Dica
-
-Você pode marcar "Manter padrão" em qualquer seção se não quiser customizá-la!
+- **Email:** sttacksite@gmail.com
+- **Suporte:** [Contate-nos](https://help.manus.im)
+- **Documentação:** Verifique o email de confirmação para mais informações
 """)
