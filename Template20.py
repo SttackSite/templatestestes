@@ -433,6 +433,8 @@ template_css = """
 
 # ========== RENDERIZAR PREVIEW ==========
 def render_preview():
+    from streamlit.components.v1 import html as st_html
+    
     preview_html = f"""
     {template_css}
     
@@ -532,7 +534,7 @@ def render_preview():
     </div>
     """
     
-    st.markdown(preview_html, unsafe_allow_html=True)
+    st_html(preview_html, height=2000)
 
 # ========== INTERFACE ==========
 st.markdown("# 🚀 Customizador - Template 1: Agência Digital")
