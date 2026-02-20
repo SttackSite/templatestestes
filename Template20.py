@@ -2,7 +2,7 @@ import streamlit as st
 import json
 from datetime import datetime
 
-# ========== CONFIGURAÇÃO ==========
+# ========== CONFIGURAÇÃO - DEVE SER A PRIMEIRA COISA ==========
 st.set_page_config(
     page_title="Template 1 - Customizador",
     page_icon="🚀",
