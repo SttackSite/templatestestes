@@ -42,7 +42,7 @@ def render_configurator():
 
     # NOVO: Seção de URL
     st.sidebar.subheader("🌐 Link do seu Site")
-    url_nome = st.sidebar.text_input("Nome da URL desejada:", placeholder="ex: minha-loja")
+    url_nome = st.sidebar.text_input("Nome da URL desejada:", placeholder="ex: myplace")
     config['url_planejada'] = f"https://{url_nome}.streamlit.app" if url_nome else "https://...streamlit.app"
     st.sidebar.caption(f"Seu site será: {config['url_planejada']}")
 
