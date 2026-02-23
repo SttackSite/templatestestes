@@ -2,13 +2,49 @@ import streamlit as st
 import json
 
 # Configuração da Página
-st.set_page_config(layout="wide", page_title="Editor Dockyard Ultimate", page_icon="⚙️")
+st.set_page_config(layout="wide", page_title="Editor Dockyard Ultimate | Sttack", page_icon="⚙️")
 
 def render_configurator():
-    # --- BARRA LATERAL (PAINEL DE CONTROLE) ---
-    st.sidebar.title("🎨 CONFIGURADOR COMPLETO")
+    # --- CSS PARA INSTRUÇÕES E ESTILO ---
+    st.markdown("""
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;900&family=Oswald:wght@700&display=swap');
+        
+        .instruction-box {
+            background-color: #e3f2fd;
+            padding: 25px;
+            border-left: 6px solid #1976d2;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            font-family: 'Inter', sans-serif;
+            color: #0d47a1;
+        }
+        
+        [data-testid="stHeader"] { display: none; }
+    </style>
+    """, unsafe_allow_html=True)
+
+    # --- 1. AVISO INICIAL DE VENDAS ---
+    st.markdown(f"""
+    <div class="instruction-box">
+        <h3 style="margin-top:0;">🚀 Instruções de Customização</h3>
+        Estas são as alterações básicas para colocar seu site no ar rapidamente. 
+        Qualquer <strong>customização mais complexa</strong> pode ser detalhada no campo de 
+        <em>'Observações'</em> na barra lateral ou no corpo do e-mail. 
+        Nós aplicamos para você (desde que não seja estrutural).
+    </div>
+    """, unsafe_allow_html=True)
+
+    # --- BARRA LATERAL (PAINEL DE CONTROLE COMPLETO) ---
+    st.sidebar.title("🎨 CONFIGURADOR MASTER")
     
     config = {}
+
+    # NOVO: Seção de URL
+    st.sidebar.subheader("🌐 Link do seu Site")
+    url_nome = st.sidebar.text_input("Nome da URL desejada:", placeholder="ex: minha-loja")
+    config['url_planejada'] = f"https://{url_nome}.streamlit.app" if url_nome else "https://...streamlit.app"
+    st.sidebar.caption(f"Seu site será: {config['url_planejada']}")
 
     # 1. Identidade Visual
     with st.sidebar.expander("📌 1. Identidade e Cores", expanded=True):
@@ -33,12 +69,12 @@ def render_configurator():
     config['cards'] = st.sidebar.data_editor(default_cards, num_rows="dynamic", key="editor_cards")
 
     # 4. Seção Sobre
-    with st.sidebar.expander("📖 4. Seção 'Sobre' (Texto Preto)", expanded=False):
+    with st.sidebar.expander("📖 4. Seção 'Sobre'", expanded=False):
         config['sobre_titulo'] = st.text_input("Título da Seção", "MAIS QUE UM MERCADO.")
-        config['sobre_texto'] = st.text_area("Texto Descritivo", "A Dockyard Social foi criada para oferecer um espaço seguro e inclusivo para todos. Nós apoiamos talentos locais...")
+        config['sobre_texto'] = st.text_area("Texto Descritivo", "A Dockyard Social foi criada para oferecer um espaço seguro e inclusivo para todos.")
 
     # 5. CTAs e Botões
-    st.sidebar.markdown("### 🔗 5. Chamadas para Ação (Botões)")
+    st.sidebar.markdown("### 🔗 5. Botões de Ação")
     config['cta_titulo_secao'] = st.sidebar.text_input("Título da Seção de Botões", "PRONTO PARA VIVER A EXPERIÊNCIA?")
     default_buttons = [{"texto": "RESERVAR AGORA", "link": "https://google.com"}]
     config['botoes'] = st.sidebar.data_editor(default_buttons, num_rows="dynamic", key="editor_btns")
@@ -52,10 +88,16 @@ def render_configurator():
         config['link_tiktok'] = st.text_input("Link TikTok", "https://tiktok.com")
         config['footer_copyright'] = st.text_input("Copyright", "© 2026 DOCKYARD SOCIAL. SEMPRE REAL, NUNCA COPIADO.")
 
-    # Botão de Exportação
+    # NOVO: Observações
+    st.sidebar.markdown("### 📝 7. Observações")
+    config['observacoes'] = st.sidebar.text_area("Detalhe aqui outras customizações desejadas:")
+
+    # FINALIZAÇÃO
     st.sidebar.markdown("---")
+    st.sidebar.error("⚠️ **IMPORTANTE:**\n\nBaixe o arquivo JSON e envie para **sttacksite@gmail.com** para aplicarmos seu site!")
+    
     json_export = json.dumps(config, indent=4, ensure_ascii=False)
-    st.sidebar.download_button("📥 BAIXAR CONFIGURAÇÃO COMPLETA", json_export, "meu_site_final.json", "application/json")
+    st.sidebar.download_button("📥 BAIXAR CONFIGURAÇÃO", json_export, "meu_site_sttack.json", "application/json")
 
     # =========================================================
     # RENDERIZAÇÃO DO SITE (ESTILO FIEL AO ORIGINAL)
@@ -63,7 +105,6 @@ def render_configurator():
     
     st.markdown(f"""
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Oswald:wght@700&display=swap');
         :root {{
             --dock-yellow: {config['cor_destaque']};
             --dock-black: {config['cor_principal']};
@@ -73,63 +114,38 @@ def render_configurator():
         .main .block-container {{ padding: 0 !important; max-width: 100% !important; }}
 
         .announcement {{
-            background: var(--dock-black);
-            color: white;
-            padding: 12px;
-            font-weight: bold;
-            text-align: center;
-            letter-spacing: 2px;
-            font-family: 'Inter', sans-serif;
-            font-size: 14px;
+            background: var(--dock-black); color: white; padding: 12px;
+            font-weight: bold; text-align: center; letter-spacing: 2px;
+            font-family: 'Inter', sans-serif; font-size: 14px;
         }}
         .nav-dock {{
-            background-color: var(--dock-black);
-            color: var(--dock-yellow);
-            padding: 20px 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            font-family: 'Oswald', sans-serif;
+            background-color: var(--dock-black); color: var(--dock-yellow);
+            padding: 20px 5%; display: flex; justify-content: space-between;
+            align-items: center; font-family: 'Oswald', sans-serif;
         }}
         .hero-dock {{
-            background-color: var(--dock-yellow);
-            padding: 80px 5%;
+            background-color: var(--dock-yellow); padding: 80px 5%;
             border-bottom: 8px solid var(--dock-black);
         }}
         .hero-h1 {{
-            font-family: 'Oswald', sans-serif;
-            font-size: clamp(50px, 10vw, 130px);
-            color: var(--dock-black);
-            line-height: 0.9;
-            text-transform: uppercase;
-            margin: 0;
+            font-family: 'Oswald', sans-serif; font-size: clamp(50px, 10vw, 130px);
+            color: var(--dock-black); line-height: 0.9; text-transform: uppercase; margin: 0;
         }}
         .dock-card {{
-            background: var(--dock-black);
-            color: white;
-            border: 4px solid var(--dock-black);
-            transition: 0.3s;
-            margin-bottom: 25px;
+            background: var(--dock-black); color: white; border: 4px solid var(--dock-black);
+            transition: 0.3s; margin-bottom: 25px;
         }}
         .card-content {{ padding: 25px; }}
         h2 {{ font-family: 'Oswald', sans-serif; text-transform: uppercase; margin: 0; }}
 
         .action-button {{
-            display: inline-block !important;
-            background: var(--dock-black) !important;
-            color: var(--dock-yellow) !important;
-            padding: 18px 45px !important;
-            font-family: 'Oswald', sans-serif !important;
-            font-size: 20px !important;
-            text-transform: uppercase !important;
-            text-decoration: none !important;
-            font-weight: bold !important;
-            transition: 0.2s !important;
-            border: none !important;
+            display: inline-block !important; background: var(--dock-black) !important;
+            color: var(--dock-yellow) !important; padding: 18px 45px !important;
+            font-family: 'Oswald', sans-serif !important; font-size: 20px !important;
+            text-transform: uppercase !important; text-decoration: none !important;
+            font-weight: bold !important; transition: 0.2s !important; border: none !important;
         }}
         .action-button:hover {{ background: #333 !important; color: white !important; transform: scale(1.05); }}
-        
-        [data-testid="stHeader"] {{ display: none; }}
     </style>
     """, unsafe_allow_html=True)
 
@@ -141,14 +157,13 @@ def render_configurator():
     st.markdown(f"""
     <div class="hero-dock">
         <h1 class="hero-h1">{config['hero_titulo']}</h1>
-        <p style="font-size: 22px; font-weight: 900; color: #111; margin-top: 25px; max-width: 700px;">{config['hero_subtitulo']}</p>
+        <p style="font-size: 22px; font-weight: 900; color: #111; margin-top: 25px;">URL Sugerida: {config['url_planejada']}</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # 3. Grid de Cards (Iteração Dinâmica)
+    # 3. Grid de Cards
     st.write("")
     cards = config['cards']
-    # Organiza em colunas de 3
     for i in range(0, len(cards), 3):
         cols = st.columns(3)
         for j in range(3):
@@ -160,45 +175,36 @@ def render_configurator():
                         <img src="{c['img']}" style="width:100%; height:300px; object-fit:cover;">
                         <div class="card-content">
                             <h2 style="font-size: 40px; line-height: 1;">{c['titulo']}</h2>
-                            <p style="color: var(--dock-yellow); font-weight: bold; margin-top: 10px;">{c['sub']}</p>
+                            <p style="color: var(--dock-yellow); font-weight: bold;">{c['sub']}</p>
                         </div>
                     </div>
                     """, unsafe_allow_html=True)
 
-    # 4. Seção Sobre (Fiel ao original)
+    # 4. Sobre
     st.markdown(f"""
     <div style="background-color: var(--dock-black); color: white; padding: 100px 5%; margin-top: 50px;">
-        <div style="max-width: 800px;">
-            <h2 style="font-size: 60px; color: var(--dock-yellow); margin-bottom: 30px;">{config['sobre_titulo']}</h2>
-            <p style="font-size: 24px; line-height: 1.4; font-weight: 300;">{config['sobre_texto']}</p>
-        </div>
+        <h2 style="font-size: 60px; color: var(--dock-yellow); margin-bottom: 30px;">{config['sobre_titulo']}</h2>
+        <p style="font-size: 24px; line-height: 1.4; font-weight: 300; max-width: 800px;">{config['sobre_texto']}</p>
     </div>
     """, unsafe_allow_html=True)
 
-    # 5. CTA Botões
+    # 5. CTA
     st.markdown(f"""
     <div style="background-color: var(--dock-yellow); padding: 120px 5%; text-align: center; border-top: 8px solid var(--dock-black);">
         <h2 style="font-size: 60px; margin-bottom: 40px; color: var(--dock-black);">{config['cta_titulo_secao']}</h2>
     """, unsafe_allow_html=True)
-    
     for btn in config['botoes']:
         st.markdown(f'<a href="{btn["link"]}" target="_blank" class="action-button">{btn["texto"]}</a>', unsafe_allow_html=True)
-    
     st.markdown("</div>", unsafe_allow_html=True)
 
-    # 6. Footer (Fiel ao original)
+    # 6. Footer
     st.markdown(f"""
     <div style="padding: 80px 5%; background: var(--dock-yellow); color: #111; border-top: 2px solid var(--dock-black);">
         <div style="display: flex; justify-content: space-between; align-items: flex-end; flex-wrap: wrap; gap: 40px;">
-            <div>
-                <h2 style="font-size: 45px;">{config['nome_site']}.</h2>
-                <p style="font-size: 18px; font-weight: bold;">{config['footer_endereco']}</p>
-            </div>
+            <div><h2 style="font-size: 45px;">{config['nome_site']}.</h2><p style="font-weight: bold;">{config['footer_endereco']}</p></div>
             <div style="text-align: right; font-weight: bold; font-size: 16px;">
-                <a href="{config['link_instagram']}" target="_blank" style="color: #111; text-decoration: none;">INSTAGRAM</a> / 
-                <a href="{config['link_facebook']}" target="_blank" style="color: #111; text-decoration: none;">FACEBOOK</a> / 
-                <a href="{config['link_tiktok']}" target="_blank" style="color: #111; text-decoration: none;">TIKTOK</a><br>
-                <a href="mailto:{config['footer_email']}" style="color: #111; text-decoration: none;">{config['footer_email']}</a>
+                {config['footer_email']}<br>
+                INSTAGRAM / FACEBOOK / TIKTOK
             </div>
         </div>
         <div style="margin-top: 60px; border-top: 3px solid #111; padding-top: 20px; font-size: 13px; font-weight: 900;">
