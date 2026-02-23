@@ -157,7 +157,6 @@ def render_configurator():
     st.markdown(f"""
     <div class="hero-dock">
         <h1 class="hero-h1">{config['hero_titulo']}</h1>
-        <p style="font-size: 22px; font-weight: 900; color: #111; margin-top: 25px;">URL Sugerida: {config['url_planejada']}</p>
     </div>
     """, unsafe_allow_html=True)
 
