@@ -211,7 +211,9 @@ def render():
         <div style="max-width: 800px;">
             <h2 style="font-size: 60px; color: var(--dock-yellow); margin-bottom: 30px;">MAIS QUE UM MERCADO.</h2>
             <p style="font-size: 24px; line-height: 1.4; font-weight: 300;">
-                A Dockyard Social foi criada para oferecer um espaço seguro e inclusivo para todos. Nós apoiamos talentos locais, reduzimos o desperdício e garantimos que a única coisa quente por aqui (além da comida) seja a hospitalidade.
+                A Dockyard Social foi criada para oferecer um espaço seguro e inclusivo para todos. 
+                Nós apoiamos talentos locais, reduzimos o desperdício e garantimos que a única coisa 
+                quente por aqui (além da comida) seja a hospitalidade.
             </p>
         </div>
     </div>
