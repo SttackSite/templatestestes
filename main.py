@@ -1,138 +1,154 @@
 import streamlit as st
-import json
+import streamlit.components.v1 as components
 
-# --- 1. CONFIGURAÇÃO DA PÁGINA ---
-st.set_page_config(page_title="Editor Sttack - Template 26", layout="wide")
+# Configuração da página
+st.set_page_config(layout="wide", page_title="Editor Sttack - Template 26", page_icon="🏗️")
 
-# --- 2. ESTADO INICIAL (O que o cliente vai editar) ---
-if 'db' not in st.session_state:
-    st.session_state.db = {
-        "cores": {"amarelo": "#ffcc00", "preto": "#111111", "fundo": "#f4f4f4"},
+# --- 1. INICIALIZAÇÃO DOS DADOS (BASEADO NO SEU Template26.py) ---
+if 'step' not in st.session_state:
+    st.session_state.step = 1
+
+if 'data' not in st.session_state:
+    st.session_state.data = {
+        "cor_yellow": "#ffcc00",
+        "cor_black": "#111111",
         "aviso": "ABERTO NESTE FINAL DE SEMANA • GARANTA SEU INGRESSO",
         "marca": "DOCKYARD SOCIAL",
-        "nav_links": [
-            {"label": "O QUE ROLA", "url": "#oque-rola"},
-            {"label": "COMIDA", "url": "#comida"},
-            {"label": "BEBIDA", "url": "#bebida"},
-            {"label": "RESERVAR", "url": "#reservar"}
-        ],
-        "hero": {
-            "titulo": "COMIDA DE RUA.<br>BOAS VIBES.<br>PARA TODOS.",
-            "desc": "O melhor mercado de comida de rua de Glasgow, agora na sua tela."
-        },
-        "cards": [
-            {"titulo": "COMIDA", "sub": "10+ VENDEDORES", "img": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"},
-            {"titulo": "BEBIDA", "sub": "CRAFT BEER & COCKTAILS", "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600"},
-            {"titulo": "EVENTOS", "sub": "MÚSICA AO VIVO", "img": "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600"}
-        ],
-        "sobre": {
-            "titulo": "MAIS QUE UM MERCADO.",
-            "texto": "A Dockyard Social foi criada para oferecer um espaço seguro e inclusivo para todos..."
-        },
-        "cta": {
-            "titulo": "PRONTO PARA VIVER A EXPERIÊNCIA?",
-            "sub": "Garanta seu ingresso agora e venha fazer parte da melhor vibe de Glasgow.",
-            "botao_txt": "RESERVAR AGORA",
-            "botao_url": "https://www.google.com"
-        }
+        "hero_h1": "COMIDA DE RUA.<br>BOAS VIBES.<br>PARA TODOS.",
+        "hero_p": "O melhor mercado de comida de rua de Glasgow, agora na sua tela.",
+        "card1": {"t": "COMIDA", "s": "10+ VENDEDORES", "img": "https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=600"},
+        "card2": {"t": "BEBIDA", "s": "CRAFT BEER & COCKTAILS", "img": "https://images.unsplash.com/photo-1514362545857-3bc16c4c7d1b?w=600"},
+        "card3": {"t": "EVENTOS", "s": "MÚSICA AO VIVO", "img": "https://images.unsplash.com/photo-1501281668745-f7f57925c3b4?w=600"},
+        "sobre_h2": "MAIS QUE UM MERCADO.",
+        "sobre_p": "A Dockyard Social foi criada para oferecer um espaço seguro e inclusivo para todos.",
+        "cta_h2": "PRONTO PARA VIVER A EXPERIÊNCIA?",
+        "cta_p": "Garanta seu ingresso agora e venha fazer parte da melhor vibe de Glasgow.",
+        "cta_btn_txt": "RESERVAR AGORA",
+        "cta_url": "https://www.google.com/",
+        "footer_end": "952 South St, Glasgow G14 0BX",
+        "footer_email": "hello@dockyardsocial.com"
     }
 
-# --- 3. SIDEBAR DE EDIÇÃO (CONTROLE TOTAL) ---
-with st.sidebar:
-    st.title("🛠️ EDITOR TEMPLATE 26")
-    
-    with st.expander("🎨 Cores e Identidade"):
-        st.session_state.db['marca'] = st.text_input("Nome da Marca", st.session_state.db['marca'])
-        st.session_state.db['cores']['amarelo'] = st.color_picker("Amarelo Principal", st.session_state.db['cores']['amarelo'])
-        st.session_state.db['cores']['preto'] = st.color_picker("Preto Principal", st.session_state.db['cores']['preto'])
-        st.session_state.db['aviso'] = st.text_input("Aviso Superior", st.session_state.db['aviso'])
-
-    with st.expander("🚀 Hero (Topo)"):
-        st.session_state.db['hero']['titulo'] = st.text_area("Título (HTML aceito)", st.session_state.db['hero']['titulo'])
-        st.session_state.db['hero']['desc'] = st.text_area("Descrição", st.session_state.db['hero']['desc'])
-
-    with st.expander("🍔 Gerenciar Cards"):
-        # Aqui ele pode adicionar e excluir elementos
-        st.session_state.db['cards'] = st.data_editor(st.session_state.db['cards'], num_rows="dynamic")
-
-    with st.expander("🎯 Call to Action (Botão)"):
-        st.session_state.db['cta']['titulo'] = st.text_input("Título CTA", st.session_state.db['cta']['titulo'])
-        st.session_state.db['cta']['botao_txt'] = st.text_input("Texto do Botão", st.session_state.db['cta']['botao_txt'])
-        st.session_state.db['cta']['botao_url'] = st.text_input("Link do Botão", st.session_state.db['cta']['botao_url'])
-
-    st.divider()
-    json_data = json.dumps(st.session_state.db, indent=4)
-    st.download_button("📥 GERAR JSON PARA GITHUB", json_data, "config_t26.json")
-
-# --- 4. RENDERIZAÇÃO 100% FIEL (INJEÇÃO DE CSS) ---
-db = st.session_state.db
-st.markdown(f"""
+# --- 2. FUNÇÃO DE RENDERIZAÇÃO (REPRODUÇÃO FIEL DO SEU HTML) ---
+def render_live_preview(d):
+    # Injetando o seu CSS e HTML original
+    return f"""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&family=Oswald:wght@700&display=swap');
-        :root {{
-            --dock-yellow: {db['cores']['amarelo']};
-            --dock-black: {db['cores']['preto']};
-            --dock-white: {db['cores']['fundo']};
-        }}
-        .stApp {{ background-color: var(--dock-white); }}
-        [data-testid="stHeader"] {{ display: none; }}
-        
-        h1, h2, h3 {{ font-family: 'Oswald', sans-serif; text-transform: uppercase; font-weight: 700; line-height: 0.9; }}
-        .announcement {{ background: var(--dock-black); color: white; padding: 10px; text-align: center; font-weight: bold; letter-spacing: 2px; }}
-        
-        .nav-dock {{
-            background-color: var(--dock-black); color: var(--dock-yellow);
-            padding: 15px 5%; display: flex; justify-content: space-between; align-items: center;
-            position: sticky; top: 0; z-index: 1000;
-        }}
-        .nav-link {{ color: var(--dock-yellow) !important; text-decoration: none; font-weight: bold; font-family: 'Oswald'; font-size: 14px; margin-left: 25px; }}
-
-        .hero-dock {{ background-color: var(--dock-yellow); padding: 80px 5%; border-bottom: 8px solid var(--dock-black); }}
-        .hero-h1 {{ font-size: clamp(60px, 12vw, 150px); color: var(--dock-black); }}
-
-        .dock-card {{ background: var(--dock-black); color: white; border: 4px solid var(--dock-black); transition: 0.3s; height: 100%; }}
-        .dock-card:hover {{ transform: rotate(-1deg); border-color: var(--dock-yellow); }}
-        
-        .action-button {{
-            display: inline-block; background: var(--dock-black); color: var(--dock-yellow);
-            padding: 18px 45px; font-family: 'Oswald'; font-size: 18px; text-decoration: none;
-            font-weight: bold; transition: 0.3s;
-        }}
-        .action-button:hover {{ background: #333; color: white; }}
+        :root {{ --dock-yellow: {d['cor_yellow']}; --dock-black: {d['cor_black']}; --dock-white: #f4f4f4; }}
+        body {{ background-color: var(--dock-white); margin: 0; font-family: 'Inter', sans-serif; }}
+        h1, h2, h3 {{ font-family: 'Oswald', sans-serif; text-transform: uppercase; line-height: 0.9; margin: 0; }}
+        .announcement {{ background: var(--dock-black); color: white; padding: 10px; text-align: center; font-weight: bold; font-size: 14px; letter-spacing: 2px; }}
+        .nav-dock {{ background-color: var(--dock-black); color: var(--dock-yellow); padding: 15px 5%; display: flex; justify-content: space-between; align-items: center; }}
+        .hero-dock {{ background-color: var(--dock-yellow); padding: 60px 5%; border-bottom: 8px solid var(--dock-black); }}
+        .hero-h1 {{ font-size: 60px; color: var(--dock-black); font-family: 'Oswald'; }}
+        .grid-dock {{ display: flex; gap: 20px; padding: 40px 5%; }}
+        .dock-card {{ background: var(--dock-black); color: white; flex: 1; border: 4px solid var(--dock-black); }}
+        .card-content {{ padding: 20px; }}
+        .card-img {{ width: 100%; height: 200px; object-fit: cover; filter: grayscale(20%); }}
+        .action-button {{ display: inline-block; background: var(--dock-black); color: var(--dock-yellow); padding: 15px 30px; text-decoration: none; font-family: 'Oswald'; font-weight: bold; margin-top: 20px; }}
+        .sobre-box {{ background: #111; color: white; padding: 60px 5%; }}
     </style>
-""", unsafe_allow_html=True)
 
-# --- 5. ESTRUTURA VISUAL ---
-st.markdown(f'<div class="announcement">{db["aviso"]}</div>', unsafe_allow_html=True)
-
-# Nav
-links_html = "".join([f'<a class="nav-link" href="{l["url"]}">{l["label"]}</a>' for l in db['nav_links']])
-st.markdown(f'<div class="nav-dock"><div style="font-size: 32px; font-family: Oswald;">{db["marca"]}</div><div>{links_html}</div></div>', unsafe_allow_html=True)
-
-# Hero
-st.markdown(f'<div class="hero-dock"><h1 class="hero-h1">{db["hero"]["titulo"]}</h1><p style="font-size: 20px; font-weight: 900; margin-top: 20px;">{db["hero"]["desc"]}</p></div>', unsafe_allow_html=True)
-
-# Cards Dinâmicos
-st.write("")
-cols = st.columns(len(db['cards']))
-for i, col in enumerate(cols):
-    card = db['cards'][i]
-    with col:
-        st.markdown(f"""
-            <div class="dock-card">
-                <img src="{card['img']}" style="width:100%; height:300px; object-fit:cover;">
-                <div style="padding: 25px;">
-                    <h2 style="font-size: 40px; margin:0;">{card['titulo']}</h2>
-                    <p style="color: var(--dock-yellow); font-weight: bold;">{card['sub']}</p>
-                </div>
-            </div>
-        """, unsafe_allow_html=True)
-
-# CTA
-st.markdown(f"""
-    <div style="background-color: var(--dock-yellow); color: #111; padding: 100px 5%; text-align: center; border-top: 8px solid var(--dock-black);">
-        <h2 style="font-size: 60px; margin-bottom: 20px;">{db['cta']['titulo']}</h2>
-        <p style="font-size: 20px; margin-bottom: 40px;">{db['cta']['sub']}</p>
-        <a href="{db['cta']['botao_url']}" target="_blank" class="action-button">{db['cta']['botao_txt']}</a>
+    {f'<div class="announcement">{d["aviso"]}</div>' if d["aviso"] else ""}
+    <div class="nav-dock">
+        <div style="font-size: 28px; font-family: 'Oswald'; font-weight: 700;">{d['marca']}</div>
+        <div style="display: flex; gap: 20px; font-size: 12px; font-weight: bold;"><span>O QUE ROLA</span><span>COMIDA</span><span>RESERVAR</span></div>
     </div>
-""", unsafe_allow_html=True)
+    <div class="hero-dock">
+        <h1 class="hero-h1">{d['hero_h1']}</h1>
+        <p style="font-size: 18px; font-weight: 900; color: #111; margin-top: 15px;">{d['hero_p']}</p>
+    </div>
+    <div class="grid-dock">
+        <div class="dock-card"><img src="{d['card1']['img']}" class="card-img"><div class="card-content"><h2>{d['card1']['t']}</h2><p style="color:var(--dock-yellow)">{d['card1']['s']}</p></div></div>
+        <div class="dock-card"><img src="{d['card2']['img']}" class="card-img"><div class="card-content"><h2>{d['card2']['t']}</h2><p style="color:var(--dock-yellow)">{d['card2']['s']}</p></div></div>
+        <div class="dock-card"><img src="{d['card3']['img']}" class="card-img"><div class="card-content"><h2>{d['card3']['t']}</h2><p style="color:var(--dock-yellow)">{d['card3']['s']}</p></div></div>
+    </div>
+    <div class="sobre-box">
+        <h2 style="color: var(--dock-yellow); font-size: 40px;">{d['sobre_h2']}</h2>
+        <p style="font-size: 18px; line-height: 1.4; margin-top: 20px;">{d['sobre_p']}</p>
+    </div>
+    <div style="background: var(--dock-yellow); padding: 60px 5%; text-align: center;">
+        <h2 style="font-size: 40px;">{d['cta_h2']}</h2>
+        <p>{d['cta_p']}</p>
+        <a href="{d['cta_url']}" class="action-button">{d['cta_btn_txt']}</a>
+    </div>
+    """
+
+# --- 3. LAYOUT DO EDITOR ---
+col_form, col_view = st.columns([1, 1.8])
+
+with col_form:
+    st.title("🛠️ Customizar Template 26")
+    st.info(f"Etapa {st.session_state.step} de 5")
+
+    # --- PASSO 1: CORES E MARCA ---
+    if st.session_state.step == 1:
+        st.subheader("🎨 Identidade Visual")
+        st.session_state.data['marca'] = st.text_input("Nome da Marca", st.session_state.data['marca'])
+        st.session_state.data['cor_yellow'] = st.color_picker("Cor Principal (Yellow)", st.session_state.data['cor_yellow'])
+        st.session_state.data['cor_black'] = st.color_picker("Cor Secundária (Black)", st.session_state.data['cor_black'])
+        
+        acao_aviso = st.radio("Banner de Aviso Superior:", ["Manter Original", "Editar Texto", "Excluir"])
+        if acao_aviso == "Editar Texto":
+            st.session_state.data['aviso'] = st.text_input("Texto do Aviso", st.session_state.data['aviso'])
+        elif acao_aviso == "Excluir":
+            st.session_state.data['aviso'] = ""
+
+    # --- PASSO 2: HERO (O IMPACTO) ---
+    elif st.session_state.step == 2:
+        st.subheader("🚀 Seção de Impacto (Hero)")
+        st.session_state.data['hero_h1'] = st.text_area("Título Principal (HTML permitido)", st.session_state.data['hero_h1'])
+        st.session_state.data['hero_p'] = st.text_area("Subtítulo/Descrição", st.session_state.data['hero_p'])
+
+    # --- PASSO 3: CARDS (OS PRODUTOS) ---
+    elif st.session_state.step == 3:
+        st.subheader("🍔 Grid de Conteúdo (Cards)")
+        with st.expander("Card 1 - Editar"):
+            st.session_state.data['card1']['t'] = st.text_input("Título 1", st.session_state.data['card1']['t'])
+            st.session_state.data['card1']['s'] = st.text_input("Subtítulo 1", st.session_state.data['card1']['s'])
+            st.session_state.data['card1']['img'] = st.text_input("URL Imagem 1", st.session_state.data['card1']['img'])
+        with st.expander("Card 2 - Editar"):
+            st.session_state.data['card2']['t'] = st.text_input("Título 2", st.session_state.data['card2']['t'])
+            st.session_state.data['card2']['s'] = st.text_input("Subtítulo 2", st.session_state.data['card2']['s'])
+            st.session_state.data['card2']['img'] = st.text_input("URL Imagem 2", st.session_state.data['card2']['img'])
+
+    # --- PASSO 4: TEXTO SOBRE E CTA ---
+    elif st.session_state.step == 4:
+        st.subheader("📝 Textos e Chamada para Ação")
+        st.session_state.data['sobre_h2'] = st.text_input("Título 'Sobre'", st.session_state.data['sobre_h2'])
+        st.session_state.data['sobre_p'] = st.text_area("Texto descritivo", st.session_state.data['sobre_p'])
+        st.divider()
+        st.session_state.data['cta_btn_txt'] = st.text_input("Texto do Botão", st.session_state.data['cta_btn_txt'])
+        st.session_state.data['cta_url'] = st.text_input("Link do Botão (URL)", st.session_state.data['cta_url'])
+
+    # --- PASSO 5: FINALIZAÇÃO ---
+    elif st.session_state.step == 5:
+        st.balloons()
+        st.success("Tudo pronto! Seu template foi configurado.")
+        st.markdown("### 📥 Próximos Passos:")
+        st.write("1. Revise o design à direita.")
+        st.write("2. Clique no botão abaixo para exportar as configurações.")
+        if st.button("Exportar Configuração JSON"):
+            st.json(st.session_state.data)
+
+    # --- NAVEGAÇÃO ---
+    st.divider()
+    c1, c2 = st.columns(2)
+    with c1:
+        if st.session_state.step > 1:
+            if st.button("⬅️ Voltar"):
+                st.session_state.step -= 1
+                st.rerun()
+    with c2:
+        if st.session_state.step < 5:
+            if st.button("Próximo ➡️"):
+                st.session_state.step += 1
+                st.rerun()
+
+# --- 4. RENDERIZAÇÃO DO PREVIEW (DIREITA) ---
+with col_view:
+    st.subheader("👁️ Visualização Real")
+    st.markdown('<div style="border: 4px solid #111; border-radius: 10px; overflow: hidden;">', unsafe_allow_html=True)
+    components.html(render_live_preview(st.session_state.data), height=800, scrolling=True)
+    st.markdown('</div>', unsafe_allow_html=True)
