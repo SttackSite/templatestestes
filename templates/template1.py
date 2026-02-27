@@ -11,6 +11,39 @@ TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/site/main/1.p
 TEMPLATE_NAME = "Template 1 — Agência Digital"
 
 
+# ─────────────────────────────────────────────────────────────────────────────
+# INICIALIZAÇÃO DO SESSION STATE
+# ─────────────────────────────────────────────────────────────────────────────
+def _init_state():
+    """Inicializa os valores padrão no session_state na primeira execução."""
+    if "t1_nav_links" not in st.session_state:
+        st.session_state.t1_nav_links = [
+            {"texto": "Serviços", "url": "#features"},
+            {"texto": "Sobre",    "url": "#cta"},
+            {"texto": "Contato",  "url": "#footer"},
+        ]
+    if "t1_hero_btns" not in st.session_state:
+        st.session_state.t1_hero_btns = [
+            {"texto": "Solicitar Consultoria", "url": "https://www.google.com/", "estilo": "primário"},
+            {"texto": "Ver Portfólio",          "url": "https://www.google.com/", "estilo": "secundário"},
+        ]
+    if "t1_stats" not in st.session_state:
+        st.session_state.t1_stats = [
+            {"numero": "500+", "label": "Clientes Satisfeitos"},
+            {"numero": "10+",  "label": "Anos de Experiência"},
+            {"numero": "300%", "label": "Crescimento Médio"},
+        ]
+    if "t1_cards" not in st.session_state:
+        st.session_state.t1_cards = [
+            {"icone": "📱", "titulo": "Social Media",       "descricao": "Gerenciamento completo de suas redes sociais com estratégia de conteúdo"},
+            {"icone": "🎯", "titulo": "Publicidade Digital", "descricao": "Campanhas otimizadas em Google Ads e Facebook para máximo ROI"},
+            {"icone": "📊", "titulo": "Análise de Dados",    "descricao": "Relatórios detalhados e insights para melhorar seu desempenho"},
+            {"icone": "🌐", "titulo": "SEO & Conteúdo",      "descricao": "Otimização para buscas e criação de conteúdo de alta qualidade"},
+            {"icone": "💻", "titulo": "Web Design",          "descricao": "Websites modernos e responsivos que convertem visitantes em clientes"},
+            {"icone": "📧", "titulo": "Email Marketing",     "descricao": "Campanhas de email personalizadas que geram resultados"},
+        ]
+
+
 def render():
     """
     Renderiza o editor do Template 1.
@@ -19,12 +52,12 @@ def render():
         import editor_template1
         editor_template1.render()
     """
+    _init_state()
 
-    # ── CSS global do painel ─────────────────────────────────────────────────
+    # ── CSS global ───────────────────────────────────────────────────────────
     st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
         html, body, [data-testid="stAppViewContainer"] {
             font-family: 'Inter', sans-serif;
             background: #f4f6fb;
@@ -33,25 +66,49 @@ def render():
         [data-testid="stDecoration"], footer { display: none !important; }
 
         .panel-title    { font-size: 18px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }
-        .panel-subtitle { font-size: 13px; color: #64748b; margin-bottom: 20px; }
+        .panel-subtitle { font-size: 13px; color: #64748b; margin-bottom: 16px; }
         .section-label  {
             font-size: 11px; font-weight: 700; text-transform: uppercase;
             letter-spacing: 1px; color: #94a3b8;
             margin: 20px 0 8px 0; padding-bottom: 6px;
             border-bottom: 1px solid #f1f5f9;
         }
-        .stButton > button {
+        .item-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 10px;
+            padding: 12px 14px;
+            margin-bottom: 8px;
+        }
+        /* Botão principal (enviar) */
+        div[data-testid="stButton"]:has(button[kind="primary"]) button {
             background: linear-gradient(135deg, #0066FF, #0052CC) !important;
             color: white !important; border: none !important;
             border-radius: 8px !important; font-weight: 600 !important;
             padding: 10px 24px !important; width: 100% !important;
             margin-top: 12px !important;
         }
-        .stButton > button:hover {
-            transform: translateY(-1px) !important;
-            box-shadow: 0 4px 12px rgba(0,102,255,0.3) !important;
+        /* Botão de adicionar */
+        .add-btn button {
+            background: #f0f7ff !important;
+            color: #0066FF !important;
+            border: 1px dashed #0066FF !important;
+            border-radius: 8px !important;
+            font-size: 13px !important;
+            font-weight: 500 !important;
+            width: 100% !important;
+            margin: 4px 0 12px 0 !important;
         }
-        /* Imagem do template com scroll próprio */
+        /* Botão de remover */
+        .remove-btn button {
+            background: #fff5f5 !important;
+            color: #e53e3e !important;
+            border: 1px solid #fed7d7 !important;
+            border-radius: 6px !important;
+            font-size: 12px !important;
+            padding: 2px 10px !important;
+        }
+        /* Imagem do template */
         .template-img-wrapper {
             height: calc(100vh - 120px);
             overflow-y: auto;
@@ -69,14 +126,14 @@ def render():
 
     col_form, col_preview = st.columns([1, 2], gap="medium")
 
-    # ── PAINEL ESQUERDO: FORMULÁRIO COM SCROLL NATIVO ────────────────────────
+    # ════════════════════════════════════════════════════════════════════════
+    # PAINEL ESQUERDO — FORMULÁRIO
+    # ════════════════════════════════════════════════════════════════════════
     with col_form:
-        # Cabeçalho fora do container (fica fixo)
         st.markdown(f'<div class="panel-title">✏️ Editor de Template</div>', unsafe_allow_html=True)
         st.markdown(f'<div class="panel-subtitle">{TEMPLATE_NAME}</div>', unsafe_allow_html=True)
 
-        # Container com scroll nativo do Streamlit
-        with st.container(height=700, border=False):
+        with st.container(height=720, border=False):
 
             # ── Configuração Geral ────────────────────────────────────────────
             st.markdown('<div class="section-label">⚙️ Configuração Geral</div>', unsafe_allow_html=True)
@@ -91,10 +148,34 @@ def render():
 
             # ── Navbar ────────────────────────────────────────────────────────
             st.markdown('<div class="section-label">🔝 Navegação (Navbar)</div>', unsafe_allow_html=True)
-            navbar_logo    = st.text_input("Logo / Nome da marca", "🚀 AGÊNCIA")
-            navbar_link1   = st.text_input("Link 1 — Texto", "Serviços")
-            navbar_link2   = st.text_input("Link 2 — Texto", "Sobre")
-            navbar_link3   = st.text_input("Link 3 — Texto", "Contato")
+            navbar_logo = st.text_input("Logo / Nome da marca", "🚀 AGÊNCIA")
+
+            # Links da navbar (dinâmicos)
+            st.caption("Links do menu")
+            for i, link in enumerate(st.session_state.t1_nav_links):
+                with st.container():
+                    c1, c2, c3 = st.columns([3, 3, 1])
+                    with c1:
+                        st.session_state.t1_nav_links[i]["texto"] = st.text_input(
+                            "Texto", link["texto"], key=f"t1_nl_txt_{i}", label_visibility="collapsed",
+                            placeholder="Texto do link"
+                        )
+                    with c2:
+                        st.session_state.t1_nav_links[i]["url"] = st.text_input(
+                            "URL", link["url"], key=f"t1_nl_url_{i}", label_visibility="collapsed",
+                            placeholder="URL"
+                        )
+                    with c3:
+                        if len(st.session_state.t1_nav_links) > 1:
+                            if st.button("🗑", key=f"t1_nl_del_{i}", help="Remover link"):
+                                st.session_state.t1_nav_links.pop(i)
+                                st.rerun()
+
+            with st.container():
+                if st.button("＋ Adicionar link ao menu", key="t1_nl_add"):
+                    st.session_state.t1_nav_links.append({"texto": "Novo Link", "url": "#"})
+                    st.rerun()
+
             navbar_cta_txt = st.text_input("Botão CTA — Texto", "Começar")
             navbar_cta_url = st.text_input("Botão CTA — URL", "https://www.google.com/")
 
@@ -103,19 +184,62 @@ def render():
             hero_titulo_antes    = st.text_input("Título — Parte 1 (antes do destaque)", "Transforme seu Negócio com")
             hero_titulo_destaque = st.text_input("Título — Parte 2 (em destaque colorido)", "Estratégia Digital")
             hero_subtitulo       = st.text_area("Subtítulo", "Soluções completas de marketing digital que aumentam suas vendas e presença online", height=80)
-            hero_btn1_txt        = st.text_input("Botão 1 — Texto", "Solicitar Consultoria")
-            hero_btn1_url        = st.text_input("Botão 1 — URL", "https://www.google.com/")
-            hero_btn2_txt        = st.text_input("Botão 2 — Texto", "Ver Portfólio")
-            hero_btn2_url        = st.text_input("Botão 2 — URL", "https://www.google.com/")
+
+            # Botões do hero (dinâmicos)
+            st.caption("Botões do hero")
+            for i, btn in enumerate(st.session_state.t1_hero_btns):
+                with st.container():
+                    c1, c2, c3, c4 = st.columns([3, 3, 2, 1])
+                    with c1:
+                        st.session_state.t1_hero_btns[i]["texto"] = st.text_input(
+                            "Texto", btn["texto"], key=f"t1_hb_txt_{i}", label_visibility="collapsed",
+                            placeholder="Texto do botão"
+                        )
+                    with c2:
+                        st.session_state.t1_hero_btns[i]["url"] = st.text_input(
+                            "URL", btn["url"], key=f"t1_hb_url_{i}", label_visibility="collapsed",
+                            placeholder="URL"
+                        )
+                    with c3:
+                        st.session_state.t1_hero_btns[i]["estilo"] = st.selectbox(
+                            "Estilo", ["primário", "secundário"], key=f"t1_hb_style_{i}",
+                            index=0 if btn["estilo"] == "primário" else 1,
+                            label_visibility="collapsed"
+                        )
+                    with c4:
+                        if len(st.session_state.t1_hero_btns) > 1:
+                            if st.button("🗑", key=f"t1_hb_del_{i}", help="Remover botão"):
+                                st.session_state.t1_hero_btns.pop(i)
+                                st.rerun()
+
+            if st.button("＋ Adicionar botão ao hero", key="t1_hb_add"):
+                st.session_state.t1_hero_btns.append({"texto": "Novo Botão", "url": "#", "estilo": "primário"})
+                st.rerun()
 
             # ── Estatísticas ──────────────────────────────────────────────────
             st.markdown('<div class="section-label">📊 Estatísticas do Hero</div>', unsafe_allow_html=True)
-            stat1_num = st.text_input("Estatística 1 — Número", "500+")
-            stat1_lbl = st.text_input("Estatística 1 — Label", "Clientes Satisfeitos")
-            stat2_num = st.text_input("Estatística 2 — Número", "10+")
-            stat2_lbl = st.text_input("Estatística 2 — Label", "Anos de Experiência")
-            stat3_num = st.text_input("Estatística 3 — Número", "300%")
-            stat3_lbl = st.text_input("Estatística 3 — Label", "Crescimento Médio")
+            for i, stat in enumerate(st.session_state.t1_stats):
+                with st.container():
+                    c1, c2, c3 = st.columns([2, 4, 1])
+                    with c1:
+                        st.session_state.t1_stats[i]["numero"] = st.text_input(
+                            "Número", stat["numero"], key=f"t1_st_num_{i}", label_visibility="collapsed",
+                            placeholder="Ex: 500+"
+                        )
+                    with c2:
+                        st.session_state.t1_stats[i]["label"] = st.text_input(
+                            "Label", stat["label"], key=f"t1_st_lbl_{i}", label_visibility="collapsed",
+                            placeholder="Descrição"
+                        )
+                    with c3:
+                        if len(st.session_state.t1_stats) > 1:
+                            if st.button("🗑", key=f"t1_st_del_{i}", help="Remover estatística"):
+                                st.session_state.t1_stats.pop(i)
+                                st.rerun()
+
+            if st.button("＋ Adicionar estatística", key="t1_st_add"):
+                st.session_state.t1_stats.append({"numero": "0", "label": "Nova Métrica"})
+                st.rerun()
 
             # ── Serviços / Cards ──────────────────────────────────────────────
             st.markdown('<div class="section-label">🃏 Serviços / Cards</div>', unsafe_allow_html=True)
@@ -123,21 +247,31 @@ def render():
             secao_destaque  = st.text_input("Título da seção — Destaque", "Serviços")
             secao_descricao = st.text_area("Descrição da seção", "Oferecemos soluções completas de marketing digital para impulsionar seu negócio", height=60)
 
-            cards = []
-            defaults = [
-                ("📱", "Social Media",       "Gerenciamento completo de suas redes sociais com estratégia de conteúdo"),
-                ("🎯", "Publicidade Digital", "Campanhas otimizadas em Google Ads e Facebook para máximo ROI"),
-                ("📊", "Análise de Dados",    "Relatórios detalhados e insights para melhorar seu desempenho"),
-                ("🌐", "SEO & Conteúdo",      "Otimização para buscas e criação de conteúdo de alta qualidade"),
-                ("💻", "Web Design",          "Websites modernos e responsivos que convertem visitantes em clientes"),
-                ("📧", "Email Marketing",     "Campanhas de email personalizadas que geram resultados"),
-            ]
-            for i, (icon_d, title_d, desc_d) in enumerate(defaults, start=1):
-                with st.expander(f"Card {i} — {title_d}"):
-                    icon  = st.text_input(f"Ícone {i}",     icon_d,  key=f"t1_icon_{i}")
-                    title = st.text_input(f"Título {i}",    title_d, key=f"t1_title_{i}")
-                    desc  = st.text_area(f"Descrição {i}", desc_d,  key=f"t1_desc_{i}", height=70)
-                    cards.append((icon, title, desc))
+            for i, card in enumerate(st.session_state.t1_cards):
+                with st.expander(f"Card {i+1} — {card['titulo']}"):
+                    c1, c2 = st.columns([1, 8])
+                    with c1:
+                        st.session_state.t1_cards[i]["icone"] = st.text_input(
+                            "Ícone", card["icone"], key=f"t1_cd_ico_{i}", label_visibility="collapsed"
+                        )
+                    with c2:
+                        st.session_state.t1_cards[i]["titulo"] = st.text_input(
+                            "Título", card["titulo"], key=f"t1_cd_tit_{i}", label_visibility="collapsed"
+                        )
+                    st.session_state.t1_cards[i]["descricao"] = st.text_area(
+                        "Descrição", card["descricao"], key=f"t1_cd_dsc_{i}", height=70, label_visibility="collapsed"
+                    )
+                    if len(st.session_state.t1_cards) > 1:
+                        if st.button(f"🗑 Remover card {i+1}", key=f"t1_cd_del_{i}"):
+                            st.session_state.t1_cards.pop(i)
+                            st.rerun()
+
+            if st.button("＋ Adicionar card de serviço", key="t1_cd_add"):
+                st.session_state.t1_cards.append({
+                    "icone": "⭐", "titulo": "Novo Serviço",
+                    "descricao": "Descrição do novo serviço"
+                })
+                st.rerun()
 
             # ── CTA ───────────────────────────────────────────────────────────
             st.markdown('<div class="section-label">📣 Seção CTA</div>', unsafe_allow_html=True)
@@ -160,11 +294,13 @@ def render():
 
             # ── Enviar ────────────────────────────────────────────────────────
             st.markdown("---")
-            if st.button("✅ Finalizar e Enviar para a Equipe", key="t1_send"):
+            if st.button("✅ Finalizar e Enviar para a Equipe", key="t1_send", type="primary"):
                 st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
                 st.balloons()
 
-    # ── PAINEL DIREITO: IMAGEM DO TEMPLATE ──────────────────────────────────
+    # ════════════════════════════════════════════════════════════════════════
+    # PAINEL DIREITO — IMAGEM DO TEMPLATE
+    # ════════════════════════════════════════════════════════════════════════
     with col_preview:
         st.markdown(
             '<p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>',
