@@ -1,92 +1,96 @@
 import streamlit as st
 
 def render():
-    # URL da imagem do seu template
-    url_imagem_referencia = "https://raw.githubusercontent.com/SttackSite/site/main/1.png"
+    # URL da imagem do seu template (Substitua pela sua)
+    url_imagem_referencia = "https://sua-url-aqui.com/imagem-do-template.png"
 
     # ─────────────────────────────────────────────────────────────────────────────
-    # CSS PARA ROLAMENTO INDEPENDENTE FORÇADO
+    # CSS PARA ROLAMENTO INDEPENDENTE E AJUSTES DE COLUNA
     # ─────────────────────────────────────────────────────────────────────────────
     st.markdown(f"""
     <style>
-        /* 1. Trava o scroll da página principal */
-        html, body, [data-testid="stAppViewContainer"] {{
-            overflow: hidden !important;
-            height: 100vh !important;
-            margin: 0 !important;
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+        /* Remove margens e fixa altura da visualização */
+        [data-testid="stAppViewContainer"] {{
             padding: 0 !important;
         }}
-
-        /* 2. Configura o container das colunas para ocupar altura total */
-        [data-testid="stHorizontalBlock"] {{
-            height: 100vh !important;
-        }}
-
-        /* 3. Aplica scroll individual nos blocos internos das colunas */
-        /* Selecionamos o primeiro container interno de cada coluna */
-        [data-testid="column"]:nth-child(1) > div:first-child {{
-            height: 100vh !important;
+        
+        /* Estilização da Coluna do Formulário (Esquerda) */
+        [data-testid="column"]:nth-child(1) {{
+            background: #ffffff;
+            height: 100vh;
             overflow-y: auto !important;
-            overflow-x: hidden !important;
-            padding: 40px 24px !important;
-            background-color: white !important;
-            border-right: 1px solid #e2e8f0 !important;
+            padding: 24px !important;
+            border-right: 1px solid #e2e8f0;
         }}
 
-        [data-testid="column"]:nth-child(2) > div:first-child {{
-            height: 100vh !important;
+        /* Estilização da Coluna da Imagem (Direita) */
+        [data-testid="column"]:nth-child(2) {{
+            background: #f1f5f9;
+            height: 100vh;
             overflow-y: auto !important;
-            overflow-x: hidden !important;
-            padding: 0 !important;
-            background-color: #f1f5f9 !important;
+            padding: 0 !important; /* Ponta a ponta */
         }}
 
-        /* Esconde elementos nativos do Streamlit */
-        [data-testid="stHeader"], [data-testid="stToolbarActions"], 
+        /* Esconde elementos padrão do Streamlit */
+        [data-testid="stHeader"], [data-testid="stToolbarActions"],
         [data-testid="stDecoration"], footer {{ display: none !important; }}
 
-        /* Estilo da Imagem Full */
-        .template-preview-img {{
-            width: 100%;
-            display: block;
+        .panel-title {{ font-size: 18px; font-weight: 700; color: #1a1a2e; margin-bottom: 4px; }}
+        .panel-subtitle {{ font-size: 13px; color: #64748b; margin-bottom: 20px; }}
+        .section-label {{ font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin: 20px 0 8px 0; border-bottom: 1px solid #f1f5f9; }}
+        
+        /* Ajuste do botão */
+        .stButton > button {{
+            background: linear-gradient(135deg, #0066FF, #0052CC) !important;
+            color: white !important;
+            width: 100% !important;
+            border-radius: 8px !important;
         }}
 
-        /* Scrollbar elegante */
-        [data-testid="column"] > div::-webkit-scrollbar {{ width: 6px; }}
-        [data-testid="column"] > div::-webkit-scrollbar-thumb {{ background: #cbd5e1; border-radius: 10px; }}
-        
-        /* Ajustes de componentes editor */
-        .panel-title {{ font-size: 18px; font-weight: 700; color: #1a1a2e; }}
-        .section-label {{ font-size: 11px; font-weight: 700; text-transform: uppercase; color: #94a3b8; margin-top: 25px; border-bottom: 1px solid #f1f5f9; }}
+        /* Estilo da imagem full */
+        .template-preview-img {{
+            width: 100%;
+            height: auto;
+            display: block;
+        }}
     </style>
     """, unsafe_allow_html=True)
 
     # ─────────────────────────────────────────────────────────────────────────────
-    # CONTEÚDO
+    # LAYOUT
     # ─────────────────────────────────────────────────────────────────────────────
     
-    col_form, col_preview = st.columns([1, 2.5])
+    col_form, col_preview = st.columns([1, 2], gap="small")
 
     with col_form:
         st.markdown('<div class="panel-title">✏️ Editor de Template</div>', unsafe_allow_html=True)
-        st.markdown('<p style="color:#64748b; font-size:13px;">Template 1 — Agência Digital</p>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-subtitle">Template 1 — Agência Digital</div>', unsafe_allow_html=True)
 
+        # -- SEÇÕES DO FORMULÁRIO --
         st.markdown('<div class="section-label">⚙️ Configuração Geral</div>', unsafe_allow_html=True)
-        st.text_input("Título da aba", "Agência Digital", key="t_aba")
-        st.color_picker("Cor principal", "#0066FF", key="c_pri")
+        page_title = st.text_input("Título da aba", "Agência Digital")
+        
+        st.markdown('<div class="section-label">🎨 Cores</div>', unsafe_allow_html=True)
+        cor_primaria = st.color_picker("Cor principal", "#0066FF")
+        
+        st.markdown('<div class="section-label">🦸 Hero (Principal)</div>', unsafe_allow_html=True)
+        hero_titulo = st.text_input("Título", "Transforme seu Negócio")
+        hero_desc = st.text_area("Descrição", "Soluções completas...", height=100)
 
-        st.markdown('<div class="section-label">🦸 Hero Section</div>', unsafe_allow_html=True)
-        st.text_input("Título Principal", "Transforme seu Negócio", key="t_hero")
-        st.text_area("Descrição", "Soluções completas...", height=100, key="d_hero")
-
-        # Gerando campos extras apenas para testar o scroll da esquerda
-        for i in range(15):
-            st.text_input(f"Campo extra {i+1}", key=f"extra_{i}")
+        # Adicione aqui os demais st.text_input que você já tinha...
+        # Repita o padrão para os 35 templates mudando apenas os inputs
 
         st.markdown("---")
         if st.button("✅ Finalizar e Enviar"):
-            st.success("Enviado!")
+            st.success("Informações enviadas para nossa equipe!")
 
     with col_preview:
-        # Imagem com link do GitHub
-        st.markdown(f'<img src="{url_imagem_referencia}" class="template-preview-img">', unsafe_allow_html=True)
+        # Renderiza a imagem de ponta a ponta
+        # Usamos HTML para garantir que não haja margens laterais do Streamlit
+        st.markdown(f"""
+            <img src="{url_imagem_referencia}" class="template-preview-img">
+        """, unsafe_allow_html=True)
+
+# Lembre-se que o app.py continua chamando o render() desse arquivo.
