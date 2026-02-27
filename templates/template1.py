@@ -2,7 +2,7 @@ import streamlit as st
 
 def render():
     # URL da imagem do seu template (Substitua pela sua)
-    url_imagem_referencia = "https://sua-url-aqui.com/imagem-do-template.png"
+    url_imagem_referencia = "https://raw.githubusercontent.com/SttackSite/site/main/1.png"
 
     # ─────────────────────────────────────────────────────────────────────────────
     # CSS PARA ROLAMENTO INDEPENDENTE E AJUSTES DE COLUNA
