@@ -3,7 +3,7 @@ import streamlit as st
 # ─────────────────────────────────────────────────────────────────────────────
 # URL DA IMAGEM DO TEMPLATE — SUBSTITUA PELO LINK DA SUA IMAGEM
 # ─────────────────────────────────────────────────────────────────────────────
-TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/site/main/1.png"
+TEMPLATE_IMAGE_URL = "https://SUA_URL_AQUI/template1.png"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # NOME DO TEMPLATE (exibido no cabeçalho do painel)
@@ -50,6 +50,12 @@ def render():
         .stButton > button:hover {
             transform: translateY(-1px) !important;
             box-shadow: 0 4px 12px rgba(0,102,255,0.3) !important;
+        }
+        /* Painel esquerdo com scroll próprio */
+        [data-testid="column"]:first-child > div:first-child {
+            height: calc(100vh - 80px);
+            overflow-y: auto;
+            padding-right: 8px;
         }
         /* Imagem do template com scroll próprio */
         .template-img-wrapper {
