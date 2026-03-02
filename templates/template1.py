@@ -12,9 +12,6 @@ TEMPLATE_NAME = "Template 1 — Agência Digital"
 # ─────────────────────────────────────────────────────────────────────────────
 def _init():
     defaults = {
-        # Configuração geral
-        "t1_page_titles": [{"valor": "Agência Digital - Transforme seu Negócio"}],
-        "t1_page_icons":  [{"valor": "🚀"}],
         # Cores
         "t1_cores": [
             {"nome": "Cor principal (botões, destaques)", "valor": "#0066FF"},
@@ -127,35 +124,6 @@ def render():
         st.markdown(f'<div class="panel-subtitle">{TEMPLATE_NAME}</div>', unsafe_allow_html=True)
 
         with st.container(height=720, border=False):
-
-            # ══════════════════════════════════════════════════════════════════
-            # CONFIGURAÇÃO GERAL
-            # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">⚙️ Configuração Geral</div>', unsafe_allow_html=True)
-
-            st.caption("Título da aba do navegador")
-            for i, item in enumerate(st.session_state.t1_page_titles):
-                c1, c2 = st.columns([9, 1])
-                with c1:
-                    st.session_state.t1_page_titles[i]["valor"] = st.text_input(
-                        "Título", item["valor"], key=f"t1_ptitle_{i}", label_visibility="collapsed")
-                with c2:
-                    if len(st.session_state.t1_page_titles) > 1 and _del_btn(f"t1_ptitle_del_{i}"):
-                        st.session_state.t1_page_titles.pop(i); st.rerun()
-            if _add_btn("t1_ptitle_add", "＋ Adicionar título"):
-                st.session_state.t1_page_titles.append({"valor": "Novo Título"}); st.rerun()
-
-            st.caption("Ícone da aba (emoji)")
-            for i, item in enumerate(st.session_state.t1_page_icons):
-                c1, c2 = st.columns([9, 1])
-                with c1:
-                    st.session_state.t1_page_icons[i]["valor"] = st.text_input(
-                        "Ícone", item["valor"], key=f"t1_picon_{i}", label_visibility="collapsed")
-                with c2:
-                    if len(st.session_state.t1_page_icons) > 1 and _del_btn(f"t1_picon_del_{i}"):
-                        st.session_state.t1_page_icons.pop(i); st.rerun()
-            if _add_btn("t1_picon_add", "＋ Adicionar ícone"):
-                st.session_state.t1_page_icons.append({"valor": "🌟"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # CORES
