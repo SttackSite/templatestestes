@@ -3,7 +3,7 @@ import streamlit as st
 # ─────────────────────────────────────────────────────────────────────────────
 # URL DA IMAGEM DO TEMPLATE — SUBSTITUA PELO LINK DA SUA IMAGEM
 # ─────────────────────────────────────────────────────────────────────────────
-TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/1.png"
+TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/site/main/1.png"
 TEMPLATE_NAME = "Template 1 — Agência Digital"
 
 
@@ -12,6 +12,9 @@ TEMPLATE_NAME = "Template 1 — Agência Digital"
 # ─────────────────────────────────────────────────────────────────────────────
 def _init():
     defaults = {
+        # Configuração geral
+        "t1_page_titles": [{"valor": "Agência Digital - Transforme seu Negócio"}],
+        "t1_page_icons":  [{"valor": "🚀"}],
         # Cores
         "t1_cores": [
             {"nome": "Cor principal (botões, destaques)", "valor": "#0066FF"},
@@ -19,13 +22,11 @@ def _init():
             {"nome": "Cor dos subtextos",                 "valor": "#666666"},
         ],
         # Navbar
-        "t1_logos": [{"valor": "🚀 Agência Digital"}],
+        "t1_logos": [{"valor": "🚀 AGÊNCIA"}],
         "t1_nav_links": [
             {"texto": "Serviços", "url": "#features"},
             {"texto": "Sobre",    "url": "#cta"},
-            {"texto": "Portfólio",  "url": "#footer"},
             {"texto": "Contato",  "url": "#footer"},
-            {"texto": "Começar agora",  "url": "#footer"},
         ],
         "t1_nav_ctas": [
             {"texto": "Começar", "url": "https://www.google.com/"},
