@@ -12,9 +12,6 @@ TEMPLATE_NAME = "Template 1 — Agência Digital"
 # ─────────────────────────────────────────────────────────────────────────────
 def _init():
     defaults = {
-        # Configuração geral
-        "t1_page_titles": [{"valor": "Agência Digital - Transforme seu Negócio"}],
-        "t1_page_icons":  [{"valor": "🚀"}],
         # Cores
         "t1_cores": [
             {"nome": "Cor principal (botões, destaques)", "valor": "#0066FF"},
