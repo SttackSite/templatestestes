@@ -3,7 +3,7 @@ import streamlit as st
 # ─────────────────────────────────────────────────────────────────────────────
 # URL DA IMAGEM DO TEMPLATE — SUBSTITUA PELO LINK DA SUA IMAGEM
 # ─────────────────────────────────────────────────────────────────────────────
-TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/1.png"
+TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img1.png"
 TEMPLATE_NAME = "Template 1 — Agência Digital"
 
 
