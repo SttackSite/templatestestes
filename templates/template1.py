@@ -226,7 +226,7 @@ def render():
             if _add_btn("t1_hsub_add", "＋ Adicionar subtítulo"):
                 st.session_state.t1_hero_subtitulos.append({"valor": "Novo subtítulo"}); st.rerun()
 
-            st.caption("Botões do hero  *(Texto | URL | Estilo)*")
+            st.caption("Botões do hero  *(Texto | URL de destino | Estilo)*")
             for i, btn in enumerate(st.session_state.t1_hero_btns):
                 c1, c2, c3, c4 = st.columns([3, 3, 2, 1])
                 with c1:
@@ -343,7 +343,7 @@ def render():
             if _add_btn("t1_ctasub_add", "＋ Adicionar subtítulo CTA"):
                 st.session_state.t1_cta_subtitulos.append({"valor": "Novo subtítulo"}); st.rerun()
 
-            st.caption("Botões do CTA  *(Texto | URL)*")
+            st.caption("Botões do CTA  *(Texto | URL de destino)*")
             for i, btn in enumerate(st.session_state.t1_cta_btns):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
