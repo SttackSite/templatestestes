@@ -5,7 +5,7 @@ import streamlit as st
 # ─────────────────────────────────────────────────────────────────────────────
 TEMPLATE_NAME = "Template 2 — FitPro Academia"
 # Se você tiver uma imagem de preview para este template, substitua a URL abaixo
-TEMPLATE_IMAGE_URL = "https://via.placeholder.com/800x1200.png?text=Preview+Template+Academia"
+TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img2.png"
 
 # ─────────────────────────────────────────────────────────────────────────────
 # INICIALIZAÇÃO DO SESSION STATE (Dados Padrão do Template 2)
