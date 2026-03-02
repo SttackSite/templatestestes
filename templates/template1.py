@@ -176,7 +176,7 @@ def render():
                     if len(st.session_state.t1_nav_links) > 1 and _del_btn(f"t1_nl_del_{i}"):
                         st.session_state.t1_nav_links.pop(i); st.rerun()
             if _add_btn("t1_nl_add", "＋ Adicionar link ao menu"):
-                st.session_state.t1_nav_links.append({"texto": "Novo Link", "url": "#"}); st.rerun()
+                st.session_state.t1_nav_links.append({"texto": "Nome do botão", "url": "Destino do botão"}); st.rerun()
 
             st.caption("Botões CTA da navbar  *(Texto | URL)*")
             for i, btn in enumerate(st.session_state.t1_nav_ctas):
