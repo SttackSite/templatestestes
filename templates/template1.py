@@ -27,7 +27,9 @@ def _init():
             {"texto": "Começar", "url": "Agendar Agora"},
         ],
         "t1_nav_ctas": [
-            {"texto": "Começar", "url": "https://www.google.com/"},
+            {"texto": "✨ Novo", "url": "Azul"},
+            {"texto": "Transformação Digital", "url": "Cinza"},
+            {"texto": "⭐ Top Rated", "url": "Verde"},
         ],
         # Hero
         "t1_hero_titulos": [
