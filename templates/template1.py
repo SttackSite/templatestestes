@@ -142,7 +142,7 @@ def render():
                     if len(st.session_state.t1_cores) > 1 and _del_btn(f"t1_cor_del_{i}"):
                         st.session_state.t1_cores.pop(i); st.rerun()
             if _add_btn("t1_cor_add", "＋ Adicionar cor"):
-                st.session_state.t1_cores.append({"nome": "Indique onde aplicar essa cor", "valor": "#FFFFFF"}); st.rerun()
+                st.session_state.t1_cores.append({"nome": "Indique aqui onde usar a cor", "valor": "#FFFFFF"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # NAVBAR
