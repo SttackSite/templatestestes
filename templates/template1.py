@@ -177,7 +177,7 @@ def render():
             if _add_btn("t1_nl_add", "＋ Adicionar link ao menu"):
                 st.session_state.t1_nav_links.append({"texto": "Nome do botão", "url": "Destino do botão"}); st.rerun()
 
-            st.caption("Botões CTA da navbar  *(Texto | URL)*")
+            st.caption("Características  *(Texto)*")
             for i, btn in enumerate(st.session_state.t1_nav_ctas):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
