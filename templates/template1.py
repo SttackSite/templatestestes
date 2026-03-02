@@ -19,11 +19,13 @@ def _init():
             {"nome": "Cor dos subtextos",                 "valor": "#666666"},
         ],
         # Navbar
-        "t1_logos": [{"valor": "🚀 AGÊNCIA"}],
+        "t1_logos": [{"valor": "🚀 Agência Digital"}],
         "t1_nav_links": [
             {"texto": "Serviços", "url": "#features"},
             {"texto": "Sobre",    "url": "#cta"},
+            {"texto": "Portfólio",  "url": "#footer"},
             {"texto": "Contato",  "url": "#footer"},
+            {"texto": "Começar agora",  "url": "#footer"},
         ],
         "t1_nav_ctas": [
             {"texto": "Começar", "url": "https://www.google.com/"},
