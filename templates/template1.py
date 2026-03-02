@@ -19,13 +19,12 @@ def _init():
             {"nome": "Cor dos subtextos",                 "valor": "#666666"},
         ],
         # Navbar
-        "t1_logos": [{"valor": "🚀 Agência Digital"}],
+        "t1_logos": [{"valor": "🚀 AGÊNCIA"}],
         "t1_nav_links": [
             {"texto": "Serviços", "url": "Nossos Serviços"},
             {"texto": "Sobre",    "url": "Por que escolher nossa agência"},
-            {"texto": "Portfólio",  "url": "Nossos Serviços"},
             {"texto": "Contato",  "url": "Pronto para crescer"},
-            {"texto": "Começar agora", "url": "Agende Agora"},
+            {"texto": "Começar", "url": "Agende Agora"},
         ],
         "t1_nav_ctas": [
             {"texto": "Começar", "url": "https://www.google.com/"},
