@@ -21,11 +21,11 @@ def _init():
         # Navbar
         "t1_logos": [{"valor": "🚀 Agência Digital"}],
         "t1_nav_links": [
-            {"texto": "Serviços", "url": "#features"},
-            {"texto": "Sobre",    "url": "#cta"},
-            {"texto": "Portfólio",  "url": "#footer"},
-            {"texto": "Contato",  "url": "#footer"},
-            {"texto": "Começar agora",  "url": "#footer"},
+            {"texto": "Serviços", "url": "Nossos Serviços"},
+            {"texto": "Sobre",    "url": "Por que escolher nossa agência"},
+            {"texto": "Portfólio",  "url": "Nossos Serviços"},
+            {"texto": "Contato",  "url": "Pronto para crescer"},
+            {"texto": "Começar agora",  "Agende Agora": "#footer"},
         ],
         "t1_nav_ctas": [
             {"texto": "Começar", "url": "https://www.google.com/"},
@@ -163,7 +163,7 @@ def render():
             if _add_btn("t1_logo_add", "＋ Adicionar logo"):
                 st.session_state.t1_logos.append({"valor": "Nova Marca"}); st.rerun()
 
-            st.caption("Links do menu  *(Texto | URL)*")
+            st.caption("Links do menu  *(Texto | Destino do botão)*")
             for i, link in enumerate(st.session_state.t1_nav_links):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
