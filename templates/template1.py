@@ -22,9 +22,9 @@ def _init():
         "t1_logos": [{"valor": "🚀 AGÊNCIA"}],
         "t1_nav_links": [
             {"texto": "Serviços", "url": "Nossos Serviços"},
-            {"texto": "Sobre",    "url": "Por que escolher nossa agência"},
-            {"texto": "Contato",  "url": "Pronto para crescer"},
-            {"texto": "Começar", "url": "Agende Agora"},
+            {"texto": "Sobre",    "url": "Transforme seu Negócio com Estratégia"},
+            {"texto": "Contato",  "url": "Pronto para Transformar"},
+            {"texto": "Começar", "url": "Agendar Agora"},
         ],
         "t1_nav_ctas": [
             {"texto": "Começar", "url": "https://www.google.com/"},
