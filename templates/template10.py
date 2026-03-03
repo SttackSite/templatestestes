@@ -209,7 +209,7 @@ def render():
                     st.session_state.t10_feat_cards[i]["icon"] = st.text_input("Emoji Ícone", card["icon"], key=f"t10_fc_i_{i}")
                     st.session_state.t10_feat_cards[i]["titulo"] = st.text_input("Título", card["titulo"], key=f"t10_fc_t_{i}")
                     st.session_state.t10_feat_cards[i]["desc"] = st.text_area("Descrição", card["desc"], key=f"t10_fc_d_{i}")
-                    if len(st.session_state.t10_feat_cards) > 1 and _del_btn(f"t10_fc_del_{i}", "Remover feature"):
+                    if len(st.session_state.t10_feat_cards) > 1 and _del_btn(f"t10_feat_del_{i}", "Remover feature"):
                         st.session_state.t10_feat_cards.pop(i); st.rerun()
             if _add_btn("t10_fc_add", "＋ Adicionar funcionalidade"):
                 st.session_state.t10_feat_cards.append({"icon": "🚀", "titulo": "Nova Feature", "desc": "..."}); st.rerun()
@@ -255,9 +255,9 @@ def render():
                     if _add_btn(f"t10_fc_l_add_{i}", "＋ Adicionar link"):
                         st.session_state.t10_foot_cols[i]["links"].append({"texto": "Novo Link", "url": "#"}); st.rerun()
                     
-                    if len(st.session_state.t10_foot_cols) > 1 and _del_btn(f"t10_fc_del_{i}", "Remover coluna"):
+                    if len(st.session_state.t10_foot_cols) > 1 and _del_btn(f"t10_foot_del_{i}", "Remover coluna"):
                         st.session_state.t10_foot_cols.pop(i); st.rerun()
-            if _add_btn("t10_fc_add", "＋ Adicionar coluna footer"):
+            if _add_btn("t10_foot_col_add", "＋ Adicionar coluna footer"):
                 st.session_state.t10_foot_cols.append({"titulo": "Nova Coluna", "links": [{"texto": "Link", "url": "#"}]}); st.rerun()
 
             for i, copy in enumerate(st.session_state.t10_foot_copys):
