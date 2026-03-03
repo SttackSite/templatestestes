@@ -76,7 +76,6 @@ def _del_btn(key, label="🗑"):
 def render():
     _init()
 
-    # CSS do Painel de Edição
     st.markdown("""
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
@@ -96,17 +95,6 @@ def render():
             border-radius: 12px; border: 1px solid #e2e8f0; background: #f8faff;
         }
         .template-img-wrapper img { width: 100%; display: block; }
-        
-        /* Estilos do Preview Brutalista (Simulação) */
-        .preview-container {
-            background: white; color: black; padding: 20px; border: 2px solid black; font-family: 'Inter', sans-serif;
-        }
-        .preview-hero-text {
-            font-size: 32px; font-weight: 900; text-transform: uppercase; line-height: 0.9; margin: 20px 0; border-bottom: 2px solid black; padding-bottom: 10px;
-        }
-        .preview-filosofia {
-            font-size: 18px; font-weight: 700; border-bottom: 2px solid black; padding: 20px 0;
-        }
     </style>
     """, unsafe_allow_html=True)
 
@@ -251,19 +239,6 @@ def render():
     # PAINEL DIREITO — PREVIEW
     # ════════════════════════════════════════════════════════════════════════
     with col_preview:
-        # Exibição do Preview Dinâmico (Hero e Filosofia corrigidos)
-        st.markdown('<div class="preview-container">', unsafe_allow_html=True)
-        
-        # Simulação do Hero dinâmico
-        hero_html = "".join([f'<div class="preview-hero-text">{t["valor"]}</div>' for t in st.session_state.t17_hero_titulos])
-        st.markdown(hero_html, unsafe_allow_html=True)
-        
-        # Simulação da Filosofia dinâmica
-        filo_html = "".join([f'<div class="preview-filosofia">{f["valor"]}</div>' for f in st.session_state.t17_filosofia_textos])
-        st.markdown(filo_html, unsafe_allow_html=True)
-        
-        st.markdown('</div>', unsafe_allow_html=True)
-        
         st.markdown('<p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>', unsafe_allow_html=True)
         st.markdown(f'<div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>', unsafe_allow_html=True)
 
