@@ -127,6 +127,8 @@ def render():
                 with c3:
                     if len(st.session_state.t8_cores) > 1 and _del_btn(f"t8_cor_del_{i}"):
                         st.session_state.t8_cores.pop(i); st.rerun()
+            if _add_btn("t8_cor_add", "＋ Adicionar cor"):
+                st.session_state.t8_cores.append({"nome": "Nova Cor", "valor": "#FFFFFF"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # NAVBAR
@@ -134,7 +136,11 @@ def render():
             st.markdown('<div class="section-label">🔝 Navegação (Navbar)</div>', unsafe_allow_html=True)
             st.caption("Logo Tech")
             for i, logo in enumerate(st.session_state.t8_logos):
-                st.session_state.t8_logos[i]["valor"] = st.text_input("Logo", logo["valor"], key=f"t8_logo_{i}", label_visibility="collapsed")
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t8_logos[i]["valor"] = st.text_input("Logo", logo["valor"], key=f"t8_logo_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t8_logos) > 1 and _del_btn(f"t8_logo_del_{i}"):
+                        st.session_state.t8_logos.pop(i); st.rerun()
             
             st.caption("Links do Menu *(Texto | URL)*")
             for i, link in enumerate(st.session_state.t8_nav_links):
@@ -158,11 +164,16 @@ def render():
             for i, d in enumerate(st.session_state.t8_hero_descs):
                 st.session_state.t8_hero_descs[i]["valor"] = st.text_area("Descrição", d["valor"], key=f"t8_h_d_{i}")
             
-            st.caption("Botão do Hero *(Texto | URL)*")
+            st.caption("Botões do Hero *(Texto | URL)*")
             for i, btn in enumerate(st.session_state.t8_hero_btns):
-                c1, c2 = st.columns([5, 5])
-                with c1: st.session_state.t8_hero_btns[i]["texto"] = st.text_input("Texto", btn["texto"], key=f"t8_hb_t_{i}")
-                with c2: st.session_state.t8_hero_btns[i]["url"] = st.text_input("URL", btn["url"], key=f"t8_hb_u_{i}")
+                c1, c2, c3 = st.columns([4, 4, 1])
+                with c1: st.session_state.t8_hero_btns[i]["texto"] = st.text_input("Texto", btn["texto"], key=f"t8_hb_t_{i}", label_visibility="collapsed")
+                with c2: st.session_state.t8_hero_btns[i]["url"] = st.text_input("URL", btn["url"], key=f"t8_hb_u_{i}", label_visibility="collapsed")
+                with c3:
+                    if len(st.session_state.t8_hero_btns) > 1 and _del_btn(f"t8_hb_del_{i}"):
+                        st.session_state.t8_hero_btns.pop(i); st.rerun()
+            if _add_btn("t8_hb_add", "＋ Adicionar botão hero"):
+                st.session_state.t8_hero_btns.append({"texto": "BOTÃO", "url": "#"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # ECOSSISTEMA DIGITAL (TECNOLOGIAS)
@@ -236,16 +247,39 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">👣 Rodapé</div>', unsafe_allow_html=True)
             for i, logo in enumerate(st.session_state.t8_footer_logos):
-                st.session_state.t8_footer_logos[i]["valor"] = st.text_input("Logo Rodapé", logo["valor"], key=f"t8_flogo_{i}")
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t8_footer_logos[i]["valor"] = st.text_input("Logo Rodapé", logo["valor"], key=f"t8_flogo_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t8_footer_logos) > 1 and _del_btn(f"t8_flogo_del_{i}"):
+                        st.session_state.t8_footer_logos.pop(i); st.rerun()
+            if _add_btn("t8_flogo_add", "＋ Adicionar logo rodapé"):
+                st.session_state.t8_footer_logos.append({"valor": "NOVA LOGO"}); st.rerun()
+
             for i, copy in enumerate(st.session_state.t8_footer_copys):
-                st.session_state.t8_footer_copys[i]["valor"] = st.text_input("Copyright", copy["valor"], key=f"t8_fcopy_{i}")
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t8_footer_copys[i]["valor"] = st.text_input("Copyright", copy["valor"], key=f"t8_fcopy_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t8_footer_copys) > 1 and _del_btn(f"t8_fcopy_del_{i}"):
+                        st.session_state.t8_footer_copys.pop(i); st.rerun()
+            if _add_btn("t8_fcopy_add", "＋ Adicionar copyright"):
+                st.session_state.t8_footer_copys.append({"valor": "© 2026"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # OBSERVAÇÕES
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📝 Observações Adicionais</div>', unsafe_allow_html=True)
             for i, item in enumerate(st.session_state.t8_obs):
-                st.session_state.t8_obs[i]["valor"] = st.text_area("Notas extras", item["valor"], key=f"t8_obs_{i}", placeholder="Ex: Mudar a imagem de fundo do hero...")
+                c1, c2 = st.columns([9, 1])
+                with c1:
+                    st.session_state.t8_obs[i]["valor"] = st.text_area(
+                        "Notas extras", item["valor"], key=f"t8_obs_{i}", height=80,
+                        placeholder="Ex: Mudar a imagem de fundo do hero...",
+                        label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t8_obs) > 1 and _del_btn(f"t8_obs_del_{i}"):
+                        st.session_state.t8_obs.pop(i); st.rerun()
+            if _add_btn("t8_obs_add", "＋ Adicionar observação"):
+                st.session_state.t8_obs.append({"valor": ""}); st.rerun()
 
             st.markdown("---")
             if st.button("✅ Finalizar e Enviar para a Equipe", key="t8_send", type="primary"):
