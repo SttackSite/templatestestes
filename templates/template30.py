@@ -120,9 +120,7 @@ def render():
 
         with st.container(height=720, border=False):
 
-            # ══════════════════════════════════════════════════════════════════
-            # CORES
-            # ══════════════════════════════════════════════════════════════════
+            # 🎨 CORES
             st.markdown('<div class="section-label">🎨 Identidade Visual</div>', unsafe_allow_html=True)
             for i, cor in enumerate(st.session_state.t30_cores):
                 c1, c2, c3 = st.columns([5, 2, 1])
@@ -134,12 +132,10 @@ def render():
             if _add_btn("t30_cor_add", "＋ Adicionar cor"):
                 st.session_state.t30_cores.append({"nome": "Nova Cor", "valor": "#FFFFFF"}); st.rerun()
 
-            # ══════════════════════════════════════════════════════════════════
-            # NAVBAR
-            # ══════════════════════════════════════════════════════════════════
+            # 🔝 NAVBAR
             st.markdown('<div class="section-label">🔝 Navegação (Navbar)</div>', unsafe_allow_html=True)
             for i, item in enumerate(st.session_state.t30_nav_logos):
-                st.session_state.t30_nav_logos[i]["texto"] = st.text_input("Nome Marca", item["texto"], key=f"t30_nl_t_{i}")
+                st.session_state.t30_nav_logos[i]["texto"] = st.text_input("Nome Marca", item["texto"], key=f"t30_nav_l_t_{i}")
             
             st.caption("Links do Menu")
             for i, link in enumerate(st.session_state.t30_nav_links):
@@ -153,9 +149,7 @@ def render():
             if _add_btn("t30_navl_add", "＋ Adicionar link"):
                 st.session_state.t30_nav_links.append({"texto": "LINK", "url": "#", "active": False}); st.rerun()
 
-            # ══════════════════════════════════════════════════════════════════
-            # HERO SECTION
-            # ══════════════════════════════════════════════════════════════════
+            # 🚀 HERO SECTION
             st.markdown('<div class="section-label">🚀 Hero Section</div>', unsafe_allow_html=True)
             for i, l in enumerate(st.session_state.t30_hero_labels):
                 st.session_state.t30_hero_labels[i]["valor"] = st.text_input("Label Hero", l["valor"], key=f"t30_h_l_{i}")
@@ -175,47 +169,39 @@ def render():
             if _add_btn("t30_hb_add", "＋ Adicionar botão"):
                 st.session_state.t30_hero_btns.append({"texto": "COMEÇAR", "url": "#"}); st.rerun()
 
-            # ══════════════════════════════════════════════════════════════════
-            # SHOWCASE IMAGE
-            # ══════════════════════════════════════════════════════════════════
+            # 🖼️ SHOWCASE IMAGE
             st.markdown('<div class="section-label">🖼️ Imagem Showcase</div>', unsafe_allow_html=True)
             for i, img in enumerate(st.session_state.t30_showcase_imgs):
                 c1, c2 = st.columns([9, 1])
-                with c1: st.session_state.t30_showcase_imgs[i]["url"] = st.text_input("URL da Imagem", img["url"], key=f"t30_si_u_{i}")
+                with c1: st.session_state.t30_showcase_imgs[i]["url"] = st.text_input("URL da Imagem", img["url"], key=f"t30_show_u_{i}")
                 with c2:
-                    if len(st.session_state.t30_showcase_imgs) > 1 and _del_btn(f"t30_si_del_{i}"):
+                    if len(st.session_state.t30_showcase_imgs) > 1 and _del_btn(f"t30_show_del_{i}"):
                         st.session_state.t30_showcase_imgs.pop(i); st.rerun()
-            if _add_btn("t30_si_add", "＋ Adicionar imagem"):
+            if _add_btn("t30_show_add", "＋ Adicionar imagem"):
                 st.session_state.t30_showcase_imgs.append({"url": "https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=1600"}); st.rerun()
 
-            # ══════════════════════════════════════════════════════════════════
-            # SERVIÇOS
-            # ══════════════════════════════════════════════════════════════════
+            # 🛠️ SERVIÇOS
             st.markdown('<div class="section-label">🛠️ Serviços</div>', unsafe_allow_html=True)
             for i, l in enumerate(st.session_state.t30_serv_labels):
                 st.session_state.t30_serv_labels[i]["valor"] = st.text_input("Título Seção", l["valor"], key=f"t30_sl_{i}")
             
             for i, item in enumerate(st.session_state.t30_serv_items):
                 with st.expander(f"Serviço {i+1}: {item['title']}"):
-                    st.session_state.t30_serv_items[i]["num"] = st.text_input("Número", item["num"], key=f"t30_si_n_{i}")
-                    st.session_state.t30_serv_items[i]["title"] = st.text_input("Título", item["title"], key=f"t30_si_t_{i}")
-                    st.session_state.t30_serv_items[i]["desc"] = st.text_area("Descrição", item["desc"], key=f"t30_si_d_{i}")
-                    st.session_state.t30_serv_items[i]["url"] = st.text_input("URL Destino", item["url"], key=f"t30_si_u_{i}")
-                    if len(st.session_state.t30_serv_items) > 1 and _del_btn(f"t30_si_del_{i}", "Remover serviço"):
+                    st.session_state.t30_serv_items[i]["num"] = st.text_input("Número", item["num"], key=f"t30_serv_n_{i}")
+                    st.session_state.t30_serv_items[i]["title"] = st.text_input("Título", item["title"], key=f"t30_serv_t_{i}")
+                    st.session_state.t30_serv_items[i]["desc"] = st.text_area("Descrição", item["desc"], key=f"t30_serv_d_{i}")
+                    st.session_state.t30_serv_items[i]["url"] = st.text_input("URL Destino", item["url"], key=f"t30_serv_u_{i}")
+                    if len(st.session_state.t30_serv_items) > 1 and _del_btn(f"t30_serv_del_{i}", "Remover serviço"):
                         st.session_state.t30_serv_items.pop(i); st.rerun()
-            if _add_btn("t30_si_add_item", "＋ Adicionar serviço"):
+            if _add_btn("t30_serv_add_item", "＋ Adicionar serviço"):
                 st.session_state.t30_serv_items.append({"num": "04", "title": "NOVO", "desc": "DESC", "url": "#"}); st.rerun()
 
-            # ══════════════════════════════════════════════════════════════════
-            # IMPACTO (TEXTO)
-            # ══════════════════════════════════════════════════════════════════
+            # ✨ IMPACTO
             st.markdown('<div class="section-label">✨ Texto de Impacto</div>', unsafe_allow_html=True)
             for i, t in enumerate(st.session_state.t30_impact_texts):
                 st.session_state.t30_impact_texts[i]["valor"] = st.text_area("Citação/Impacto", t["valor"], key=f"t30_it_{i}")
 
-            # ══════════════════════════════════════════════════════════════════
-            # FOOTER
-            # ══════════════════════════════════════════════════════════════════
+            # 👣 FOOTER
             st.markdown('<div class="section-label">👣 Rodapé</div>', unsafe_allow_html=True)
             for i, t in enumerate(st.session_state.t30_foot_titles):
                 st.session_state.t30_foot_titles[i]["valor"] = st.text_input("Título Grande Footer", t["valor"], key=f"t30_ft_{i}")
@@ -247,9 +233,7 @@ def render():
             for i, copy in enumerate(st.session_state.t30_foot_copys):
                 st.session_state.t30_foot_copys[i]["valor"] = st.text_input("Copyright", copy["valor"], key=f"t30_fcp_{i}")
 
-            # ══════════════════════════════════════════════════════════════════
-            # OBSERVAÇÕES
-            # ══════════════════════════════════════════════════════════════════
+            # 📝 OBSERVAÇÕES
             st.markdown('<div class="section-label">📝 Observações Adicionais</div>', unsafe_allow_html=True)
             for i, item in enumerate(st.session_state.t13_obs):
                 c1, c2 = st.columns([9, 1])
@@ -269,9 +253,7 @@ def render():
                 st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
                 st.balloons()
 
-    # ════════════════════════════════════════════════════════════════════════
-    # PAINEL DIREITO — PREVIEW (LIMPO)
-    # ════════════════════════════════════════════════════════════════════════
+    # 🖼️ PAINEL DIREITO
     with col_preview:
         st.markdown('<p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>', unsafe_allow_html=True)
         st.markdown(f'<div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>', unsafe_allow_html=True)
