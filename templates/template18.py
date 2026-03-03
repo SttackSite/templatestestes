@@ -99,17 +99,6 @@ def render():
             border-radius: 12px; border: 1px solid #e2e8f0; background: #f8faff;
         }
         .template-img-wrapper img { width: 100%; display: block; }
-        
-        /* Estilos do Preview Digital (Simulação) */
-        .preview-container {
-            background: black; color: white; padding: 20px; border: 1px solid #333; font-family: 'JetBrains Mono', monospace;
-        }
-        .preview-hero-text {
-            font-family: 'Inter', sans-serif; font-size: 32px; font-weight: 900; text-transform: uppercase; line-height: 0.9; margin: 20px 0;
-        }
-        .preview-studio {
-            background: #080808; padding: 20px; border-top: 1px solid #222; margin-top: 20px;
-        }
     </style>
     """, unsafe_allow_html=True)
 
@@ -242,26 +231,9 @@ def render():
                 st.balloons()
 
     # ════════════════════════════════════════════════════════════════════════
-    # PAINEL DIREITO — PREVIEW
+    # PAINEL DIREITO — PREVIEW (LIMPO)
     # ════════════════════════════════════════════════════════════════════════
     with col_preview:
-        # Exibição do Preview Dinâmico
-        st.markdown('<div class="preview-container">', unsafe_allow_html=True)
-        
-        # Simulação do Hero dinâmico
-        hero_title = "".join([f'<div class="preview-hero-text">{t["valor"]}</div>' for t in st.session_state.t18_hero_titulos])
-        hero_desc = "".join([f'<p style="color:#888; font-size:12px;">{d["valor"]}</p>' for d in st.session_state.t18_hero_descs])
-        st.markdown(hero_title + hero_desc, unsafe_allow_html=True)
-        
-        # Simulação do Studio dinâmico
-        st.markdown('<div class="preview-studio">', unsafe_allow_html=True)
-        studio_title = "".join([f'<h3 style="font-family:Inter; font-weight:900; margin:0;">{t["valor"]}</h3>' for t in st.session_state.t18_studio_titulos])
-        studio_desc = "".join([f'<p style="color:#ccc; font-size:12px;">{d["valor"]}</p>' for d in st.session_state.t18_studio_descs])
-        st.markdown(studio_title + studio_desc, unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
-        
-        st.markdown('</div>', unsafe_allow_html=True)
-        
         st.markdown('<p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>', unsafe_allow_html=True)
         st.markdown(f'<div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>', unsafe_allow_html=True)
 
