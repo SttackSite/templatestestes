@@ -38,7 +38,7 @@ def _init():
         "t9_sol_cards": [
             {"icon": "🚀", "titulo": "Learning Campaigns",    "desc": "Campanhas de aprendizagem engajadoras para mudanças de cultura e novos processos.", "url": "https://www.google.com/"},
             {"icon": "🤝", "titulo": "Design de Comunidades", "desc": "Criamos ecossistemas internos onde o conhecimento flui de forma orgânica e contínua.", "url": "https://www.google.com/"},
-            {"icon": "📈", "titulo": "Upskilling & Reskilling","Programas intensivos de desenvolvimento de novas competências para o futuro.", "url": "https://www.google.com/"},
+            {"icon": "📈", "titulo": "Upskilling & Reskilling","desc": "Programas intensivos de desenvolvimento de novas competências para o futuro.", "url": "https://www.google.com/"},
         ],
         # Números (Prova Social)
         "t9_stats": [
