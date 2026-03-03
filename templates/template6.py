@@ -153,8 +153,8 @@ def render():
                 st.session_state.t6_cat_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t6_cat_t_{i}")
             
             for i, item in enumerate(st.session_state.t6_cat_items):
-                with st.expander(f"Componente {i+1}: {item['name']}"):
-                    st.session_state.t6_cat_items[i]["name"] = st.text_input("Nome", item["name"], key=f"t6_ci_n_{i}")
+                with st.expander(f"Componente {i+1}: {item['nome']}"):
+                    st.session_state.t6_cat_items[i]["nome"] = st.text_input("Nome", item["nome"], key=f"t6_ci_n_{i}")
                     st.session_state.t6_cat_items[i]["ref"] = st.text_input("REF (Código)", item["ref"], key=f"t6_ci_r_{i}")
                     st.session_state.t6_cat_items[i]["img"] = st.text_input("URL Imagem", item["img"], key=f"t6_ci_i_{i}")
                     st.session_state.t6_cat_items[i]["desc"] = st.text_area("Descrição", item["desc"], key=f"t6_ci_d_{i}")
@@ -162,7 +162,7 @@ def render():
                     if len(st.session_state.t6_cat_items) > 1 and _del_btn(f"t6_ci_del_{i}", "Remover Componente"):
                         st.session_state.t6_cat_items.pop(i); st.rerun()
             if _add_btn("t6_ci_add", "＋ Adicionar Componente"):
-                st.session_state.t6_cat_items.append({"name": "NOVO MODELO", "ref": "BTZ-00", "img": "", "desc": "...", "url": "#"}); st.rerun()
+                st.session_state.t6_cat_items.append({"nome": "NOVO MODELO", "ref": "BTZ-00", "img": "", "desc": "...", "url": "#"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # LOGOS DE CONFIANÇA
