@@ -280,7 +280,7 @@ def render():
             st.session_state.t5_ship_titulos[0]["valor"] = st.text_input("Título da Seção", st.session_state.t5_ship_titulos[0]["valor"], key="t5_sh_t_0")
             
             for i, ship in enumerate(st.session_state.t5_ships):
-                with st.expander(f"Nave {i+1}: {ship[\'nome\']}"):
+                with st.expander(f"Nave {i+1}: {ship[\"nome\"]}"):
                     st.session_state.t5_ships[i]["nome"] = st.text_input("Nome", ship["nome"], key=f"t5_s_n_{i}")
                     st.session_state.t5_ships[i]["tier"] = st.text_input("Tier", ship["tier"], key=f"t5_s_tr_{i}")
                     st.session_state.t5_ships[i]["img"] = st.text_input("URL Imagem", ship["img"], key=f"t5_s_img_{i}")
@@ -326,7 +326,7 @@ def render():
             st.markdown("<div class=\"section-label\">⚙️ Protocolo de Lançamento</div>", unsafe_allow_html=True)
             st.session_state.t5_passos_titulos[0]["valor"] = st.text_input("Título da Seção", st.session_state.t5_passos_titulos[0]["valor"], key="t5_p_t_0")
             for i, passo in enumerate(st.session_state.t5_passos):
-                with st.expander(f"Passo {i+1}: {passo[\'titulo\']}"):
+                with st.expander(f"Passo {i+1}: {passo[\"titulo\"]}"):
                     st.session_state.t5_passos[i]["num"] = st.text_input("Número", passo["num"], key=f"t5_ps_n_{i}")
                     st.session_state.t5_passos[i]["titulo"] = st.text_input("Título", passo["titulo"], key=f"t5_ps_t_{i}")
                     st.session_state.t5_passos[i]["desc"] = st.text_area("Descrição", passo["desc"], key=f"t5_ps_d_{i}")
@@ -341,7 +341,7 @@ def render():
             st.markdown("<div class=\"section-label\">💳 Acesso à Frota (Preços)</div>", unsafe_allow_html=True)
             st.session_state.t5_precos_titulos[0]["valor"] = st.text_input("Título da Seção", st.session_state.t5_precos_titulos[0]["valor"], key="t5_pr_t_0")
             for i, preco in enumerate(st.session_state.t5_precos):
-                with st.expander(f"Plano {i+1}: {preco[\'plano\']}"):
+                with st.expander(f"Plano {i+1}: {preco[\"plano\"]}"):
                     st.session_state.t5_precos[i]["plano"] = st.text_input("Nome do Plano", preco["plano"], key=f"t5_pr_p_{i}")
                     st.session_state.t5_precos[i]["valor"] = st.text_input("Valor", preco["valor"], key=f"t5_pr_v_{i}")
                     st.session_state.t5_precos[i]["features"] = st.text_area("Recursos (um por linha)", preco["features"], key=f"t5_pr_f_{i}")
@@ -358,7 +358,7 @@ def render():
             st.markdown("<div class=\"section-label\">❓ Frequência de Comunicação (FAQ)</div>", unsafe_allow_html=True)
             st.session_state.t5_faqs_titulos[0]["valor"] = st.text_input("Título da Seção", st.session_state.t5_faqs_titulos[0]["valor"], key="t5_faq_t_0")
             for i, faq in enumerate(st.session_state.t5_faqs):
-                with st.expander(f"FAQ {i+1}: {faq[\'pergunta\']}"):
+                with st.expander(f"FAQ {i+1}: {faq[\"pergunta\"]}"):
                     st.session_state.t5_faqs[i]["pergunta"] = st.text_input("Pergunta", faq["pergunta"], key=f"t5_faq_p_{i}")
                     st.session_state.t5_faqs[i]["resposta"] = st.text_area("Resposta", faq["resposta"], key=f"t5_faq_r_{i}")
                     if len(st.session_state.t5_faqs) > 1 and _del_btn(f"t5_faq_del_{i}", "Excluir FAQ"):
@@ -402,11 +402,9 @@ def render():
     # ════════════════════════════════════════════════════════════════════════
     with col_preview:
         st.markdown(
-            \' <p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>\',
-            unsafe_allow_html=True)
+         ' <p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>'            ,unsafe_allow_html=True)
         st.markdown(
-            f\' <div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>\',
-            unsafe_allow_html=True)
+       f' <div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>'          ,unsafe_allow_html=True)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
