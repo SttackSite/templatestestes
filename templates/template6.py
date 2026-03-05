@@ -20,17 +20,19 @@ def _init():
         ],
         # Hero (Engenharia)
         "t6_hero_mono": [{"valor": "Codeless Architecture v2.0"}],
-        "t6_hero_titulos": [{"valor": "SITES DE ALTA<br>PRECISÃO."}],
+        "t6_hero_titulos": [{"valor": "SITES DE ALTA PRECISÃO."}],
         "t6_hero_subtitulos": [{"valor": "Desenvolva a sua presença digital com a eficiência de um processo industrial. Templates otimizados para velocidade, conversão e autonomia total."}],
         "t6_hero_btns": [{"texto": "CONFIGURAR AGORA", "url": "#catalogo"}],
         # Catálogo de Componentes (Templates)
+        "t6_cat_subtitulos": [{"valor": "// CATÁLOGO DE COMPONENTES"}],
         "t6_cat_titulos": [{"valor": "MODELOS DISPONÍVEIS"}],
         "t6_cat_items": [
-            {"nome": "STRUCTURAL MINIMAL", "ref": "BTZ-01", "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "url": "#"},
-            {"nome": "DYNAMIC FLOW",        "ref": "BTZ-02", "img": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "url": "#"},
-            {"nome": "CORPORATE CORE",      "ref": "BTZ-03", "img": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "url": "#"},
+            {"nome": "STRUCTURAL MINIMAL", "ref": "BTZ-01", "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "url": "#", "btn_txt": "INSPECIONAR BTZ-01"},
+            {"nome": "DYNAMIC FLOW",        "ref": "BTZ-02", "img": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "url": "#", "btn_txt": "INSPECIONAR BTZ-02"},
+            {"nome": "CORPORATE CORE",      "ref": "BTZ-03", "img": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "url": "#", "btn_txt": "INSPECIONAR BTZ-03"},
         ],
         # Logos de Confiança
+        "t6_logos_titulos": [{"valor": "TRUSTED BY INDUSTRY LEADERS:"}],
         "t6_logos": [
             {"valor": "MATTEL"}, {"valor": "SIEMENS"}, {"valor": "BMW"}, {"valor": "BASF"},
         ],
@@ -41,6 +43,7 @@ def _init():
             {"num": "03", "label": "PERFORMANCE",  "titulo": "Aumente a conversão dos seus produtos com layouts validados por testes de stress."},
         ],
         # Fluxo de Implementação (Workflow)
+        "t6_flow_titulos": [{"valor": "FLUXO DE IMPLEMENTAÇÃO"}],
         "t6_flow": [
             {"num": "01", "titulo": "AQUISIÇÃO DO MÓDULO", "desc": "Acesso imediato ao repositório de códigos fonte após a validação."},
             {"num": "02", "titulo": "ASSEMBLY (MONTAGEM)", "desc": "Substitua textos e imagens seguindo o nosso manual de diretrizes visuais."},
@@ -48,6 +51,7 @@ def _init():
             {"num": "04", "titulo": "OPERAÇÃO",            "desc": "Seu site está pronto para gerar resultados com manutenção zero."},
         ],
         # Planos Industriais
+        "t6_planos_titulos": [{"valor": "PLANOS DE ACESSO"}],
         "t6_planos": [
             {"nome": "BASIC UNIT", "valor": "R$ 97",  "features": "1 Template Modular\nManual de Montagem", "btn_txt": "ADQUIRIR BASIC", "url": "#", "destaque": False},
             {"nome": "FULL STACK",  "valor": "R$ 197", "features": "Todos os Templates\nSuporte Técnico Direto\nUpdates de Engenharia", "btn_txt": "ADQUIRIR FULL", "url": "#", "destaque": True},
@@ -60,7 +64,7 @@ def _init():
         ],
         # Footer
         "t6_footer_left":  [{"valor": "SITE PRO / ENGINEERING DIVISION"}],
-        "t6_footer_right": [{"valor": "BUILD_V.4.0.1"}],
+        "t6_footer_right": [{"valor": "© 2026 ALL RIGHTS RESERVED"}],
         # Observações
         "t6_obs": [{"valor": ""}],
     }
@@ -135,7 +139,7 @@ def render():
             for i, m in enumerate(st.session_state.t6_hero_mono):
                 st.session_state.t6_hero_mono[i]["valor"] = st.text_input("Mono Label", m["valor"], key=f"t6_h_m_{i}")
             for i, t in enumerate(st.session_state.t6_hero_titulos):
-                st.session_state.t6_hero_titulos[i]["valor"] = st.text_area("Título (use <br>)", t["valor"], key=f"t6_h_t_{i}")
+                st.session_state.t6_hero_titulos[i]["valor"] = st.text_input("Título", t["valor"], key=f"t6_h_t_{i}")
             for i, s in enumerate(st.session_state.t6_hero_subtitulos):
                 st.session_state.t6_hero_subtitulos[i]["valor"] = st.text_area("Subtítulo", s["valor"], key=f"t6_h_s_{i}")
             
@@ -149,6 +153,8 @@ def render():
             # CATÁLOGO (TEMPLATES)
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📦 Catálogo de Componentes</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t6_cat_subtitulos):
+                st.session_state.t6_cat_subtitulos[i]["valor"] = st.text_input("Subtítulo da Seção", t["valor"], key=f"t6_cat_sub_{i}")
             for i, t in enumerate(st.session_state.t6_cat_titulos):
                 st.session_state.t6_cat_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t6_cat_t_{i}")
             
@@ -158,16 +164,19 @@ def render():
                     st.session_state.t6_cat_items[i]["ref"] = st.text_input("REF (Código)", item["ref"], key=f"t6_ci_r_{i}")
                     st.session_state.t6_cat_items[i]["img"] = st.text_input("URL Imagem", item["img"], key=f"t6_ci_i_{i}")
                     st.session_state.t6_cat_items[i]["desc"] = st.text_area("Descrição", item["desc"], key=f"t6_ci_d_{i}")
+                    st.session_state.t6_cat_items[i]["btn_txt"] = st.text_input("Texto Botão", item["btn_txt"], key=f"t6_ci_bt_{i}")
                     st.session_state.t6_cat_items[i]["url"] = st.text_input("URL Botão", item["url"], key=f"t6_ci_u_{i}")
                     if len(st.session_state.t6_cat_items) > 1 and _del_btn(f"t6_ci_del_{i}", "Remover Componente"):
                         st.session_state.t6_cat_items.pop(i); st.rerun()
             if _add_btn("t6_ci_add", "＋ Adicionar Componente"):
-                st.session_state.t6_cat_items.append({"nome": "NOVO MODELO", "ref": "BTZ-00", "img": "", "desc": "...", "url": "#"}); st.rerun()
+                st.session_state.t6_cat_items.append({"nome": "NOVO MODELO", "ref": "BTZ-00", "img": "", "desc": "...", "btn_txt": "INSPECIONAR", "url": "#"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # LOGOS DE CONFIANÇA
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🤝 Marcas de Confiança</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t6_logos_titulos):
+                st.session_state.t6_logos_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t6_l_t_{i}")
             for i, logo in enumerate(st.session_state.t6_logos):
                 c1, c2 = st.columns([9, 1])
                 with c1: st.session_state.t6_logos[i]["valor"] = st.text_input("Marca", logo["valor"], key=f"t6_l_v_{i}", label_visibility="collapsed")
@@ -192,80 +201,71 @@ def render():
                 st.session_state.t6_apps.append({"num": "04", "label": "NOVO", "titulo": "..."}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # WORKFLOW (FLUXO)
+            # FLUXO (WORKFLOW)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">⚙️ Fluxo de Implementação</div>', unsafe_allow_html=True)
-            for i, flow in enumerate(st.session_state.t6_flow):
-                with st.expander(f"Passo {flow['num']}: {flow['titulo']}"):
-                    st.session_state.t6_flow[i]["num"] = st.text_input("Número", flow["num"], key=f"t6_f_n_{i}")
-                    st.session_state.t6_flow[i]["titulo"] = st.text_input("Título", flow["titulo"], key=f"t6_f_t_{i}")
-                    st.session_state.t6_flow[i]["desc"] = st.text_area("Descrição", flow["desc"], key=f"t6_f_d_{i}")
+            st.markdown('<div class="section-label">🔄 Fluxo de Implementação</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t6_flow_titulos):
+                st.session_state.t6_flow_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t6_f_t_{i}")
+            for i, f in enumerate(st.session_state.t6_flow):
+                with st.expander(f"Passo {f['num']}: {f['titulo']}"):
+                    st.session_state.t6_flow[i]["num"] = st.text_input("Número", f["num"], key=f"t6_f_n_{i}")
+                    st.session_state.t6_flow[i]["titulo"] = st.text_input("Título", f["titulo"], key=f"t6_f_ti_{i}")
+                    st.session_state.t6_flow[i]["desc"] = st.text_area("Descrição", f["desc"], key=f"t6_f_d_{i}")
                     if len(st.session_state.t6_flow) > 1 and _del_btn(f"t6_f_del_{i}", "Remover Passo"):
                         st.session_state.t6_flow.pop(i); st.rerun()
-            if _add_btn("t6_f_add", "＋ Adicionar Passo"):
-                st.session_state.t6_flow.append({"num": "05", "titulo": "NOVO", "desc": "..."}); st.rerun()
+            if _add_btn("t6_f_add", "＋ Adicionar Passo ao Fluxo"):
+                st.session_state.t6_flow.append({"num": "05", "titulo": "NOVO PASSO", "desc": "..."}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # PLANOS
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">💰 Planos Industriais</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">💳 Planos Industriais</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t6_planos_titulos):
+                st.session_state.t6_planos_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t6_p_t_{i}")
             for i, plano in enumerate(st.session_state.t6_planos):
                 with st.expander(f"Plano: {plano['nome']}"):
                     st.session_state.t6_planos[i]["nome"] = st.text_input("Nome", plano["nome"], key=f"t6_p_n_{i}")
-                    st.session_state.t6_planos[i]["valor"] = st.text_input("Preço", plano["valor"], key=f"t6_p_v_{i}")
+                    st.session_state.t6_planos[i]["valor"] = st.text_input("Valor", plano["valor"], key=f"t6_p_v_{i}")
                     st.session_state.t6_planos[i]["features"] = st.text_area("Features (uma por linha)", plano["features"], key=f"t6_p_f_{i}")
                     st.session_state.t6_planos[i]["btn_txt"] = st.text_input("Texto Botão", plano["btn_txt"], key=f"t6_p_bt_{i}")
                     st.session_state.t6_planos[i]["url"] = st.text_input("URL Botão", plano["url"], key=f"t6_p_u_{i}")
-                    st.session_state.t6_planos[i]["destaque"] = st.checkbox("Destaque (Fundo Preto)", value=plano["destaque"], key=f"t6_p_d_{i}")
+                    st.session_state.t6_planos[i]["destaque"] = st.checkbox("Destaque", plano["destaque"], key=f"t6_p_d_{i}")
                     if len(st.session_state.t6_planos) > 1 and _del_btn(f"t6_p_del_{i}", "Remover Plano"):
                         st.session_state.t6_planos.pop(i); st.rerun()
             if _add_btn("t6_p_add", "＋ Adicionar Plano"):
-                st.session_state.t6_planos.append({"nome": "NOVO", "valor": "R$ 0", "features": "...", "btn_txt": "ADQUIRIR", "url": "#", "destaque": False}); st.rerun()
+                st.session_state.t6_planos.append({"nome": "NOVO PLANO", "valor": "R$ 0", "features": "...", "btn_txt": "ASSINAR", "url": "#", "destaque": False}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # FAQ E FOOTER
+            # FAQ
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">❓ FAQ & Rodapé</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">❓ Perguntas Frequentes</div>', unsafe_allow_html=True)
             for i, faq in enumerate(st.session_state.t6_faqs):
-                with st.expander(f"FAQ {i+1}"):
+                with st.expander(f"FAQ {i+1}: {faq['pergunta'][:30]}..."):
                     st.session_state.t6_faqs[i]["pergunta"] = st.text_input("Pergunta", faq["pergunta"], key=f"t6_faq_p_{i}")
                     st.session_state.t6_faqs[i]["resposta"] = st.text_area("Resposta", faq["resposta"], key=f"t6_faq_r_{i}")
-                    if len(st.session_state.t6_faqs) > 1 and _del_btn(f"t6_faq_del_{i}", "Remover"):
+                    if len(st.session_state.t6_faqs) > 1 and _del_btn(f"t6_faq_del_{i}", "Remover Pergunta"):
                         st.session_state.t6_faqs.pop(i); st.rerun()
-            if _add_btn("t6_faq_add", "＋ Adicionar FAQ"):
-                st.session_state.t6_faqs.append({"pergunta": "Pergunta?", "resposta": "Resposta..."}); st.rerun()
+            if _add_btn("t6_faq_add", "＋ Adicionar Pergunta"):
+                st.session_state.t6_faqs.append({"pergunta": "NOVA PERGUNTA", "resposta": "..."}); st.rerun()
 
-            st.caption("Textos do Rodapé")
+            # ══════════════════════════════════════════════════════════════════
+            # FOOTER
+            # ══════════════════════════════════════════════════════════════════
+            st.markdown('<div class="section-label">🏁 Rodapé</div>', unsafe_allow_html=True)
             for i, f in enumerate(st.session_state.t6_footer_left):
-                st.session_state.t6_footer_left[i]["valor"] = st.text_input("Footer Left", f["valor"], key=f"t6_fl_{i}")
+                st.session_state.t6_footer_left[i]["valor"] = st.text_input("Esquerda", f["valor"], key=f"t6_fl_{i}")
             for i, f in enumerate(st.session_state.t6_footer_right):
-                st.session_state.t6_footer_right[i]["valor"] = st.text_input("Footer Right", f["valor"], key=f"t6_fr_{i}")
+                st.session_state.t6_footer_right[i]["valor"] = st.text_input("Direita", f["valor"], key=f"t6_fr_{i}")
 
-            # ══════════════════════════════════════════════════════════════════
-            # OBSERVAÇÕES
-            # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">📝 Observações Adicionais</div>', unsafe_allow_html=True)
-            for i, item in enumerate(st.session_state.t6_obs):
-                st.session_state.t6_obs[i]["valor"] = st.text_area("Obs", item["valor"], key=f"t6_obs_{i}", placeholder="Notas extras para a equipe...")
-
-            st.markdown("---")
-            if st.button("✅ Finalizar e Enviar para a Equipe", key="t6_send", type="primary"):
-                st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
-                st.balloons()
-
-    # ════════════════════════════════════════════════════════════════════════
-    # PAINEL DIREITO — PREVIEW
-    # ════════════════════════════════════════════════════════════════════════
     with col_preview:
-        st.markdown('<p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>', unsafe_allow_html=True)
-        st.markdown(f'<div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>', unsafe_allow_html=True)
-
-
-if __name__ == "__main__":
-    st.set_page_config(
-        page_title=f"Editor — {TEMPLATE_NAME}",
-        page_icon="✏️",
-        layout="wide",
-        initial_sidebar_state="collapsed",
-    )
-    render()
+        st.markdown('<div class="panel-title">👁️ Visualização Real</div>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-subtitle">Interface do usuário final</div>', unsafe_allow_html=True)
+        
+        with st.container(border=True):
+            st.markdown(f'''
+            <div class="template-img-wrapper">
+                <div class="img-caption">Visualização do Template Selecionado</div>
+                <img src="{TEMPLATE_IMAGE_URL}" alt="Preview do Template">
+            </div>
+            ''', unsafe_allow_html=True)
+            st.info("💡 As alterações feitas no editor serão aplicadas ao código final do seu site.")
