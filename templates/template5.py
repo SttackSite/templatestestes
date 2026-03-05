@@ -24,11 +24,12 @@ def _init():
         "t5_hero_descs": [{"valor": "Aprenda a criar seu novo site profissional em minutos, sem a dependência de um programador. Economize 80% do tempo e lance sua marca na velocidade da luz."}],
         "t5_hero_btns": [{"texto": "INICIAR SEQUÊNCIA →", "url": "#templates"}],
         # Galeria de Ships (Templates)
+        "t5_ship_subtitulos": [{"valor": "// EXPLORAR CATÁLOGO DE TEMPLATES"}],
         "t5_ship_titulos": [{"valor": "ESQUADRÃO DE ELITE"}],
         "t5_ships": [
-            {"nome": "NEON PULSE",    "tier": "LEGENDARY", "img": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600", "desc": "Configurado para máxima conversão e SEO otimizado.", "btn_url": "#"},
-            {"nome": "QUANTUM SUITE", "tier": "EPIC",      "img": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600", "desc": "Configurado para máxima conversão e SEO otimizado.", "btn_url": "#"},
-            {"nome": "VOID MINIMAL",  "tier": "RARE",      "img": "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=600", "desc": "Configurado para máxima conversão e SEO otimizado.", "btn_url": "#"},
+            {"nome": "NEON PULSE",    "tier": "LEGENDARY", "img": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600", "desc": "Configurado para máxima conversão e SEO otimizado.", "btn_txt": "VER DATA-SHEET NEON", "btn_url": "#"},
+            {"nome": "QUANTUM SUITE", "tier": "EPIC",      "img": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600", "desc": "Configurado para máxima conversão e SEO otimizado.", "btn_txt": "VER DATA-SHEET QUANTUM", "btn_url": "#"},
+            {"nome": "VOID MINIMAL",  "tier": "RARE",      "img": "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=600", "desc": "Configurado para máxima conversão e SEO otimizado.", "btn_txt": "VER DATA-SHEET VOID", "btn_url": "#"},
         ],
         # Estatísticas (Data Nodes)
         "t5_stats": [
@@ -38,6 +39,7 @@ def _init():
             {"valor": "80%",  "label": "MAIS RÁPIDO"},
         ],
         # Missões (Objetivos)
+        "t5_missoes_titulos": [{"valor": "OBJETIVOS DA MISSÃO"}],
         "t5_missoes": [
             {"valor": "Quer criar seu próprio site e customizá-lo em minutos pelo menor preço de mercado."},
             {"valor": "Deseja trabalhar vendendo sites de elite para terceiros com alta margem."},
@@ -51,6 +53,7 @@ def _init():
             {"num": "04", "titulo": "SISTEMA ONLINE",        "desc": "Seu site está no ar e pronto para operações em larga escala."},
         ],
         # Preços (Acesso à Frota)
+        "t5_precos_titulos": [{"valor": "ACESSO À FROTA"}],
         "t5_precos": [
             {"plano": "PILOT ACCESS",    "valor": "R$ 97",  "features": "1 Template de Elite\nSuporte Básico", "btn_txt": "SELECIONAR PILOT",    "url": "#"},
             {"plano": "COMMANDER BUNDLE", "valor": "R$ 197", "features": "Todos os Templates\nAcesso à Comunidade\nSuporte Prioritário", "btn_txt": "ADQUIRIR COMMANDER", "url": "#"},
@@ -151,6 +154,8 @@ def render():
             # GALERIA (SHIPS)
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🚀 Esquadrão (Galeria)</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t5_ship_subtitulos):
+                st.session_state.t5_ship_subtitulos[i]["valor"] = st.text_input("Subtítulo da Seção", t["valor"], key=f"t5_sh_sub_{i}")
             for i, t in enumerate(st.session_state.t5_ship_titulos):
                 st.session_state.t5_ship_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t5_sh_t_{i}")
             
@@ -160,11 +165,12 @@ def render():
                     st.session_state.t5_ships[i]["tier"] = st.text_input("Tier", ship["tier"], key=f"t5_s_tr_{i}")
                     st.session_state.t5_ships[i]["img"] = st.text_input("URL Imagem", ship["img"], key=f"t5_s_img_{i}")
                     st.session_state.t5_ships[i]["desc"] = st.text_area("Descrição", ship["desc"], key=f"t5_s_d_{i}")
+                    st.session_state.t5_ships[i]["btn_txt"] = st.text_input("Texto Botão", ship.get("btn_txt", "VER DATA-SHEET"), key=f"t5_s_bt_{i}")
                     st.session_state.t5_ships[i]["btn_url"] = st.text_input("URL Botão", ship["btn_url"], key=f"t5_s_u_{i}")
                     if len(st.session_state.t5_ships) > 1 and _del_btn(f"t5_s_del_{i}", "Excluir Nave"):
                         st.session_state.t5_ships.pop(i); st.rerun()
             if _add_btn("t5_s_add", "＋ Adicionar Nave ao Esquadrão"):
-                st.session_state.t5_ships.append({"nome": "NOVA NAVE", "tier": "RARE", "img": "", "desc": "...", "btn_url": "#"}); st.rerun()
+                st.session_state.t5_ships.append({"nome": "NOVA NAVE", "tier": "RARE", "img": "", "desc": "...", "btn_txt": "VER DATA-SHEET", "btn_url": "#"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # ESTATÍSTICAS (DATA NODES)
@@ -184,6 +190,8 @@ def render():
             # MISSÕES (OBJETIVOS)
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🎯 Objetivos da Missão</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t5_missoes_titulos):
+                st.session_state.t5_missoes_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t5_m_t_{i}")
             for i, missao in enumerate(st.session_state.t5_missoes):
                 c1, c2 = st.columns([9, 1])
                 with c1: st.session_state.t5_missoes[i]["valor"] = st.text_input("Missão", missao["valor"], key=f"t5_m_v_{i}", label_visibility="collapsed")
@@ -196,74 +204,65 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # PROTOCOLO (PASSOS)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">⚙️ Protocolo de Lançamento</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">⚙️ Protocolo (Passos)</div>', unsafe_allow_html=True)
             for i, passo in enumerate(st.session_state.t5_passos):
-                with st.expander(f"Passo {passo['num']}: {passo['titulo']}"):
-                    st.session_state.t5_passos[i]["num"] = st.text_input("Número", passo["num"], key=f"t5_p_n_{i}")
-                    st.session_state.t5_passos[i]["titulo"] = st.text_input("Título", passo["titulo"], key=f"t5_p_t_{i}")
-                    st.session_state.t5_passos[i]["desc"] = st.text_area("Descrição", passo["desc"], key=f"t5_p_d_{i}")
-                    if len(st.session_state.t5_passos) > 1 and _del_btn(f"t5_p_del_{i}", "Excluir Passo"):
+                with st.expander(f"Passo {i+1}: {passo['titulo']}"):
+                    st.session_state.t5_passos[i]["num"] = st.text_input("Número", passo["num"], key=f"t5_ps_n_{i}")
+                    st.session_state.t5_passos[i]["titulo"] = st.text_input("Título", passo["titulo"], key=f"t5_ps_t_{i}")
+                    st.session_state.t5_passos[i]["desc"] = st.text_area("Descrição", passo["desc"], key=f"t5_ps_d_{i}")
+                    if len(st.session_state.t5_passos) > 1 and _del_btn(f"t5_ps_del_{i}", "Excluir Passo"):
                         st.session_state.t5_passos.pop(i); st.rerun()
-            if _add_btn("t5_p_add", "＋ Adicionar Passo ao Protocolo"):
-                st.session_state.t5_passos.append({"num": "05", "titulo": "NOVO PASSO", "desc": "..."}); st.rerun()
+            if _add_btn("t5_ps_add", "＋ Adicionar Passo"):
+                st.session_state.t5_passos.append({"num": "00", "titulo": "NOVO PASSO", "desc": "..."}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # PREÇOS (FROTA)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">💎 Acesso à Frota (Preços)</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">💳 Acesso à Frota (Preços)</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t5_precos_titulos):
+                st.session_state.t5_precos_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t5_pr_t_{i}")
             for i, preco in enumerate(st.session_state.t5_precos):
-                with st.expander(f"Plano: {preco['plano']}"):
-                    st.session_state.t5_precos[i]["plano"] = st.text_input("Nome", preco["plano"], key=f"t5_pr_p_{i}")
+                with st.expander(f"Plano {i+1}: {preco['plano']}"):
+                    st.session_state.t5_precos[i]["plano"] = st.text_input("Plano", preco["plano"], key=f"t5_pr_p_{i}")
                     st.session_state.t5_precos[i]["valor"] = st.text_input("Valor", preco["valor"], key=f"t5_pr_v_{i}")
-                    st.session_state.t5_precos[i]["features"] = st.text_area("Vantagens (uma por linha)", preco["features"], key=f"t5_pr_f_{i}")
+                    st.session_state.t5_precos[i]["features"] = st.text_area("Features (uma por linha)", preco["features"], key=f"t5_pr_f_{i}")
                     st.session_state.t5_precos[i]["btn_txt"] = st.text_input("Texto Botão", preco["btn_txt"], key=f"t5_pr_bt_{i}")
-                    st.session_state.t5_precos[i]["url"] = st.text_input("URL Botão", preco["url"], key=f"t5_pr_u_{i}")
+                    st.session_state.t5_precos[i]["url"] = st.text_input("URL Bot_u", preco["url"], key=f"t5_pr_u_{i}")
                     if len(st.session_state.t5_precos) > 1 and _del_btn(f"t5_pr_del_{i}", "Excluir Plano"):
                         st.session_state.t5_precos.pop(i); st.rerun()
             if _add_btn("t5_pr_add", "＋ Adicionar Plano"):
-                st.session_state.t5_precos.append({"plano": "NOVO PLANO", "valor": "R$ 0", "features": "Vantagem", "btn_txt": "ASSINAR", "url": "#"}); st.rerun()
+                st.session_state.t5_precos.append({"plano": "NOVO PLANO", "valor": "R$ 0", "features": "...", "btn_txt": "ASSINAR", "url": "#"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # FAQ (DATABASE)
+            # FAQ
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">❓ Database / FAQ</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">❓ FAQ (Database)</div>', unsafe_allow_html=True)
             for i, faq in enumerate(st.session_state.t5_faqs):
-                with st.expander(f"FAQ {i+1}: {faq['pergunta'][:30]}..."):
+                with st.expander(f"FAQ {i+1}: {faq['pergunta']}"):
                     st.session_state.t5_faqs[i]["pergunta"] = st.text_input("Pergunta", faq["pergunta"], key=f"t5_faq_p_{i}")
                     st.session_state.t5_faqs[i]["resposta"] = st.text_area("Resposta", faq["resposta"], key=f"t5_faq_r_{i}")
                     if len(st.session_state.t5_faqs) > 1 and _del_btn(f"t5_faq_del_{i}", "Excluir FAQ"):
                         st.session_state.t5_faqs.pop(i); st.rerun()
             if _add_btn("t5_faq_add", "＋ Adicionar FAQ"):
-                st.session_state.t5_faqs.append({"pergunta": "Nova pergunta?", "resposta": "Resposta aqui..."}); st.rerun()
+                st.session_state.t5_faqs.append({"pergunta": "NOVA PERGUNTA", "resposta": "..."}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # FOOTER E OBS
+            # FOOTER
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">👣 Rodapé & Notas</div>', unsafe_allow_html=True)
-            for i, copy in enumerate(st.session_state.t5_footer):
-                st.session_state.t5_footer[i]["valor"] = st.text_input("Copyright", copy["valor"], key=f"t5_foot_{i}")
-            
-            for i, item in enumerate(st.session_state.t5_obs):
-                st.session_state.t5_obs[i]["valor"] = st.text_area("Observações Adicionais", item["valor"], key=f"t5_obs_{i}", placeholder="Ex: Adicionar seção de contato...")
+            st.markdown('<div class="section-label">📜 Footer</div>', unsafe_allow_html=True)
+            for i, f in enumerate(st.session_state.t5_footer):
+                st.session_state.t5_footer[i]["valor"] = st.text_input("Texto do Footer", f["valor"], key=f"t5_foot_v_{i}")
 
-            st.markdown("---")
-            if st.button("✅ Finalizar e Enviar para a Equipe", key="t5_send", type="primary"):
-                st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
-                st.balloons()
-
-    # ════════════════════════════════════════════════════════════════════════
-    # PAINEL DIREITO — PREVIEW
-    # ════════════════════════════════════════════════════════════════════════
+    # ══════════════════════════════════════════════════════════════════════════
+    # ÁREA DE PREVIEW (DIREITA)
+    # ══════════════════════════════════════════════════════════════════════════
     with col_preview:
-        st.markdown('<p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>', unsafe_allow_html=True)
-        st.markdown(f'<div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-title">📱 Preview em Tempo Real</div>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-subtitle">Visualização do site final</div>', unsafe_allow_html=True)
 
+        with st.container(border=False):
+            st.markdown(f'<div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}"></div>', unsafe_allow_html=True)
+            st.markdown('<div class="img-caption">O preview acima é uma representação visual do template.</div>', unsafe_allow_html=True)
 
 if __name__ == "__main__":
-    st.set_page_config(
-        page_title=f"Editor — {TEMPLATE_NAME}",
-        page_icon="✏️",
-        layout="wide",
-        initial_sidebar_state="collapsed",
-    )
     render()
