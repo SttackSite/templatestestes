@@ -147,7 +147,8 @@ def render():
 
             st.caption("Descrição do Hero")
             for i, s in enumerate(st.session_state.t6_hero_subtitulos):
-                st.session_state.t6_hero_subtitulos[i]["valor"] = st.text_area("Descrição do Hero", s["valor"], key=f"t6_h_s_{i}")
+                with st.expander(f"Descrição do Hero {i+1}"):
+                    st.session_state.t6_hero_subtitulos[i]["valor"] = st.text_area("Conteúdo da Descrição", s["valor"], key=f"t6_h_s_{i}")
             st.caption("Botão do Hero *(Texto | URL)*")
             for i, btn in enumerate(st.session_state.t6_hero_btns):
                 c1, c2 = st.columns([5, 5])
