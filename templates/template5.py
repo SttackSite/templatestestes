@@ -195,8 +195,8 @@ def render():
             if _add_btn("t5_m_add", "＋ Adicionar Objetivo"):
                 st.session_state.t5_missoes.append({"valor": "Novo objetivo da missão..."}); st.rerun()
 
-            # PROTOCOLO (PASSOS)
-            st.markdown("<div class=\"section-label\">🛰️ Protocolo de Lançamento</div>", unsafe_allow_html=True)
+             # Protocolo (Passos)
+            st.markdown("<div class=\"section-label\">🚀 Protocolo de Lançamento</div>", unsafe_allow_html=True)
             for i, t in enumerate(st.session_state.t5_protocolo_titulos):
                 st.session_state.t5_protocolo_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t5_p_t_{i}")
             for i, passo in enumerate(st.session_state.t5_passos):
