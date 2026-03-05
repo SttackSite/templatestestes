@@ -148,7 +148,6 @@ def render():
             st.caption("Descrição do Hero")
             for i, s in enumerate(st.session_state.t6_hero_subtitulos):
                 st.session_state.t6_hero_subtitulos[i]["valor"] = st.text_area("Descrição do Hero", s["valor"], key=f"t6_h_s_{i}")
-            
             st.caption("Botão do Hero *(Texto | URL)*")
             for i, btn in enumerate(st.session_state.t6_hero_btns):
                 c1, c2 = st.columns([5, 5])
@@ -278,6 +277,7 @@ def render():
                 <div class="img-caption">Visualização do Template Selecionado</div>
                 <img src="{TEMPLATE_IMAGE_URL}" alt="Preview do Template">
             </div>
+            <p style="font-size: 14px; color: #64748b; text-align: center;">{st.session_state.t6_hero_subtitulos[0]["valor"]}</p>
             ''', unsafe_allow_html=True)
             st.info("💡 As alterações feitas no editor serão aplicadas ao código final do seu site.")
 
