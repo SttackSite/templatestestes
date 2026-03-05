@@ -23,6 +23,8 @@ def _init():
         "t6_hero_titulos": [{"valor": "SITES DE ALTA PRECISÃO."}],
         "t6_hero_subtitulos": [{"valor": "Desenvolva a sua presença digital com a eficiência de um processo industrial. Templates otimizados para velocidade, conversão e autonomia total."}],
         "t6_hero_btns": [{"texto": "CONFIGURAR AGORA", "url": "#catalogo"}],
+        # Aplicações (Cards)
+        "t6_apps_titulos": [{"valor": "APLICAÇÕES DO SISTEMA"}],
         # Catálogo de Componentes (Templates)
         "t6_cat_subtitulos": [{"valor": "// CATÁLOGO DE COMPONENTES"}],
         "t6_cat_titulos": [{"valor": "MODELOS DISPONÍVEIS"}],
@@ -64,7 +66,7 @@ def _init():
         ],
         # Footer
         "t6_footer_left":  [{"valor": "SITE PRO / ENGINEERING DIVISION"}],
-        "t6_footer_right": [{"valor": "© 2026 ALL RIGHTS RESERVED"}],
+        "t6_footer_right": [{"valor": "BUILD_V.4.0.1"}],
         # Observações
         "t6_obs": [{"valor": ""}],
     }
@@ -135,13 +137,17 @@ def render():
             # HERO
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🏗️ Hero (Engenharia)</div>', unsafe_allow_html=True)
-            st.caption("Label Mono / Título / Subtítulo")
+            st.caption("Label Mono")
             for i, m in enumerate(st.session_state.t6_hero_mono):
                 st.session_state.t6_hero_mono[i]["valor"] = st.text_input("Mono Label", m["valor"], key=f"t6_h_m_{i}")
+
+            st.caption("Título")
             for i, t in enumerate(st.session_state.t6_hero_titulos):
                 st.session_state.t6_hero_titulos[i]["valor"] = st.text_input("Título", t["valor"], key=f"t6_h_t_{i}")
+
+            st.caption("Descrição do Hero")
             for i, s in enumerate(st.session_state.t6_hero_subtitulos):
-                st.session_state.t6_hero_subtitulos[i]["valor"] = st.text_area("Subtítulo", s["valor"], key=f"t6_h_s_{i}")
+                st.session_state.t6_hero_subtitulos[i]["valor"] = st.text_area("Descrição do Hero", s["valor"], key=f"t6_h_s_{i}")
             
             st.caption("Botão do Hero *(Texto | URL)*")
             for i, btn in enumerate(st.session_state.t6_hero_btns):
@@ -189,7 +195,10 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # APLICAÇÕES (CARDS)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">🛠️ Aplicações do Sistema</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">💡 Aplicações do Sistema</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t6_apps_titulos):
+                st.session_state.t6_apps_titulos[i]["valor"] = st.text_input("Título da Seção (Aplicações)", t["valor"], key=f"t6_apps_t_{i}")
+            
             for i, app in enumerate(st.session_state.t6_apps):
                 with st.expander(f"Aplicação {app['num']}: {app['label']}"):
                     st.session_state.t6_apps[i]["num"] = st.text_input("Número", app["num"], key=f"t6_a_n_{i}")
@@ -249,11 +258,13 @@ def render():
                 st.session_state.t6_faqs.append({"pergunta": "NOVA PERGUNTA", "resposta": "..."}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # FOOTER
+            # RODAPÉ
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🏁 Rodapé</div>', unsafe_allow_html=True)
+            st.caption("Texto do Rodapé (Esquerda)")
             for i, f in enumerate(st.session_state.t6_footer_left):
                 st.session_state.t6_footer_left[i]["valor"] = st.text_input("Esquerda", f["valor"], key=f"t6_fl_{i}")
+            st.caption("Texto do Rodapé (Direita)")
             for i, f in enumerate(st.session_state.t6_footer_right):
                 st.session_state.t6_footer_right[i]["valor"] = st.text_input("Direita", f["valor"], key=f"t6_fr_{i}")
 
@@ -269,3 +280,6 @@ def render():
             </div>
             ''', unsafe_allow_html=True)
             st.info("💡 As alterações feitas no editor serão aplicadas ao código final do seu site.")
+
+if __name__ == "__main__":
+    render()
