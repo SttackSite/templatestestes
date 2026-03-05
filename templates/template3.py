@@ -1,4 +1,4 @@
-import streamlit as st
+'''import streamlit as st
 
 # ─────────────────────────────────────────────────────────────────────────────
 # URL DA IMAGEM DO TEMPLATE — SUBSTITUA PELO LINK DA SUA IMAGEM
@@ -240,6 +240,27 @@ def render():
             # NÚMEROS (SHOWCASE)
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📊 Números (Showcase)</div>', unsafe_allow_html=True)
+
+            st.caption("Título da Seção de Números")
+            for i, t in enumerate(st.session_state.t3_show_titulos):
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t3_show_titulos[i]["valor"] = st.text_input("Título", t["valor"], key=f"t3_st_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t3_show_titulos) > 1 and _del_btn(f"t3_st_del_{i}"):
+                        st.session_state.t3_show_titulos.pop(i); st.rerun()
+            if _add_btn("t3_st_add", "＋ Adicionar título números"):
+                st.session_state.t3_show_titulos.append({"valor": "Novo Título"}); st.rerun()
+
+            st.caption("Subtítulo da Seção de Números")
+            for i, d in enumerate(st.session_state.t3_show_descs):
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t3_show_descs[i]["valor"] = st.text_area("Subtítulo", d["valor"], key=f"t3_sd_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t3_show_descs) > 1 and _del_btn(f"t3_sd_del_{i}"):
+                        st.session_state.t3_show_descs.pop(i); st.rerun()
+            if _add_btn("t3_sd_add", "＋ Adicionar subtítulo números"):
+                st.session_state.t3_show_descs.append({"valor": "Novo Subtítulo"}); st.rerun()
+
             for i, card in enumerate(st.session_state.t3_show_cards):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1: st.session_state.t3_show_cards[i]["numero"] = st.text_input("Valor", card["numero"], key=f"t3_sc_n_{i}", label_visibility="collapsed")
@@ -254,14 +275,37 @@ def render():
             # CTA FINAL
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📢 Chamada Final</div>', unsafe_allow_html=True)
+
+            st.caption("Título da Chamada Final")
             for i, t in enumerate(st.session_state.t3_ctaf_titulos):
-                st.session_state.t3_ctaf_titulos[i]["valor"] = st.text_input("Título CTA", t["valor"], key=f"t3_ctaft_{i}", label_visibility="collapsed")
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t3_ctaf_titulos[i]["valor"] = st.text_input("Título CTA", t["valor"], key=f"t3_ctaft_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t3_ctaf_titulos) > 1 and _del_btn(f"t3_ctaft_del_{i}"):
+                        st.session_state.t3_ctaf_titulos.pop(i); st.rerun()
+            if _add_btn("t3_ctaft_add", "＋ Adicionar título CTA final"):
+                st.session_state.t3_ctaf_titulos.append({"valor": "Novo Título"}); st.rerun()
+
+            st.caption("Descrição da Chamada Final")
             for i, d in enumerate(st.session_state.t3_ctaf_descs):
-                st.session_state.t3_ctaf_descs[i]["valor"] = st.text_area("Desc CTA", d["valor"], key=f"t3_ctafd_{i}", label_visibility="collapsed")
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t3_ctaf_descs[i]["valor"] = st.text_area("Desc CTA", d["valor"], key=f"t3_ctafd_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t3_ctaf_descs) > 1 and _del_btn(f"t3_ctafd_del_{i}"):
+                        st.session_state.t3_ctaf_descs.pop(i); st.rerun()
+            if _add_btn("t3_ctafd_add", "＋ Adicionar descrição CTA final"):
+                st.session_state.t3_ctaf_descs.append({"valor": "Nova Descrição"}); st.rerun()
+
+            st.caption("Botões da Chamada Final *(Texto | URL)*")
             for i, btn in enumerate(st.session_state.t3_ctaf_btns):
-                c1, c2 = st.columns([5, 5])
+                c1, c2, c3 = st.columns([4, 4, 1])
                 with c1: st.session_state.t3_ctaf_btns[i]["texto"] = st.text_input("Txt Botão", btn["texto"], key=f"t3_ctafb_t_{i}", label_visibility="collapsed")
                 with c2: st.session_state.t3_ctaf_btns[i]["url"] = st.text_input("URL Botão", btn["url"], key=f"t3_ctafb_u_{i}", label_visibility="collapsed")
+                with c3:
+                    if len(st.session_state.t3_ctaf_btns) > 1 and _del_btn(f"t3_ctafb_del_{i}"):
+                        st.session_state.t3_ctaf_btns.pop(i); st.rerun()
+            if _add_btn("t3_ctafb_add", "＋ Adicionar botão CTA final"):
+                st.session_state.t3_ctaf_btns.append({"texto": "Botão", "url": "#"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # FOOTER
@@ -294,7 +338,7 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # FINALIZAR
             # ══════════════════════════════════════════════════════════════════
-            st.markdown("---")
+            st.markdown("--")
             if st.button("✅ Finalizar e Enviar para a Equipe", key="t3_send", type="primary"):
                 st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
                 st.balloons()
@@ -321,4 +365,4 @@ if __name__ == "__main__":
         layout="wide",
         initial_sidebar_state="collapsed",
     )
-    render()
+    render()'''
