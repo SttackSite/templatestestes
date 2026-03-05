@@ -184,7 +184,7 @@ def render():
             if _add_btn("t2_logo_add", "＋ Adicionar logo"):
                 st.session_state.t2_logos.append({"parte1": "NOVA", "destaque": "MARCA"}); st.rerun()
 
-            st.caption("Links do menu *(Texto | Destino do botão)*")
+            st.caption("Links do menu *(Texto | URL)*")
             for i, link in enumerate(st.session_state.t2_nav_links):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
@@ -285,7 +285,7 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🏋️ Serviços</div>', unsafe_allow_html=True)
             
-            st.caption("Títulos da Seção de Serviços")
+            st.caption("Título da Seção de Serviços")
             for i, t in enumerate(st.session_state.t2_serv_titulos):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1: st.session_state.t2_serv_titulos[i]["parte1"] = st.text_input("P1", t["parte1"], key=f"t2_st_p1_{i}", label_visibility="collapsed")
@@ -293,6 +293,16 @@ def render():
                 with c3:
                     if len(st.session_state.t2_serv_titulos) > 1 and _del_btn(f"t2_st_del_{i}"):
                         st.session_state.t2_serv_titulos.pop(i); st.rerun()
+            
+            st.caption("Subtítulo de Serviços")
+            for i, desc in enumerate(st.session_state.t2_serv_descs):
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t2_serv_descs[i]["valor"] = st.text_area("Desc", desc["valor"], key=f"t2_sd_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t2_serv_descs) > 1 and _del_btn(f"t2_sd_del_{i}"):
+                        st.session_state.t2_serv_descs.pop(i); st.rerun()
+            if _add_btn("t2_sd_add", "＋ Adicionar subtítulo serviços"):
+                st.session_state.t2_serv_descs.append({"valor": "Nova descrição"}); st.rerun()
 
             st.caption("Cards de Serviços *(Ícone | Título | Descrição)*")
             for i, card in enumerate(st.session_state.t2_serv_cards):
@@ -309,6 +319,26 @@ def render():
             # DIFERENCIAIS (FEATURES)
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🌟 Diferenciais</div>', unsafe_allow_html=True)
+            
+            st.caption("Título da Seção de Diferenciais")
+            for i, t in enumerate(st.session_state.t2_feat_titulos):
+                c1, c2, c3 = st.columns([4, 4, 1])
+                with c1: st.session_state.t2_feat_titulos[i]["parte1"] = st.text_input("P1", t["parte1"], key=f"t2_ft_p1_{i}", label_visibility="collapsed")
+                with c2: st.session_state.t2_feat_titulos[i]["destaque"] = st.text_input("Dest", t["destaque"], key=f"t2_ft_dest_{i}", label_visibility="collapsed")
+                with c3:
+                    if len(st.session_state.t2_feat_titulos) > 1 and _del_btn(f"t2_ft_del_{i}"):
+                        st.session_state.t2_feat_titulos.pop(i); st.rerun()
+            
+            st.caption("Subtítulo de Diferenciais")
+            for i, desc in enumerate(st.session_state.t2_feat_descs):
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t2_feat_descs[i]["valor"] = st.text_area("Desc", desc["valor"], key=f"t2_fd_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t2_feat_descs) > 1 and _del_btn(f"t2_fd_del_{i}"):
+                        st.session_state.t2_feat_descs.pop(i); st.rerun()
+            if _add_btn("t2_fd_add", "＋ Adicionar subtítulo diferenciais"):
+                st.session_state.t2_feat_descs.append({"valor": "Nova descrição"}); st.rerun()
+
             for i, box in enumerate(st.session_state.t2_feat_boxes):
                 with st.expander(f"Diferencial {i+1}: {box['titulo']}"):
                     st.session_state.t2_feat_boxes[i]["titulo"] = st.text_input("Título", box["titulo"], key=f"t2_fb_t_{i}")
@@ -322,6 +352,26 @@ def render():
             # PREÇOS
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">💰 Planos e Preços</div>', unsafe_allow_html=True)
+            
+            st.caption("Título da Seção de Preços")
+            for i, t in enumerate(st.session_state.t2_price_titulos):
+                c1, c2, c3 = st.columns([4, 4, 1])
+                with c1: st.session_state.t2_price_titulos[i]["parte1"] = st.text_input("P1", t["parte1"], key=f"t2_pt_p1_{i}", label_visibility="collapsed")
+                with c2: st.session_state.t2_price_titulos[i]["destaque"] = st.text_input("Dest", t["destaque"], key=f"t2_pt_dest_{i}", label_visibility="collapsed")
+                with c3:
+                    if len(st.session_state.t2_price_titulos) > 1 and _del_btn(f"t2_pt_del_{i}"):
+                        st.session_state.t2_price_titulos.pop(i); st.rerun()
+            
+            st.caption("Subtítulo de Preços")
+            for i, desc in enumerate(st.session_state.t2_price_descs):
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t2_price_descs[i]["valor"] = st.text_area("Desc", desc["valor"], key=f"t2_pd_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t2_price_descs) > 1 and _del_btn(f"t2_pd_del_{i}"):
+                        st.session_state.t2_price_descs.pop(i); st.rerun()
+            if _add_btn("t2_pd_add", "＋ Adicionar subtítulo preços"):
+                st.session_state.t2_price_descs.append({"valor": "Nova descrição"}); st.rerun()
+
             for i, card in enumerate(st.session_state.t2_price_cards):
                 with st.expander(f"Plano: {card['titulo']}"):
                     st.session_state.t2_price_cards[i]["titulo"] = st.text_input("Nome do Plano", card["titulo"], key=f"t2_pc_t_{i}")
@@ -339,6 +389,26 @@ def render():
             # DEPOIMENTOS
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">💬 Depoimentos</div>', unsafe_allow_html=True)
+            
+            st.caption("Título da Seção de Depoimentos")
+            for i, t in enumerate(st.session_state.t2_test_titulos):
+                c1, c2, c3 = st.columns([4, 4, 1])
+                with c1: st.session_state.t2_test_titulos[i]["parte1"] = st.text_input("P1", t["parte1"], key=f"t2_tt_p1_{i}", label_visibility="collapsed")
+                with c2: st.session_state.t2_test_titulos[i]["destaque"] = st.text_input("Dest", t["destaque"], key=f"t2_tt_dest_{i}", label_visibility="collapsed")
+                with c3:
+                    if len(st.session_state.t2_test_titulos) > 1 and _del_btn(f"t2_tt_del_{i}"):
+                        st.session_state.t2_test_titulos.pop(i); st.rerun()
+            
+            st.caption("Subtítulo de Depoimentos")
+            for i, desc in enumerate(st.session_state.t2_test_descs):
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t2_test_descs[i]["valor"] = st.text_area("Desc", desc["valor"], key=f"t2_td_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t2_test_descs) > 1 and _del_btn(f"t2_td_del_{i}"):
+                        st.session_state.t2_test_descs.pop(i); st.rerun()
+            if _add_btn("t2_td_add", "＋ Adicionar subtítulo depoimentos"):
+                st.session_state.t2_test_descs.append({"valor": "Nova descrição"}); st.rerun()
+
             for i, test in enumerate(st.session_state.t2_test_cards):
                 with st.expander(f"Depoimento de {test['autor']}"):
                     st.session_state.t2_test_cards[i]["texto"] = st.text_area("Texto", test["texto"], key=f"t2_tc_x_{i}")
@@ -353,69 +423,95 @@ def render():
             # CTA FINAL E FOOTER
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📢 Chamada Final & Rodapé</div>', unsafe_allow_html=True)
+            
             st.caption("Título CTA Final")
             for i, t in enumerate(st.session_state.t2_ctaf_titulos):
-                c1, c2 = st.columns([5, 5])
+                c1, c2, c3 = st.columns([4, 4, 1])
                 with c1: st.session_state.t2_ctaf_titulos[i]["parte1"] = st.text_input("P1", t["parte1"], key=f"t2_ctaft_p1_{i}", label_visibility="collapsed")
                 with c2: st.session_state.t2_ctaf_titulos[i]["destaque"] = st.text_input("Dest", t["destaque"], key=f"t2_ctaft_d_{i}", label_visibility="collapsed")
-            
+                with c3:
+                    if len(st.session_state.t2_ctaf_titulos) > 1 and _del_btn(f"t2_ctaft_del_{i}"):
+                        st.session_state.t2_ctaf_titulos.pop(i); st.rerun()
+            if _add_btn("t2_ctaft_add", "＋ Adicionar título CTA final"):
+                st.session_state.t2_ctaf_titulos.append({"parte1": "Texto", "destaque": "Destaque"}); st.rerun()
+
+            st.caption("Subtítulo CTA Final")
+            for i, desc in enumerate(st.session_state.t2_ctaf_descs):
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t2_ctaf_descs[i]["valor"] = st.text_area("Desc", desc["valor"], key=f"t2_ctafd_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t2_ctaf_descs) > 1 and _del_btn(f"t2_ctafd_del_{i}"):
+                        st.session_state.t2_ctaf_descs.pop(i); st.rerun()
+            if _add_btn("t2_ctafd_add", "＋ Adicionar subtítulo CTA final"):
+                st.session_state.t2_ctaf_descs.append({"valor": "Nova descrição"}); st.rerun()
+
+            st.caption("Botões CTA Final *(Texto | URL)*")
+            for i, btn in enumerate(st.session_state.t2_ctaf_btns):
+                c1, c2, c3 = st.columns([4, 4, 1])
+                with c1: st.session_state.t2_ctaf_btns[i]["texto"] = st.text_input("Txt", btn["texto"], key=f"t2_ctafb_t_{i}", label_visibility="collapsed")
+                with c2: st.session_state.t2_ctaf_btns[i]["url"] = st.text_input("URL", btn["url"], key=f"t2_ctafb_u_{i}", label_visibility="collapsed")
+                with c3:
+                    if len(st.session_state.t2_ctaf_btns) > 1 and _del_btn(f"t2_ctafb_del_{i}"):
+                        st.session_state.t2_ctaf_btns.pop(i); st.rerun()
+            if _add_btn("t2_ctafb_add", "＋ Adicionar botão CTA final"):
+                st.session_state.t2_ctaf_btns.append({"texto": "Saiba Mais", "url": "#"}); st.rerun()
+
             st.caption("Informações de Contato")
             for i, info in enumerate(st.session_state.t2_footer_infos):
-                st.session_state.t2_footer_infos[i]["valor"] = st.text_input("Contato", info["valor"], key=f"t2_finfo_{i}", label_visibility="collapsed")
-            
-            st.caption("Endereço")
-            for i, addr in enumerate(st.session_state.t2_footer_addrs):
-                st.session_state.t2_footer_addrs[i]["valor"] = st.text_input("Endereço", addr["valor"], key=f"t2_faddr_{i}", label_visibility="collapsed")
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t2_footer_infos[i]["valor"] = st.text_input("Contato", info["valor"], key=f"t2_fi_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t2_footer_infos) > 1 and _del_btn(f"t2_fi_del_{i}"):
+                        st.session_state.t2_footer_infos.pop(i); st.rerun()
+            if _add_btn("t2_fi_add", "＋ Adicionar info contato"):
+                st.session_state.t2_footer_infos.append({"valor": "Nova informação"}); st.rerun()
 
-            st.caption("Copyright")
+            st.caption("Endereços")
+            for i, addr in enumerate(st.session_state.t2_footer_addrs):
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t2_footer_addrs[i]["valor"] = st.text_input("Endereço", addr["valor"], key=f"t2_fa_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t2_footer_addrs) > 1 and _del_btn(f"t2_fa_del_{i}"):
+                        st.session_state.t2_footer_addrs.pop(i); st.rerun()
+            if _add_btn("t2_fa_add", "＋ Adicionar endereço"):
+                st.session_state.t2_footer_addrs.append({"valor": "Novo endereço"}); st.rerun()
+
+            st.caption("Copyright / Rodapé")
             for i, copy in enumerate(st.session_state.t2_footer_copys):
-                st.session_state.t2_footer_copys[i]["valor"] = st.text_input("Copyright", copy["valor"], key=f"t2_fcopy_{i}", label_visibility="collapsed")
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t2_footer_copys[i]["valor"] = st.text_input("Copy", copy["valor"], key=f"t2_fc_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t2_footer_copys) > 1 and _del_btn(f"t2_fc_del_{i}"):
+                        st.session_state.t2_footer_copys.pop(i); st.rerun()
+            if _add_btn("t2_fc_add", "＋ Adicionar copyright"):
+                st.session_state.t2_footer_copys.append({"valor": "Novo copyright"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # OBSERVAÇÕES
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📝 Observações Adicionais</div>', unsafe_allow_html=True)
-            for i, item in enumerate(st.session_state.t2_obs):
+            for i, obs in enumerate(st.session_state.t2_obs):
                 c1, c2 = st.columns([9, 1])
-                with c1:
-                    st.session_state.t2_obs[i]["valor"] = st.text_area(
-                        "Obs", item["valor"], key=f"t2_obs_{i}", height=80,
-                        placeholder="Ex: quero mudar a fonte, adicionar FAQ, remover botão X...",
-                        label_visibility="collapsed")
+                with c1: st.session_state.t2_obs[i]["valor"] = st.text_area("Obs", obs["valor"], key=f"t2_obs_{i}", label_visibility="collapsed", placeholder="Notas extras...")
                 with c2:
                     if len(st.session_state.t2_obs) > 1 and _del_btn(f"t2_obs_del_{i}"):
                         st.session_state.t2_obs.pop(i); st.rerun()
             if _add_btn("t2_obs_add", "＋ Adicionar observação"):
                 st.session_state.t2_obs.append({"valor": ""}); st.rerun()
 
-            # ══════════════════════════════════════════════════════════════════
-            # FINALIZAR
-            # ══════════════════════════════════════════════════════════════════
             st.markdown("---")
-            if st.button("✅ Finalizar e Enviar para a Equipe", key="t2_send", type="primary"):
-                st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
+            if st.button("🚀 FINALIZAR E GERAR SITE", use_container_width=True):
                 st.balloons()
+                st.success("Configurações salvas! O site está sendo processado.")
 
-    # ════════════════════════════════════════════════════════════════════════
-    # PAINEL DIREITO — IMAGEM DO TEMPLATE
-    # ════════════════════════════════════════════════════════════════════════
     with col_preview:
-        st.markdown(
-            '<p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>',
-            unsafe_allow_html=True)
-        st.markdown(
-            f'<div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>',
-            unsafe_allow_html=True)
+        st.markdown('<div class="panel-title">👁️ Preview Visual</div>', unsafe_allow_html=True)
+        st.markdown('<div class="panel-subtitle">Referência visual do template — role para ver o site completo</div>', unsafe_allow_html=True)
+        st.markdown(f"""
+            <div class="template-img-wrapper">
+                <img src="{TEMPLATE_IMAGE_URL}" alt="Template Preview">
+            </div>
+        """, unsafe_allow_html=True)
 
-
-# ─────────────────────────────────────────────────────────────────────────────
-# EXECUÇÃO DIRETA
-# ─────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
-    st.set_page_config(
-        page_title=f"Editor — {TEMPLATE_NAME}",
-        page_icon="✏️",
-        layout="wide",
-        initial_sidebar_state="collapsed",
-    )
     render()
