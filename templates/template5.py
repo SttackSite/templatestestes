@@ -3,8 +3,8 @@ import streamlit as st
 # ─────────────────────────────────────────────────────────────────────────────
 # URL DA IMAGEM DO TEMPLATE — SUBSTITUA PELO LINK DA SUA IMAGEM
 # ─────────────────────────────────────────────────────────────────────────────
-TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img4.png"
-TEMPLATE_NAME = "Template 4 — Inovação Absoluta (Champion)"
+TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img5.png"
+TEMPLATE_NAME = "Template 5 — Interstellar (Site Pro)"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -13,61 +13,58 @@ TEMPLATE_NAME = "Template 4 — Inovação Absoluta (Champion)"
 def _init():
     defaults = {
         # Cores
-        "t4_cores": [
-            {"nome": "Cor Neon Principal (Glow)", "valor": "#00FF88"},
-            {"nome": "Cor Secundária (Cyan)",     "valor": "#00D9FF"},
-            {"nome": "Cor de Destaque (Magenta)",  "valor": "#FF00FF"},
-            {"nome": "Cor de Fundo (Deep Black)", "valor": "#000000"},
-        ],
-        # Navbar
-        "t4_logos": [{"valor": "CHAMPION"}],
-        "t4_nav_links": [
-            {"texto": "Recursos",  "url": "#recursos"},
-            {"texto": "Portfólio", "url": "#portfolio"},
-            {"texto": "Sobre",     "url": "#sobre"},
-            {"texto": "Contato",   "url": "#contato"},
-        ],
-        "t4_nav_ctas": [
-            {"texto": "Começar", "url": "https://www.google.com/"},
+        "t5_cores": [
+            {"nome": "Cor Principal (Cyan)",    "valor": "#00f2ff"},
+            {"nome": "Cor Secundária (Magenta)", "valor": "#ff00ff"},
+            {"nome": "Cor de Fundo (Space)",     "valor": "#02040a"},
         ],
         # Hero
-        "t4_hero_titulos": [
-            {"valor": "INOVAÇÃO ABSOLUTA"},
+        "t5_hero_status": [{"valor": "[ STATUS: READY FOR DEPLOYMENT ]"}],
+        "t5_hero_titulos": [{"valor": "CONSTRUA SUA<br>ESTAÇÃO DIGITAL."}],
+        "t5_hero_descs": [{"valor": "Aprenda a criar seu novo site profissional em minutos, sem a dependência de um programador. Economize 80% do tempo e lance sua marca na velocidade da luz."}],
+        "t5_hero_btns": [{"texto": "INICIAR SEQUÊNCIA →", "url": "#templates"}],
+        # Galeria de Ships (Templates)
+        "t5_ship_titulos": [{"valor": "ESQUADRÃO DE ELITE"}],
+        "t5_ships": [
+            {"nome": "NEON PULSE",    "tier": "LEGENDARY", "img": "https://images.unsplash.com/photo-1635070041078-e363dbe005cb?w=600", "desc": "Configurado para máxima conversão e SEO otimizado.", "btn_url": "#"},
+            {"nome": "QUANTUM SUITE", "tier": "EPIC",      "img": "https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600", "desc": "Configurado para máxima conversão e SEO otimizado.", "btn_url": "#"},
+            {"nome": "VOID MINIMAL",  "tier": "RARE",      "img": "https://images.unsplash.com/photo-1634017839464-5c339ebe3cb4?w=600", "desc": "Configurado para máxima conversão e SEO otimizado.", "btn_url": "#"},
         ],
-        "t4_hero_subtitulos": [
-            {"valor": "Design que transcende limites"},
+        # Estatísticas (Data Nodes)
+        "t5_stats": [
+            {"valor": "1.2K", "label": "SITES PUBLICADOS"},
+            {"valor": "98%",  "label": "SATISFAÇÃO"},
+            {"valor": "24/7", "label": "UPLINK SUPORTE"},
+            {"valor": "80%",  "label": "MAIS RÁPIDO"},
         ],
-        "t4_hero_btns": [
-            {"texto": "Explorar Agora", "url": "https://www.google.com/", "estilo": "primário"},
-            {"texto": "Saiba Mais",      "url": "https://www.google.com/", "estilo": "secundário"},
+        # Missões (Objetivos)
+        "t5_missoes": [
+            {"valor": "Quer criar seu próprio site e customizá-lo em minutos pelo menor preço de mercado."},
+            {"valor": "Deseja trabalhar vendendo sites de elite para terceiros com alta margem."},
+            {"valor": "Precisa escalar a conversão de seus produtos físicos ou digitais."},
         ],
-        # Recursos (Features)
-        "t4_feat_cards": [
-            {"icone": "⚡", "titulo": "Velocidade",  "descricao": "Performance extrema com carregamento instantâneo em qualquer dispositivo."},
-            {"icone": "🎨", "titulo": "Design",      "descricao": "Interface visual revolucionária com animações que impressionam."},
-            {"icone": "🔧", "titulo": "Flexível",    "descricao": "Totalmente customizável para qualquer tipo de negócio ou projeto."},
-            {"icone": "📱", "titulo": "Responsivo",  "descricao": "Funciona perfeitamente em todos os dispositivos e tamanhos de tela."},
-            {"icone": "🚀", "titulo": "Conversão",   "descricao": "Design estratégico focado em maximizar taxas de conversão."},
-            {"icone": "✨", "titulo": "Premium",     "descricao": "Experiência de luxo em cada interação e detalhe visual."},
+        # Protocolo (Passos)
+        "t5_passos": [
+            {"num": "01", "titulo": "DOWNLOAD DOS ASSETS",   "desc": "Após a compra, todos os templates são disponibilizados no seu painel de comando."},
+            {"num": "02", "titulo": "CUSTOMIZAÇÃO DE DADOS", "desc": "Siga nosso passo a passo visual para inserir suas informações e imagens."},
+            {"num": "03", "titulo": "DEPLOY EM SEGUNDOS",    "desc": "Configure sua URL personalizada e suba os arquivos para a rede global."},
+            {"num": "04", "titulo": "SISTEMA ONLINE",        "desc": "Seu site está no ar e pronto para operações em larga escala."},
         ],
-        # Números (Showcase)
-        "t4_show_titulos": [{"valor": "NÚMEROS QUE FALAM"}],
-        "t4_show_cards": [
-            {"numero": "500%", "label": "Mais Engajamento"},
-            {"numero": "100K+", "label": "Usuários Ativos"},
-            {"numero": "99.9%", "label": "Uptime"},
-            {"numero": "24/7",  "label": "Suporte Premium"},
+        # Preços (Acesso à Frota)
+        "t5_precos": [
+            {"plano": "PILOT ACCESS",    "valor": "R$ 97",  "features": "1 Template de Elite\nSuporte Básico", "btn_txt": "SELECIONAR PILOT",    "url": "#"},
+            {"plano": "COMMANDER BUNDLE", "valor": "R$ 197", "features": "Todos os Templates\nAcesso à Comunidade\nSuporte Prioritário", "btn_txt": "ADQUIRIR COMMANDER", "url": "#"},
+            {"plano": "ADMIRAL PASS",    "valor": "R$ 497", "features": "Licença Comercial\nMentoria 1:1\nUpdates Vitalícios", "btn_txt": "TORNAR-SE ADMIRAL", "url": "#"},
         ],
-        # CTA Final
-        "t4_ctaf_titulos": [{"valor": "Pronto para Revolucionar?"}],
-        "t4_ctaf_descs":   [{"valor": "Junte-se aos líderes que já transformaram seus negócios com design de campeão."}],
-        "t4_ctaf_btns":    [{"texto": "Começar Sua Revolução", "url": "https://www.google.com/"}],
+        # FAQ (Database)
+        "t5_faqs": [
+            {"pergunta": "COMO É FEITA A TRANSFERÊNCIA DOS ARQUIVOS?", "resposta": "Os códigos são entregues em formato digital pronto para deploy direto via GitHub ou hospedagens estáticas."},
+            {"pergunta": "TEREI SUPORTE NA CONFIGURAÇÃO DO DOMÍNIO?",   "resposta": "Sim, fornecemos manuais detalhados e suporte técnico para garantir que sua URL personalizada funcione perfeitamente."},
+        ],
         # Footer
-        "t4_footer_infos": [{"valor": "Email: hello@champion.com | Telefone: +55 (99) 99999-9999"}],
-        "t4_footer_addrs": [{"valor": "Endereço: Av. Inovação, 1000 - São Paulo, SP"}],
-        "t4_footer_copys": [{"valor": "© 2025 Champion Design. Todos os direitos reservados. Design que vence campeonatos."}],
+        "t5_footer": [{"valor": "© 2026 SITE PRO // INTERSTELLAR DESIGN // ALL RIGHTS RESERVED"}],
         # Observações
-        "t4_obs": [{"valor": ""}],
+        "t5_obs": [{"valor": ""}],
     }
     for k, v in defaults.items():
         if k not in st.session_state:
@@ -123,212 +120,149 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # CORES
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">🎨 Cores Neon & Fundo</div>', unsafe_allow_html=True)
-            for i, cor in enumerate(st.session_state.t4_cores):
+            st.markdown('<div class="section-label">🎨 Cores Espaciais</div>', unsafe_allow_html=True)
+            for i, cor in enumerate(st.session_state.t5_cores):
                 c1, c2, c3 = st.columns([5, 2, 1])
-                with c1:
-                    st.session_state.t4_cores[i]["nome"] = st.text_input(
-                        "Nome da cor", cor["nome"], key=f"t4_cor_nome_{i}", label_visibility="collapsed")
-                with c2:
-                    st.session_state.t4_cores[i]["valor"] = st.color_picker(
-                        "Cor", cor["valor"], key=f"t4_cor_val_{i}", label_visibility="collapsed")
+                with c1: st.session_state.t5_cores[i]["nome"] = st.text_input("Nome", cor["nome"], key=f"t5_cor_n_{i}", label_visibility="collapsed")
+                with c2: st.session_state.t5_cores[i]["valor"] = st.color_picker("Cor", cor["valor"], key=f"t5_cor_v_{i}", label_visibility="collapsed")
                 with c3:
-                    if len(st.session_state.t4_cores) > 1 and _del_btn(f"t4_cor_del_{i}"):
-                        st.session_state.t4_cores.pop(i); st.rerun()
-            if _add_btn("t4_cor_add", "＋ Adicionar cor"):
-                st.session_state.t4_cores.append({"nome": "Nova Cor", "valor": "#FFFFFF"}); st.rerun()
-
-            # ══════════════════════════════════════════════════════════════════
-            # NAVBAR
-            # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">🔝 Navegação (Navbar)</div>', unsafe_allow_html=True)
-
-            st.caption("Logo (Estilo Neon)")
-            for i, item in enumerate(st.session_state.t4_logos):
-                c1, c2 = st.columns([9, 1])
-                with c1:
-                    st.session_state.t4_logos[i]["valor"] = st.text_input(
-                        "Logo", item["valor"], key=f"t4_logo_{i}", label_visibility="collapsed")
-                with c2:
-                    if len(st.session_state.t4_logos) > 1 and _del_btn(f"t4_logo_del_{i}"):
-                        st.session_state.t4_logos.pop(i); st.rerun()
-
-            st.caption("Links do menu *(Texto | URL)*")
-            for i, link in enumerate(st.session_state.t4_nav_links):
-                c1, c2, c3 = st.columns([4, 4, 1])
-                with c1: st.session_state.t4_nav_links[i]["texto"] = st.text_input("Txt", link["texto"], key=f"t4_nl_txt_{i}", label_visibility="collapsed")
-                with c2: st.session_state.t4_nav_links[i]["url"] = st.text_input("URL", link["url"], key=f"t4_nl_url_{i}", label_visibility="collapsed")
-                with c3:
-                    if len(st.session_state.t4_nav_links) > 1 and _del_btn(f"t4_nl_del_{i}"):
-                        st.session_state.t4_nav_links.pop(i); st.rerun()
-            if _add_btn("t4_nl_add", "＋ Adicionar link"):
-                st.session_state.t4_nav_links.append({"texto": "Link", "url": "#"}); st.rerun()
-
-            st.caption("Botão CTA da Navbar *(Texto | URL)*")
-            for i, btn in enumerate(st.session_state.t4_nav_ctas):
-                c1, c2, c3 = st.columns([4, 4, 1])
-                with c1: st.session_state.t4_nav_ctas[i]["texto"] = st.text_input("Txt", btn["texto"], key=f"t4_ncta_txt_{i}", label_visibility="collapsed")
-                with c2: st.session_state.t4_nav_ctas[i]["url"] = st.text_input("URL", btn["url"], key=f"t4_ncta_url_{i}", label_visibility="collapsed")
-                with c3:
-                    if len(st.session_state.t4_nav_ctas) > 1 and _del_btn(f"t4_ncta_del_{i}"):
-                        st.session_state.t4_nav_ctas.pop(i); st.rerun()
+                    if len(st.session_state.t5_cores) > 1 and _del_btn(f"t5_cor_del_{i}"):
+                        st.session_state.t5_cores.pop(i); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # HERO
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">⚡ Hero (Principal)</div>', unsafe_allow_html=True)
-
-            st.caption("Títulos do Hero (Estilo Space Mono)")
-            for i, t in enumerate(st.session_state.t4_hero_titulos):
-                c1, c2 = st.columns([9, 1])
-                with c1: st.session_state.t4_hero_titulos[i]["valor"] = st.text_input("Título", t["valor"], key=f"t4_ht_{i}", label_visibility="collapsed")
-                with c2:
-                    if len(st.session_state.t4_hero_titulos) > 1 and _del_btn(f"t4_ht_del_{i}"):
-                        st.session_state.t4_hero_titulos.pop(i); st.rerun()
-
-            st.caption("Subtítulos do Hero")
-            for i, s in enumerate(st.session_state.t4_hero_subtitulos):
-                c1, c2 = st.columns([9, 1])
-                with c1: st.session_state.t4_hero_subtitulos[i]["valor"] = st.text_input("Sub", s["valor"], key=f"t4_hs_{i}", label_visibility="collapsed")
-                with c2:
-                    if len(st.session_state.t4_hero_subtitulos) > 1 and _del_btn(f"t4_hs_del_{i}"):
-                        st.session_state.t4_hero_subtitulos.pop(i); st.rerun()
-
-            st.caption("Botões do Hero *(Texto | URL | Estilo)*")
-            for i, btn in enumerate(st.session_state.t4_hero_btns):
-                c1, c2, c3, c4 = st.columns([3, 3, 3, 1])
-                with c1: st.session_state.t4_hero_btns[i]["texto"] = st.text_input("Txt", btn["texto"], key=f"t4_hbtn_t_{i}", label_visibility="collapsed")
-                with c2: st.session_state.t4_hero_btns[i]["url"] = st.text_input("URL", btn["url"], key=f"t4_hbtn_u_{i}", label_visibility="collapsed")
-                with c3: st.session_state.t4_hero_btns[i]["estilo"] = st.selectbox("Estilo", ["primário", "secundário"], index=0 if btn["estilo"]=="primário" else 1, key=f"t4_hbtn_e_{i}", label_visibility="collapsed")
-                with c4:
-                    if len(st.session_state.t4_hero_btns) > 1 and _del_btn(f"t4_hbtn_del_{i}"):
-                        st.session_state.t4_hero_btns.pop(i); st.rerun()
-            if _add_btn("t4_hbtn_add", "＋ Adicionar botão hero"):
-                st.session_state.t4_hero_btns.append({"texto": "Botão", "url": "#", "estilo": "primário"}); st.rerun()
+            st.markdown('<div class="section-label">🌌 Hero (Comando Central)</div>', unsafe_allow_html=True)
+            st.caption("Status / Título / Descrição")
+            for i, status in enumerate(st.session_state.t5_hero_status):
+                st.session_state.t5_hero_status[i]["valor"] = st.text_input("Status", status["valor"], key=f"t5_h_stat_{i}")
+            for i, t in enumerate(st.session_state.t5_hero_titulos):
+                st.session_state.t5_hero_titulos[i]["valor"] = st.text_area("Título (use <br> para quebra)", t["valor"], key=f"t5_h_tit_{i}")
+            for i, d in enumerate(st.session_state.t5_hero_descs):
+                st.session_state.t5_hero_descs[i]["valor"] = st.text_area("Descrição", d["valor"], key=f"t5_h_desc_{i}")
+            
+            st.caption("Botão do Hero *(Texto | URL)*")
+            for i, btn in enumerate(st.session_state.t5_hero_btns):
+                c1, c2 = st.columns([5, 5])
+                with c1: st.session_state.t5_hero_btns[i]["texto"] = st.text_input("Texto", btn["texto"], key=f"t5_h_btn_t_{i}")
+                with c2: st.session_state.t5_hero_btns[i]["url"] = st.text_input("URL", btn["url"], key=f"t5_h_btn_u_{i}")
 
             # ══════════════════════════════════════════════════════════════════
-            # RECURSOS (FEATURES)
+            # GALERIA (SHIPS)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">💎 Recursos Revolucionários</div>', unsafe_allow_html=True)
-            for i, card in enumerate(st.session_state.t4_feat_cards):
-                with st.expander(f"Recurso {i+1}: {card['titulo']}"):
-                    st.session_state.t4_feat_cards[i]["icone"] = st.text_input("Ícone/Emoji", card["icone"], key=f"t4_fc_i_{i}")
-                    st.session_state.t4_feat_cards[i]["titulo"] = st.text_input("Título", card["titulo"], key=f"t4_fc_t_{i}")
-                    st.session_state.t4_feat_cards[i]["descricao"] = st.text_area("Descrição", card["descricao"], key=f"t4_fc_d_{i}")
-                    if len(st.session_state.t4_feat_cards) > 1 and _del_btn(f"t4_fc_del_{i}", "Excluir recurso"):
-                        st.session_state.t4_feat_cards.pop(i); st.rerun()
-            if _add_btn("t4_fc_add", "＋ Adicionar recurso"):
-                st.session_state.t4_feat_cards.append({"icone": "✨", "titulo": "Novo Recurso", "descricao": "Descrição aqui"}); st.rerun()
+            st.markdown('<div class="section-label">🚀 Esquadrão (Galeria)</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t5_ship_titulos):
+                st.session_state.t5_ship_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t5_sh_t_{i}")
+            
+            for i, ship in enumerate(st.session_state.t5_ships):
+                with st.expander(f"Nave {i+1}: {ship['nome']}"):
+                    st.session_state.t5_ships[i]["nome"] = st.text_input("Nome", ship["nome"], key=f"t5_s_n_{i}")
+                    st.session_state.t5_ships[i]["tier"] = st.text_input("Tier", ship["tier"], key=f"t5_s_tr_{i}")
+                    st.session_state.t5_ships[i]["img"] = st.text_input("URL Imagem", ship["img"], key=f"t5_s_img_{i}")
+                    st.session_state.t5_ships[i]["desc"] = st.text_area("Descrição", ship["desc"], key=f"t5_s_d_{i}")
+                    st.session_state.t5_ships[i]["btn_url"] = st.text_input("URL Botão", ship["btn_url"], key=f"t5_s_u_{i}")
+                    if len(st.session_state.t5_ships) > 1 and _del_btn(f"t5_s_del_{i}", "Excluir Nave"):
+                        st.session_state.t5_ships.pop(i); st.rerun()
+            if _add_btn("t5_s_add", "＋ Adicionar Nave ao Esquadrão"):
+                st.session_state.t5_ships.append({"nome": "NOVA NAVE", "tier": "RARE", "img": "", "desc": "...", "btn_url": "#"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # NÚMEROS (SHOWCASE)
+            # ESTATÍSTICAS (DATA NODES)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">📊 Números que Impressionam</div>', unsafe_allow_html=True)
-            for i, t in enumerate(st.session_state.t4_show_titulos):
-                st.session_state.t4_show_titulos[i]["valor"] = st.text_input("Título Seção", t["valor"], key=f"t4_st_{i}", label_visibility="collapsed")
-
-            st.caption("Cards de Números")
-            for i, card in enumerate(st.session_state.t4_show_cards):
+            st.markdown('<div class="section-label">📊 Data Nodes (Estatísticas)</div>', unsafe_allow_html=True)
+            for i, stat in enumerate(st.session_state.t5_stats):
                 c1, c2, c3 = st.columns([4, 4, 1])
-                with c1: st.session_state.t4_show_cards[i]["numero"] = st.text_input("Valor", card["numero"], key=f"t4_sc_n_{i}", label_visibility="collapsed")
-                with c2: st.session_state.t4_show_cards[i]["label"] = st.text_input("Rótulo", card["label"], key=f"t4_sc_l_{i}", label_visibility="collapsed")
+                with c1: st.session_state.t5_stats[i]["valor"] = st.text_input("Valor", stat["valor"], key=f"t5_st_v_{i}", label_visibility="collapsed")
+                with c2: st.session_state.t5_stats[i]["label"] = st.text_input("Rótulo", stat["label"], key=f"t5_st_l_{i}", label_visibility="collapsed")
                 with c3:
-                    if len(st.session_state.t4_show_cards) > 1 and _del_btn(f"t4_sc_del_{i}"):
-                        st.session_state.t4_show_cards.pop(i); st.rerun()
-            if _add_btn("t4_sc_add", "＋ Adicionar número"):
-                st.session_state.t4_show_cards.append({"numero": "0", "label": "Novo Dado"}); st.rerun()
+                    if len(st.session_state.t5_stats) > 1 and _del_btn(f"t5_st_del_{i}"):
+                        st.session_state.t5_stats.pop(i); st.rerun()
+            if _add_btn("t5_st_add", "＋ Adicionar Data Node"):
+                st.session_state.t5_stats.append({"valor": "0", "label": "NOVO DADO"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # CTA FINAL
+            # MISSÕES (OBJETIVOS)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">🚀 Chamada para Ação Final</div>', unsafe_allow_html=True)
-
-            st.caption("Título da Chamada Final")
-            for i, t in enumerate(st.session_state.t4_ctaf_titulos):
+            st.markdown('<div class="section-label">🎯 Objetivos da Missão</div>', unsafe_allow_html=True)
+            for i, missao in enumerate(st.session_state.t5_missoes):
                 c1, c2 = st.columns([9, 1])
-                with c1: st.session_state.t4_ctaf_titulos[i]["valor"] = st.text_input("Título CTA", t["valor"], key=f"t4_ctaft_{i}", label_visibility="collapsed")
+                with c1: st.session_state.t5_missoes[i]["valor"] = st.text_input("Missão", missao["valor"], key=f"t5_m_v_{i}", label_visibility="collapsed")
                 with c2:
-                    if len(st.session_state.t4_ctaf_titulos) > 1 and _del_btn(f"t4_ctaft_del_{i}"):
-                        st.session_state.t4_ctaf_titulos.pop(i); st.rerun()
-            if _add_btn("t4_ctaft_add", "＋ Adicionar título CTA final"):
-                st.session_state.t4_ctaf_titulos.append({"valor": "Novo Título"}); st.rerun()
-
-            st.caption("Descrição da Chamada Final")
-            for i, d in enumerate(st.session_state.t4_ctaf_descs):
-                c1, c2 = st.columns([9, 1])
-                with c1: st.session_state.t4_ctaf_descs[i]["valor"] = st.text_area("Desc CTA", d["valor"], key=f"t4_ctafd_{i}", label_visibility="collapsed")
-                with c2:
-                    if len(st.session_state.t4_ctaf_descs) > 1 and _del_btn(f"t4_ctafd_del_{i}"):
-                        st.session_state.t4_ctaf_descs.pop(i); st.rerun()
-            if _add_btn("t4_ctafd_add", "＋ Adicionar descrição CTA final"):
-                st.session_state.t4_ctaf_descs.append({"valor": "Nova Descrição"}); st.rerun()
-
-            st.caption("Botões da Chamada Final *(Texto | URL)*")
-            for i, btn in enumerate(st.session_state.t4_ctaf_btns):
-                c1, c2, c3 = st.columns([4, 4, 1])
-                with c1: st.session_state.t4_ctaf_btns[i]["texto"] = st.text_input("Txt Botão", btn["texto"], key=f"t4_ctafb_t_{i}", label_visibility="collapsed")
-                with c2: st.session_state.t4_ctaf_btns[i]["url"] = st.text_input("URL Botão", btn["url"], key=f"t4_ctafb_u_{i}", label_visibility="collapsed")
-                with c3:
-                    if len(st.session_state.t4_ctaf_btns) > 1 and _del_btn(f"t4_ctafb_del_{i}"):
-                        st.session_state.t4_ctaf_btns.pop(i); st.rerun()
-            if _add_btn("t4_ctafb_add", "＋ Adicionar botão CTA final"):
-                st.session_state.t4_ctaf_btns.append({"texto": "Botão", "url": "#"}); st.rerun()
+                    if len(st.session_state.t5_missoes) > 1 and _del_btn(f"t5_m_del_{i}"):
+                        st.session_state.t5_missoes.pop(i); st.rerun()
+            if _add_btn("t5_m_add", "＋ Adicionar Objetivo"):
+                st.session_state.t5_missoes.append({"valor": "Novo objetivo da missão..."}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # FOOTER
+            # PROTOCOLO (PASSOS)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">👣 Rodapé Futurista</div>', unsafe_allow_html=True)
-            for i, info in enumerate(st.session_state.t4_footer_infos):
-                st.session_state.t4_footer_infos[i]["valor"] = st.text_input("Infos", info["valor"], key=f"t4_finfo_{i}", label_visibility="collapsed")
-            for i, addr in enumerate(st.session_state.t4_footer_addrs):
-                st.session_state.t4_footer_addrs[i]["valor"] = st.text_input("Endereço", addr["valor"], key=f"t4_faddr_{i}", label_visibility="collapsed")
-            for i, copy in enumerate(st.session_state.t4_footer_copys):
-                st.session_state.t4_footer_copys[i]["valor"] = st.text_input("Copyright", copy["valor"], key=f"t4_fcopy_{i}", label_visibility="collapsed")
+            st.markdown('<div class="section-label">⚙️ Protocolo de Lançamento</div>', unsafe_allow_html=True)
+            for i, passo in enumerate(st.session_state.t5_passos):
+                with st.expander(f"Passo {passo['num']}: {passo['titulo']}"):
+                    st.session_state.t5_passos[i]["num"] = st.text_input("Número", passo["num"], key=f"t5_p_n_{i}")
+                    st.session_state.t5_passos[i]["titulo"] = st.text_input("Título", passo["titulo"], key=f"t5_p_t_{i}")
+                    st.session_state.t5_passos[i]["desc"] = st.text_area("Descrição", passo["desc"], key=f"t5_p_d_{i}")
+                    if len(st.session_state.t5_passos) > 1 and _del_btn(f"t5_p_del_{i}", "Excluir Passo"):
+                        st.session_state.t5_passos.pop(i); st.rerun()
+            if _add_btn("t5_p_add", "＋ Adicionar Passo ao Protocolo"):
+                st.session_state.t5_passos.append({"num": "05", "titulo": "NOVO PASSO", "desc": "..."}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # OBSERVAÇÕES
+            # PREÇOS (FROTA)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">📝 Observações Adicionais</div>', unsafe_allow_html=True)
-            for i, item in enumerate(st.session_state.t4_obs):
-                c1, c2 = st.columns([9, 1])
-                with c1:
-                    st.session_state.t4_obs[i]["valor"] = st.text_area(
-                        "Obs", item["valor"], key=f"t4_obs_{i}", height=80,
-                        placeholder="Ex: quero mudar a fonte, adicionar FAQ, remover botão X...",
-                        label_visibility="collapsed")
-                with c2:
-                    if len(st.session_state.t4_obs) > 1 and _del_btn(f"t4_obs_del_{i}"):
-                        st.session_state.t4_obs.pop(i); st.rerun()
-            if _add_btn("t4_obs_add", "＋ Adicionar observação"):
-                st.session_state.t4_obs.append({"valor": ""}); st.rerun()
+            st.markdown('<div class="section-label">💎 Acesso à Frota (Preços)</div>', unsafe_allow_html=True)
+            for i, preco in enumerate(st.session_state.t5_precos):
+                with st.expander(f"Plano: {preco['plano']}"):
+                    st.session_state.t5_precos[i]["plano"] = st.text_input("Nome", preco["plano"], key=f"t5_pr_p_{i}")
+                    st.session_state.t5_precos[i]["valor"] = st.text_input("Valor", preco["valor"], key=f"t5_pr_v_{i}")
+                    st.session_state.t5_precos[i]["features"] = st.text_area("Vantagens (uma por linha)", preco["features"], key=f"t5_pr_f_{i}")
+                    st.session_state.t5_precos[i]["btn_txt"] = st.text_input("Texto Botão", preco["btn_txt"], key=f"t5_pr_bt_{i}")
+                    st.session_state.t5_precos[i]["url"] = st.text_input("URL Botão", preco["url"], key=f"t5_pr_u_{i}")
+                    if len(st.session_state.t5_precos) > 1 and _del_btn(f"t5_pr_del_{i}", "Excluir Plano"):
+                        st.session_state.t5_precos.pop(i); st.rerun()
+            if _add_btn("t5_pr_add", "＋ Adicionar Plano"):
+                st.session_state.t5_precos.append({"plano": "NOVO PLANO", "valor": "R$ 0", "features": "Vantagem", "btn_txt": "ASSINAR", "url": "#"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # FINALIZAR
+            # FAQ (DATABASE)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown("--")
-            if st.button("✅ Finalizar e Enviar para a Equipe", key="t4_send", type="primary"):
+            st.markdown('<div class="section-label">❓ Database / FAQ</div>', unsafe_allow_html=True)
+            for i, faq in enumerate(st.session_state.t5_faqs):
+                with st.expander(f"FAQ {i+1}: {faq['pergunta'][:30]}..."):
+                    st.session_state.t5_faqs[i]["pergunta"] = st.text_input("Pergunta", faq["pergunta"], key=f"t5_faq_p_{i}")
+                    st.session_state.t5_faqs[i]["resposta"] = st.text_area("Resposta", faq["resposta"], key=f"t5_faq_r_{i}")
+                    if len(st.session_state.t5_faqs) > 1 and _del_btn(f"t5_faq_del_{i}", "Excluir FAQ"):
+                        st.session_state.t5_faqs.pop(i); st.rerun()
+            if _add_btn("t5_faq_add", "＋ Adicionar FAQ"):
+                st.session_state.t5_faqs.append({"pergunta": "Nova pergunta?", "resposta": "Resposta aqui..."}); st.rerun()
+
+            # ══════════════════════════════════════════════════════════════════
+            # FOOTER E OBS
+            # ══════════════════════════════════════════════════════════════════
+            st.markdown('<div class="section-label">👣 Rodapé & Notas</div>', unsafe_allow_html=True)
+            for i, copy in enumerate(st.session_state.t5_footer):
+                st.session_state.t5_footer[i]["valor"] = st.text_input("Copyright", copy["valor"], key=f"t5_foot_{i}")
+            
+            for i, item in enumerate(st.session_state.t5_obs):
+                st.session_state.t5_obs[i]["valor"] = st.text_area("Observações Adicionais", item["valor"], key=f"t5_obs_{i}", placeholder="Ex: Adicionar seção de contato...")
+
+            st.markdown("---")
+            if st.button("✅ Finalizar e Enviar para a Equipe", key="t5_send", type="primary"):
                 st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
                 st.balloons()
 
     # ════════════════════════════════════════════════════════════════════════
-    # PAINEL DIREITO — IMAGEM DO TEMPLATE
+    # PAINEL DIREITO — PREVIEW
     # ════════════════════════════════════════════════════════════════════════
     with col_preview:
-        st.markdown(
-            '<p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>',
-            unsafe_allow_html=True)
-        st.markdown(
-            f'<div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>',
-            unsafe_allow_html=True)
+        st.markdown('<p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>', unsafe_allow_html=True)
+        st.markdown(f'<div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>', unsafe_allow_html=True)
 
 
-# ─────────────────────────────────────────────────────────────────────────────
-# EXECUÇÃO DIRETA
-# ─────────────────────────────────────────────────────────────────────────────
 if __name__ == "__main__":
     st.set_page_config(
         page_title=f"Editor — {TEMPLATE_NAME}",
-        page_icon="⚡",
+        page_icon="✏️",
         layout="wide",
         initial_sidebar_state="collapsed",
     )
