@@ -251,11 +251,11 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t9_sol_titulos[i]["valor"] = st.text_input(
-                        "Título", t["valor"], key=f"t9_st_{i}", label_visibility="collapsed")
+                        "Título", t["valor"], key=f"t9_solt_{i}", label_visibility="collapsed")
                 with c2:
-                    if len(st.session_state.t9_sol_titulos) > 1 and _del_btn(f"t9_st_del_{i}"):
+                    if len(st.session_state.t9_sol_titulos) > 1 and _del_btn(f"t9_solt_del_{i}"):
                         st.session_state.t9_sol_titulos.pop(i); st.rerun()
-            if _add_btn("t9_st_add", "＋ Adicionar título de seção"):
+            if _add_btn("t9_solt_add", "＋ Adicionar título de seção"):
                 st.session_state.t9_sol_titulos.append({"valor": "Novo Título"}); st.rerun()
 
             st.caption("Cards de solução  *(Ícone | Título | Descrição | Link | URL)*")
