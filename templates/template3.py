@@ -1,4 +1,4 @@
-'''import streamlit as st
+import streamlit as st
 
 # ─────────────────────────────────────────────────────────────────────────────
 # URL DA IMAGEM DO TEMPLATE — SUBSTITUA PELO LINK DA SUA IMAGEM
@@ -365,4 +365,4 @@ if __name__ == "__main__":
         layout="wide",
         initial_sidebar_state="collapsed",
     )
-    render()'''
+    render()
