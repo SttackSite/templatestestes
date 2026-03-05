@@ -22,10 +22,10 @@ def _init():
         # Navbar
         "t2_logos": [{"parte1": "FIT", "destaque": "PRO"}],
         "t2_nav_links": [
-            {"texto": "Recursos", "url": "#recursos"},
-            {"texto": "Galeria",  "url": "#galeria"},
-            {"texto": "Sobre",    "url": "#sobre"},
-            {"texto": "Contato",  "url": "#contato"},
+            {"texto": "Recursos", "url": "#Nossos Serviços"},
+            {"texto": "Galeria",  "url": "#Por que escolher a FitPro"},
+            {"texto": "Sobre",    "url": "#Planos e preços"},
+            {"texto": "Contato",  "url": "#Começar agora"},
         ],
         "t2_nav_ctas": [
             {"texto": "Começar Agora", "url": "https://www.google.com/"},
@@ -184,7 +184,7 @@ def render():
             if _add_btn("t2_logo_add", "＋ Adicionar logo"):
                 st.session_state.t2_logos.append({"parte1": "NOVA", "destaque": "MARCA"}); st.rerun()
 
-            st.caption("Links do menu *(Texto | Âncora/URL)*")
+            st.caption("Links do menu *(Texto | Destino do botão)*")
             for i, link in enumerate(st.session_state.t2_nav_links):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
