@@ -20,7 +20,7 @@ def _init():
         ],
         # Hero
         "t5_hero_status": [{"valor": "[ STATUS: READY FOR DEPLOYMENT ]"}],
-        "t5_hero_titulos": [{"valor": "CONSTRUA SUA<br>ESTAÇÃO DIGITAL."}],
+        "t5_hero_titulos": [{"valor": "CONSTRUA SUA ESTAÇÃO DIGITAL."}],
         "t5_hero_descs": [{"valor": "Aprenda a criar seu novo site profissional em minutos, sem a dependência de um programador. Economize 80% do tempo e lance sua marca na velocidade da luz."}],
         "t5_hero_btns": [{"texto": "INICIAR SEQUÊNCIA →", "url": "#templates"}],
         # Galeria de Ships (Templates)
@@ -140,9 +140,9 @@ def render():
             for i, status in enumerate(st.session_state.t5_hero_status):
                 st.session_state.t5_hero_status[i]["valor"] = st.text_input("Status", status["valor"], key=f"t5_h_stat_{i}")
             for i, t in enumerate(st.session_state.t5_hero_titulos):
-                st.session_state.t5_hero_titulos[i]["valor"] = st.text_area("Título (use <br> para quebra)", t["valor"], key=f"t5_h_tit_{i}")
+                st.session_state.t5_hero_titulos[i]["valor"] = st.text_input("Título", t["valor"], key=f"t5_h_tit_{i}")
             for i, d in enumerate(st.session_state.t5_hero_descs):
-                st.session_state.t5_hero_descs[i]["valor"] = st.text_area("Descrição", d["valor"], key=f"t5_h_desc_{i}")
+                st.session_state.t5_hero_descs[i]["valor"] = st.text_input("Descrição", d["valor"], key=f"t5_h_desc_{i}")
             st.caption("Botão do Hero *(Texto | URL)*")
             for i, btn in enumerate(st.session_state.t5_hero_btns):
                 c1, c2 = st.columns([5, 5])
