@@ -92,8 +92,8 @@ def render():
 
     st.markdown("""
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-        html, body, [data-testid="stAppViewContainer"] { font-family: 'Inter', sans-serif; background: #f4f6fb; }
+        @import url(\'https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap\');
+        html, body, [data-testid="stAppViewContainer"] { font-family: \'Inter\', sans-serif; background: #f4f6fb; }
         [data-testid="stHeader"],[data-testid="stToolbarActions"],[data-testid="stDecoration"],footer { display:none!important; }
         .section-label {
             font-size: 11px; font-weight: 700; text-transform: uppercase;
@@ -115,15 +115,15 @@ def render():
     col_form, col_preview = st.columns([1, 2], gap="medium")
 
     with col_form:
-        st.markdown('<div class="panel-title">✏️ Editor de Template</div>', unsafe_allow_html=True)
-        st.markdown(f'<div class="panel-subtitle">{TEMPLATE_NAME}</div>', unsafe_allow_html=True)
+        st.markdown(\'<div class="panel-title">✏️ Editor de Template</div>\', unsafe_allow_html=True)
+        st.markdown(f\' <div class="panel-subtitle">{TEMPLATE_NAME}</div>\', unsafe_allow_html=True)
 
         with st.container(height=720, border=False):
 
             # ══════════════════════════════════════════════════════════════════
             # CORES
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">🎨 Cores Neon & Fundo</div>', unsafe_allow_html=True)
+            st.markdown(\'<div class="section-label">🎨 Cores Neon & Fundo</div>\', unsafe_allow_html=True)
             for i, cor in enumerate(st.session_state.t4_cores):
                 c1, c2, c3 = st.columns([5, 2, 1])
                 with c1:
@@ -141,7 +141,7 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # NAVBAR
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">🔝 Navegação (Navbar)</div>', unsafe_allow_html=True)
+            st.markdown(\'<div class="section-label">🔝 Navegação (Navbar)</div>\', unsafe_allow_html=True)
 
             st.caption("Logo (Estilo Neon)")
             for i, item in enumerate(st.session_state.t4_logos):
@@ -176,7 +176,7 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # HERO
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">⚡ Hero (Principal)</div>', unsafe_allow_html=True)
+            st.markdown(\'<div class="section-label">⚡ Hero (Principal)</div>\', unsafe_allow_html=True)
 
             st.caption("Títulos do Hero (Estilo Space Mono)")
             for i, t in enumerate(st.session_state.t4_hero_titulos):
@@ -209,9 +209,9 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # RECURSOS (FEATURES)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">💎 Recursos Revolucionários</div>', unsafe_allow_html=True)
+            st.markdown(\'<div class="section-label">💎 Recursos Revolucionários</div>\', unsafe_allow_html=True)
             for i, card in enumerate(st.session_state.t4_feat_cards):
-                with st.expander(f"Recurso {i+1}: {card['titulo']}"):
+                with st.expander(f"Recurso {i+1}: {card[\'titulo\']}"):
                     st.session_state.t4_feat_cards[i]["icone"] = st.text_input("Ícone/Emoji", card["icone"], key=f"t4_fc_i_{i}")
                     st.session_state.t4_feat_cards[i]["titulo"] = st.text_input("Título", card["titulo"], key=f"t4_fc_t_{i}")
                     st.session_state.t4_feat_cards[i]["descricao"] = st.text_area("Descrição", card["descricao"], key=f"t4_fc_d_{i}")
@@ -223,10 +223,11 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # NÚMEROS (SHOWCASE)
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">📈 Números que Falam</div>', unsafe_allow_html=True)
+            st.markdown(\'<div class="section-label">📊 Números que Impressionam</div>\', unsafe_allow_html=True)
             for i, t in enumerate(st.session_state.t4_show_titulos):
                 st.session_state.t4_show_titulos[i]["valor"] = st.text_input("Título Seção", t["valor"], key=f"t4_st_{i}", label_visibility="collapsed")
-            
+
+            st.caption("Cards de Números")
             for i, card in enumerate(st.session_state.t4_show_cards):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1: st.session_state.t4_show_cards[i]["numero"] = st.text_input("Valor", card["numero"], key=f"t4_sc_n_{i}", label_visibility="collapsed")
@@ -240,20 +241,37 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # CTA FINAL
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">🏁 Chamada Final</div>', unsafe_allow_html=True)
+            st.markdown(\'<div class="section-label">🚀 Chamada para Ação Final</div>\', unsafe_allow_html=True)
+
+            st.caption("Título da Chamada Final")
             for i, t in enumerate(st.session_state.t4_ctaf_titulos):
-                st.session_state.t4_ctaf_titulos[i]["valor"] = st.text_input("Título CTA", t["valor"], key=f"t4_ctaft_{i}", label_visibility="collapsed")
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t4_ctaf_titulos[i]["valor"] = st.text_input("Título CTA", t["valor"], key=f"t4_ctaft_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t4_ctaf_titulos) > 1 and _del_btn(f"t4_ctaft_del_{i}"):
+                        st.session_state.t4_ctaf_titulos.pop(i); st.rerun()
+
+            st.caption("Descrição da Chamada Final")
             for i, d in enumerate(st.session_state.t4_ctaf_descs):
-                st.session_state.t4_ctaf_descs[i]["valor"] = st.text_area("Desc CTA", d["valor"], key=f"t4_ctafd_{i}", label_visibility="collapsed")
+                c1, c2 = st.columns([9, 1])
+                with c1: st.session_state.t4_ctaf_descs[i]["valor"] = st.text_area("Desc CTA", d["valor"], key=f"t4_ctafd_{i}", label_visibility="collapsed")
+                with c2:
+                    if len(st.session_state.t4_ctaf_descs) > 1 and _del_btn(f"t4_ctafd_del_{i}"):
+                        st.session_state.t4_ctaf_descs.pop(i); st.rerun()
+
+            st.caption("Botões da Chamada Final *(Texto | URL)*")
             for i, btn in enumerate(st.session_state.t4_ctaf_btns):
-                c1, c2 = st.columns([5, 5])
+                c1, c2, c3 = st.columns([4, 4, 1])
                 with c1: st.session_state.t4_ctaf_btns[i]["texto"] = st.text_input("Txt Botão", btn["texto"], key=f"t4_ctafb_t_{i}", label_visibility="collapsed")
                 with c2: st.session_state.t4_ctaf_btns[i]["url"] = st.text_input("URL Botão", btn["url"], key=f"t4_ctafb_u_{i}", label_visibility="collapsed")
+                with c3:
+                    if len(st.session_state.t4_ctaf_btns) > 1 and _del_btn(f"t4_ctafb_del_{i}"):
+                        st.session_state.t4_ctaf_btns.pop(i); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # FOOTER
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">👣 Rodapé</div>', unsafe_allow_html=True)
+            st.markdown(\'<div class="section-label">👣 Rodapé Futurista</div>\', unsafe_allow_html=True)
             for i, info in enumerate(st.session_state.t4_footer_infos):
                 st.session_state.t4_footer_infos[i]["valor"] = st.text_input("Infos", info["valor"], key=f"t4_finfo_{i}", label_visibility="collapsed")
             for i, addr in enumerate(st.session_state.t4_footer_addrs):
@@ -264,7 +282,7 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # OBSERVAÇÕES
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">📝 Observações Adicionais</div>', unsafe_allow_html=True)
+            st.markdown(\'<div class="section-label">📝 Observações Adicionais</div>\', unsafe_allow_html=True)
             for i, item in enumerate(st.session_state.t4_obs):
                 c1, c2 = st.columns([9, 1])
                 with c1:
@@ -281,7 +299,7 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # FINALIZAR
             # ══════════════════════════════════════════════════════════════════
-            st.markdown("---")
+            st.markdown("--")
             if st.button("✅ Finalizar e Enviar para a Equipe", key="t4_send", type="primary"):
                 st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
                 st.balloons()
@@ -291,10 +309,10 @@ def render():
     # ════════════════════════════════════════════════════════════════════════
     with col_preview:
         st.markdown(
-            '<p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>',
+            \' <p class="img-caption">📌 Referência visual do template — role para ver o site completo</p>\',
             unsafe_allow_html=True)
         st.markdown(
-            f'<div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>',
+            f\' <div class="template-img-wrapper"><img src="{TEMPLATE_IMAGE_URL}" alt="Preview do template" /></div>\',
             unsafe_allow_html=True)
 
 
@@ -304,7 +322,7 @@ def render():
 if __name__ == "__main__":
     st.set_page_config(
         page_title=f"Editor — {TEMPLATE_NAME}",
-        page_icon="✏️",
+        page_icon="⚡",
         layout="wide",
         initial_sidebar_state="collapsed",
     )
