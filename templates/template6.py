@@ -4,7 +4,7 @@ import streamlit as st
 # URL DA IMAGEM DO TEMPLATE — SUBSTITUA PELO LINK DA SUA IMAGEM
 # ─────────────────────────────────────────────────────────────────────────────
 TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img6.png"
-TEMPLATE_NAME = "Template 6 — Alta Precisão (Bautz Style)"
+TEMPLATE_NAME = "Template 6 — Alta Precisão (Bautz Style )"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -20,47 +20,61 @@ def _init():
         ],
         # Hero (Engenharia)
         "t6_hero_mono": [{"valor": "Codeless Architecture v2.0"}],
-        "t6_hero_titulos": [{"valor": "SITES DE ALTA<br>PRECISÃO."}],
+        "t6_hero_titulos": [{"valor": "SITES DE ALTA PRECISÃO."}],
         "t6_hero_subtitulos": [{"valor": "Desenvolva a sua presença digital com a eficiência de um processo industrial. Templates otimizados para velocidade, conversão e autonomia total."}],
         "t6_hero_btns": [{"texto": "CONFIGURAR AGORA", "url": "#catalogo"}],
+        
         # Catálogo de Componentes (Templates)
+        "t6_cat_label": [{"valor": "// CATÁLOGO DE COMPONENTES"}],
         "t6_cat_titulos": [{"valor": "MODELOS DISPONÍVEIS"}],
         "t6_cat_items": [
-            {"nome": "STRUCTURAL MINIMAL", "ref": "BTZ-01", "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "url": "#"},
-            {"nome": "DYNAMIC FLOW",        "ref": "BTZ-02", "img": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "url": "#"},
-            {"nome": "CORPORATE CORE",      "ref": "BTZ-03", "img": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "url": "#"},
+            {"nome": "STRUCTURAL MINIMAL", "ref": "BTZ-01", "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "btn_txt": "INSPECIONAR BTZ-01", "url": "#"},
+            {"nome": "DYNAMIC FLOW",        "ref": "BTZ-02", "img": "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "btn_txt": "INSPECIONAR BTZ-02", "url": "#"},
+            {"nome": "CORPORATE CORE",      "ref": "BTZ-03", "img": "https://images.unsplash.com/photo-1497215728101-856f4ea42174?w=600", "desc": "Estrutura modular com 100% de pontuação no Core Web Vitals.", "btn_txt": "INSPECIONAR BTZ-03", "url": "#"},
         ],
+        
         # Logos de Confiança
+        "t6_logos_label": [{"valor": "TRUSTED BY INDUSTRY LEADERS:"}],
         "t6_logos": [
             {"valor": "MATTEL"}, {"valor": "SIEMENS"}, {"valor": "BMW"}, {"valor": "BASF"},
         ],
-        # Aplicações (Cards)
+        
+        # Aplicações (Cards )
+        "t6_apps_titulo": [{"valor": "APLICAÇÕES DO SISTEMA"}],
         "t6_apps": [
             {"num": "01", "label": "AUTONOMIA",    "titulo": "Crie e customize em minutos sem depender de terceiros ou agências lentas."},
             {"num": "02", "label": "RENTABILIDADE", "titulo": "Venda sites profissionais com margem de lucro industrial para o mercado B2B."},
             {"num": "03", "label": "PERFORMANCE",  "titulo": "Aumente a conversão dos seus produtos com layouts validados por testes de stress."},
         ],
+        
         # Fluxo de Implementação (Workflow)
+        "t6_flow_titulo": [{"valor": "Fluxo de Implementação"}],
         "t6_flow": [
             {"num": "01", "titulo": "AQUISIÇÃO DO MÓDULO", "desc": "Acesso imediato ao repositório de códigos fonte após a validação."},
             {"num": "02", "titulo": "ASSEMBLY (MONTAGEM)", "desc": "Substitua textos e imagens seguindo o nosso manual de diretrizes visuais."},
             {"num": "03", "titulo": "DEPLOYMENT",          "desc": "Conecte o seu domínio e publique o site em servidores de alta velocidade."},
             {"num": "04", "titulo": "OPERAÇÃO",            "desc": "Seu site está pronto para gerar resultados com manutenção zero."},
         ],
+        
         # Planos Industriais
+        "t6_planos_titulo": [{"valor": "PLANOS DE ACESSO"}],
         "t6_planos": [
             {"nome": "BASIC UNIT", "valor": "R$ 97",  "features": "1 Template Modular\nManual de Montagem", "btn_txt": "ADQUIRIR BASIC", "url": "#", "destaque": False},
             {"nome": "FULL STACK",  "valor": "R$ 197", "features": "Todos os Templates\nSuporte Técnico Direto\nUpdates de Engenharia", "btn_txt": "ADQUIRIR FULL", "url": "#", "destaque": True},
             {"nome": "ENTERPRISE", "valor": "R$ 497", "features": "Licença Comercial\nWhitelabel Ready\nConsultoria de Deploy", "btn_txt": "ADQUIRIR ENTERPRISE", "url": "#", "destaque": False},
         ],
+        
         # FAQ
         "t6_faqs": [
             {"pergunta": "O CÓDIGO É OTIMIZADO PARA SEO?", "resposta": "Sim, todos os modelos seguem a semântica correta de HTML5 para máxima indexação."},
             {"pergunta": "POSSO ALTERAR AS CORES E FONTES?", "resposta": "Absolutamente. O sistema é modular e permite alterações rápidas no ficheiro de estilos."},
         ],
+        
         # Footer
         "t6_footer_left":  [{"valor": "SITE PRO / ENGINEERING DIVISION"}],
+        "t6_footer_center": [{"valor": "© 2026 ALL RIGHTS RESERVED"}],
         "t6_footer_right": [{"valor": "BUILD_V.4.0.1"}],
+        
         # Observações
         "t6_obs": [{"valor": ""}],
     }
@@ -87,7 +101,7 @@ def render():
 
     st.markdown("""
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap' );
         html, body, [data-testid="stAppViewContainer"] { font-family: 'Inter', sans-serif; background: #f4f6fb; }
         [data-testid="stHeader"],[data-testid="stToolbarActions"],[data-testid="stDecoration"],footer { display:none!important; }
         .section-label {
@@ -135,7 +149,7 @@ def render():
             for i, m in enumerate(st.session_state.t6_hero_mono):
                 st.session_state.t6_hero_mono[i]["valor"] = st.text_input("Mono Label", m["valor"], key=f"t6_h_m_{i}")
             for i, t in enumerate(st.session_state.t6_hero_titulos):
-                st.session_state.t6_hero_titulos[i]["valor"] = st.text_area("Título (use <br>)", t["valor"], key=f"t6_h_t_{i}")
+                st.session_state.t6_hero_titulos[i]["valor"] = st.text_area("Título", t["valor"], key=f"t6_h_t_{i}")
             for i, s in enumerate(st.session_state.t6_hero_subtitulos):
                 st.session_state.t6_hero_subtitulos[i]["valor"] = st.text_area("Subtítulo", s["valor"], key=f"t6_h_s_{i}")
             
@@ -149,6 +163,8 @@ def render():
             # CATÁLOGO (TEMPLATES)
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📦 Catálogo de Componentes</div>', unsafe_allow_html=True)
+            for i, l in enumerate(st.session_state.t6_cat_label):
+                st.session_state.t6_cat_label[i]["valor"] = st.text_input("Label da Seção", l["valor"], key=f"t6_cat_l_{i}")
             for i, t in enumerate(st.session_state.t6_cat_titulos):
                 st.session_state.t6_cat_titulos[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t6_cat_t_{i}")
             
@@ -158,16 +174,19 @@ def render():
                     st.session_state.t6_cat_items[i]["ref"] = st.text_input("REF (Código)", item["ref"], key=f"t6_ci_r_{i}")
                     st.session_state.t6_cat_items[i]["img"] = st.text_input("URL Imagem", item["img"], key=f"t6_ci_i_{i}")
                     st.session_state.t6_cat_items[i]["desc"] = st.text_area("Descrição", item["desc"], key=f"t6_ci_d_{i}")
+                    st.session_state.t6_cat_items[i]["btn_txt"] = st.text_input("Texto do Botão", item["btn_txt"], key=f"t6_ci_bt_{i}")
                     st.session_state.t6_cat_items[i]["url"] = st.text_input("URL Botão", item["url"], key=f"t6_ci_u_{i}")
                     if len(st.session_state.t6_cat_items) > 1 and _del_btn(f"t6_ci_del_{i}", "Remover Componente"):
                         st.session_state.t6_cat_items.pop(i); st.rerun()
             if _add_btn("t6_ci_add", "＋ Adicionar Componente"):
-                st.session_state.t6_cat_items.append({"nome": "NOVO MODELO", "ref": "BTZ-00", "img": "", "desc": "...", "url": "#"}); st.rerun()
+                st.session_state.t6_cat_items.append({"nome": "NOVO MODELO", "ref": "BTZ-00", "img": "", "desc": "...", "btn_txt": "INSPECIONAR", "url": "#"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # LOGOS DE CONFIANÇA
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🤝 Marcas de Confiança</div>', unsafe_allow_html=True)
+            for i, l in enumerate(st.session_state.t6_logos_label):
+                st.session_state.t6_logos_label[i]["valor"] = st.text_input("Label da Seção", l["valor"], key=f"t6_logos_l_{i}")
             for i, logo in enumerate(st.session_state.t6_logos):
                 c1, c2 = st.columns([9, 1])
                 with c1: st.session_state.t6_logos[i]["valor"] = st.text_input("Marca", logo["valor"], key=f"t6_l_v_{i}", label_visibility="collapsed")
@@ -181,6 +200,8 @@ def render():
             # APLICAÇÕES (CARDS)
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🛠️ Aplicações do Sistema</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t6_apps_titulo):
+                st.session_state.t6_apps_titulo[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t6_apps_t_{i}")
             for i, app in enumerate(st.session_state.t6_apps):
                 with st.expander(f"Aplicação {app['num']}: {app['label']}"):
                     st.session_state.t6_apps[i]["num"] = st.text_input("Número", app["num"], key=f"t6_a_n_{i}")
@@ -195,6 +216,8 @@ def render():
             # WORKFLOW (FLUXO)
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">⚙️ Fluxo de Implementação</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t6_flow_titulo):
+                st.session_state.t6_flow_titulo[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t6_flow_t_{i}")
             for i, flow in enumerate(st.session_state.t6_flow):
                 with st.expander(f"Passo {flow['num']}: {flow['titulo']}"):
                     st.session_state.t6_flow[i]["num"] = st.text_input("Número", flow["num"], key=f"t6_f_n_{i}")
@@ -209,6 +232,8 @@ def render():
             # PLANOS
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">💰 Planos Industriais</div>', unsafe_allow_html=True)
+            for i, t in enumerate(st.session_state.t6_planos_titulo):
+                st.session_state.t6_planos_titulo[i]["valor"] = st.text_input("Título da Seção", t["valor"], key=f"t6_planos_t_{i}")
             for i, plano in enumerate(st.session_state.t6_planos):
                 with st.expander(f"Plano: {plano['nome']}"):
                     st.session_state.t6_planos[i]["nome"] = st.text_input("Nome", plano["nome"], key=f"t6_p_n_{i}")
@@ -238,6 +263,8 @@ def render():
             st.caption("Textos do Rodapé")
             for i, f in enumerate(st.session_state.t6_footer_left):
                 st.session_state.t6_footer_left[i]["valor"] = st.text_input("Footer Left", f["valor"], key=f"t6_fl_{i}")
+            for i, f in enumerate(st.session_state.t6_footer_center):
+                st.session_state.t6_footer_center[i]["valor"] = st.text_input("Footer Center", f["valor"], key=f"t6_fc_{i}")
             for i, f in enumerate(st.session_state.t6_footer_right):
                 st.session_state.t6_footer_right[i]["valor"] = st.text_input("Footer Right", f["valor"], key=f"t6_fr_{i}")
 
