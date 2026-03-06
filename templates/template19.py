@@ -149,11 +149,11 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t19_nav_logos[i]["valor"] = st.text_input(
-                        "Logo", item["valor"], key=f"t19_nl_{i}", label_visibility="collapsed")
+                        "Logo", item["valor"], key=f"t19_logo_{i}", label_visibility="collapsed")
                 with c2:
-                    if len(st.session_state.t19_nav_logos) > 1 and _del_btn(f"t19_nl_del_{i}"):
+                    if len(st.session_state.t19_nav_logos) > 1 and _del_btn(f"t19_logo_del_{i}"):
                         st.session_state.t19_nav_logos.pop(i); st.rerun()
-            if _add_btn("t19_nl_add", "＋ Adicionar logo"):
+            if _add_btn("t19_logo_add", "＋ Adicionar logo"):
                 st.session_state.t19_nav_logos.append({"valor": "Marca"}); st.rerun()
 
             st.caption("Links do menu  *(Texto | URL)*")
