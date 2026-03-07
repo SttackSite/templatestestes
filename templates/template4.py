@@ -1,17 +1,27 @@
 import streamlit as st
+import json
+import urllib.request
 
 # ─────────────────────────────────────────────────────────────────────────────
-# URL DA IMAGEM DO TEMPLATE — SUBSTITUA PELO LINK DA SUA IMAGEM
+# CONFIGURAÇÕES FIXAS
 # ─────────────────────────────────────────────────────────────────────────────
 TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img4.png"
-TEMPLATE_NAME = "Template 4 — Inovação Absoluta (Champion)"
+TEMPLATE_NAME      = "Template 4 — Inovação Absoluta (Champion)"
+TEMPLATE_ID        = "template_4"
+RESEND_API_KEY     = st.secrets.get("RESEND_KEY", "")
+DESTINO_EMAIL      = "sttacksite@gmail.com"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# INICIALIZAÇÃO DO SESSION STATE
+# SESSION STATE
 # ─────────────────────────────────────────────────────────────────────────────
 def _init():
     defaults = {
+        # ── IDENTIFICAÇÃO ────────────────────────────────────────────────────
+        "t4_nome_cliente":  "",
+        "t4_email_cliente": "",
+        "t4_nome_site":     "",
+
         # ── CORES ───────────────────────────────────────────────────────────
         "t4_cores": [
             {"nome": "Cor Neon Principal (Glow)", "valor": "#00FF88"},
@@ -23,19 +33,19 @@ def _init():
         # ── NAVBAR ──────────────────────────────────────────────────────────
         "t4_logos": [{"valor": "CHAMPION"}],
         "t4_nav_links": [
-            {"texto": "Recursos",  "url": "#recursos"},
-            {"texto": "Portfólio", "url": "#portfolio"},
-            {"texto": "Sobre",     "url": "#sobre"},
-            {"texto": "Contato",   "url": "#contato"},
+            {"texto": "Recursos",  "url": "seção Recursos Revolucionários"},
+            {"texto": "Portfólio", "url": "seção Portfólio"},
+            {"texto": "Sobre",     "url": "seção Sobre nós"},
+            {"texto": "Contato",   "url": "seção de contato ao final da página"},
         ],
-        "t4_nav_ctas": [{"texto": "Começar", "url": "https://www.google.com/"}],
+        "t4_nav_ctas": [{"texto": "Começar", "url": "https://wa.me/5511999999999"}],
 
         # ── HERO ────────────────────────────────────────────────────────────
         "t4_hero_titulos":    [{"valor": "INOVAÇÃO ABSOLUTA"}],
         "t4_hero_subtitulos": [{"valor": "Design que transcende limites"}],
         "t4_hero_btns": [
-            {"texto": "Explorar Agora", "url": "https://www.google.com/", "estilo": "primário"},
-            {"texto": "Saiba Mais",     "url": "https://www.google.com/", "estilo": "secundário"},
+            {"texto": "Explorar Agora", "url": "https://wa.me/5511999999999",         "estilo": "primário"},
+            {"texto": "Saiba Mais",     "url": "seção Recursos Revolucionários", "estilo": "secundário"},
         ],
 
         # ── RECURSOS (FEATURES) ─────────────────────────────────────────────
@@ -60,12 +70,12 @@ def _init():
         # ── CTA FINAL ───────────────────────────────────────────────────────
         "t4_ctaf_titulos": [{"valor": "Pronto para Revolucionar?"}],
         "t4_ctaf_descs":   [{"valor": "Junte-se aos líderes que já transformaram seus negócios com design de campeão."}],
-        "t4_ctaf_btns":    [{"texto": "Começar Sua Revolução", "url": "https://www.google.com/"}],
+        "t4_ctaf_btns":    [{"texto": "Começar Sua Revolução", "url": "https://wa.me/5511999999999"}],
 
         # ── FOOTER ──────────────────────────────────────────────────────────
-        "t4_footer_infos":  [{"valor": "Email: hello@champion.com | Telefone: +55 (99) 99999-9999"}],
-        "t4_footer_addrs":  [{"valor": "Endereço: Av. Inovação, 1000 - São Paulo, SP"}],
-        "t4_footer_copys":  [{"valor": "© 2025 Champion Design. Todos os direitos reservados. Design que vence campeonatos."}],
+        "t4_footer_infos": [{"valor": "Email: hello@champion.com | Telefone: +55 (99) 99999-9999"}],
+        "t4_footer_addrs": [{"valor": "Endereço: Av. Inovação, 1000 - São Paulo, SP"}],
+        "t4_footer_copys": [{"valor": "© 2025 Champion Design. Todos os direitos reservados. Design que vence campeonatos."}],
 
         # ── OBSERVAÇÕES ─────────────────────────────────────────────────────
         "t4_obs": [{"valor": ""}],
@@ -83,6 +93,70 @@ def _add_btn(key, label="＋ Adicionar"):
 
 def _del_btn(key, label="🗑"):
     return st.button(label, key=key, help="Remover")
+
+def _build_json():
+    return {
+        "template":      TEMPLATE_ID,
+        "template_nome": TEMPLATE_NAME,
+        "identificacao": {
+            "nome":      st.session_state.t4_nome_cliente,
+            "email":     st.session_state.t4_email_cliente,
+            "nome_site": st.session_state.t4_nome_site,
+            "url_final": f"https://sttacksite.streamlit.app/?c={st.session_state.t4_nome_site}",
+        },
+        "cores": st.session_state.t4_cores,
+        "navbar": {
+            "logos": st.session_state.t4_logos,
+            "links": st.session_state.t4_nav_links,
+            "cta":   st.session_state.t4_nav_ctas,
+        },
+        "hero": {
+            "titulos":    st.session_state.t4_hero_titulos,
+            "subtitulos": st.session_state.t4_hero_subtitulos,
+            "botoes":     st.session_state.t4_hero_btns,
+        },
+        "recursos": {
+            "cards": st.session_state.t4_feat_cards,
+        },
+        "showcase": {
+            "titulos": st.session_state.t4_show_titulos,
+            "cards":   st.session_state.t4_show_cards,
+        },
+        "cta_final": {
+            "titulos":    st.session_state.t4_ctaf_titulos,
+            "descricoes": st.session_state.t4_ctaf_descs,
+            "botoes":     st.session_state.t4_ctaf_btns,
+        },
+        "footer": {
+            "infos":     st.session_state.t4_footer_infos,
+            "enderecos": st.session_state.t4_footer_addrs,
+            "copyright": st.session_state.t4_footer_copys,
+        },
+        "observacoes": st.session_state.t4_obs,
+    }
+
+def _enviar_resend(payload: dict) -> bool:
+    try:
+        body_html = f"<pre style='font-family:monospace;font-size:13px'>{json.dumps(payload, ensure_ascii=False, indent=2)}</pre>"
+        data = json.dumps({
+            "from":    "editor@sttacksite.com.br",
+            "to":      [DESTINO_EMAIL],
+            "subject": f"[Novo Pedido] {TEMPLATE_NAME} — {payload['identificacao']['nome']}",
+            "html":    body_html,
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            "https://api.resend.com/emails",
+            data=data,
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type":  "application/json",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return resp.status in (200, 201)
+    except Exception:
+        return False
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -110,7 +184,30 @@ def render():
             border-radius: 12px; border: 1px solid #e2e8f0; background: #f8faff;
         }
         .template-img-wrapper img { width: 100%; display: block; }
+        .info-box {
+            background: #eff6ff; border: 1px solid #bfdbfe;
+            border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+            font-size: 13px; color: #1e40af; line-height: 1.6;
+        }
+        .info-box strong { color: #1e3a8a; }
+        .warn-box {
+            background: #fefce8; border: 1px solid #fde68a;
+            border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+            font-size: 13px; color: #92400e; line-height: 1.6;
+        }
     </style>
+    """, unsafe_allow_html=True)
+
+    # ── Aviso inicial ─────────────────────────────────────────────────────────
+    st.markdown("""
+    <div class="info-box">
+        👋 <strong>Bem-vindo ao editor do seu site!</strong><br>
+        Preencha os campos abaixo para personalizar o seu site. Não precisa ser técnico — é só digitar!
+        Você também poderá vir aqui e ajustar seu site quantas vezes quiser.<br><br>
+        💡 <strong>Tem alguma ideia que não encontrou aqui?</strong> Use o campo <em>Observações</em> no final
+        para descrever o que deseja (ex: "quero uma fonte diferente", "adicionar um vídeo", "mudar o layout da seção X").
+        Nossa equipe analisa tudo e aplica para você. 😊
+    </div>
     """, unsafe_allow_html=True)
 
     col_form, col_preview = st.columns([1, 2], gap="medium")
@@ -122,14 +219,57 @@ def render():
         with st.container(height=720, border=False):
 
             # ══════════════════════════════════════════════════════════════════
-            # CORES
+            # 0. IDENTIFICAÇÃO
+            # ══════════════════════════════════════════════════════════════════
+            st.markdown('<div class="section-label">👤 Seus Dados</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="info-box" style="margin-top:4px">
+                Preencha seus dados antes de começar. Usamos essas informações para identificar seu pedido e
+                entrar em contato quando o site estiver pronto. 🚀
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.session_state.t4_nome_cliente = st.text_input(
+                "Seu nome completo",
+                value=st.session_state.t4_nome_cliente,
+                key="t4_nome_cliente_inp",
+                placeholder="Ex: João Silva",
+                help="Seu nome para identificarmos seu pedido.")
+
+            st.session_state.t4_email_cliente = st.text_input(
+                "Seu e-mail (mesmo e-mail de cadastro na Eduzz)",
+                value=st.session_state.t4_email_cliente,
+                key="t4_email_cliente_inp",
+                placeholder="Ex: joao@email.com",
+                help="Use o mesmo e-mail com o qual você comprou na Eduzz.")
+
+            st.markdown("""
+            <div class="info-box" style="margin-top:8px">
+                🌐 <strong>Nome do seu site:</strong> seu site ficará disponível em<br>
+                <code>https://sttacksite.streamlit.app/?c=<strong>seunome</strong></code><br>
+                Digite abaixo o que você quer no lugar de <strong>seunome</strong>
+                (sem espaços, sem acentos — ex: joaosilva, champion2026, meusite).
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.session_state.t4_nome_site = st.text_input(
+                "Nome desejado para a URL do site",
+                value=st.session_state.t4_nome_site,
+                key="t4_nome_site_inp",
+                placeholder="Ex: champion2026  →  sttacksite.streamlit.app/?c=champion2026",
+                help="Apenas letras minúsculas, números e hífens. Sem espaços.")
+
+            # ══════════════════════════════════════════════════════════════════
+            # 1. CORES
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🎨 Cores Neon & Fundo</div>', unsafe_allow_html=True)
+            st.caption("Clique na bolinha colorida para escolher a cor de cada elemento.")
             for i, cor in enumerate(st.session_state.t4_cores):
                 c1, c2, c3 = st.columns([5, 2, 1])
                 with c1:
                     st.session_state.t4_cores[i]["nome"] = st.text_input(
-                        "Nome", cor["nome"], key=f"t4_cor_nome_{i}", label_visibility="collapsed")
+                        "Nome", cor["nome"], key=f"t4_cor_nome_{i}", label_visibility="collapsed",
+                        placeholder="Onde essa cor é usada")
                 with c2:
                     st.session_state.t4_cores[i]["valor"] = st.color_picker(
                         "Cor", cor["valor"], key=f"t4_cor_val_{i}", label_visibility="collapsed")
@@ -137,93 +277,111 @@ def render():
                     if len(st.session_state.t4_cores) > 1 and _del_btn(f"t4_cor_del_{i}"):
                         st.session_state.t4_cores.pop(i); st.rerun()
             if _add_btn("t4_cor_add", "＋ Adicionar cor"):
-                st.session_state.t4_cores.append({"nome": "Nova Cor", "valor": "#FFFFFF"}); st.rerun()
+                st.session_state.t4_cores.append({"nome": "Descreva onde usar esta cor", "valor": "#FFFFFF"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # NAVBAR
+            # 2. NAVBAR
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🔝 Navegação (Navbar)</div>', unsafe_allow_html=True)
 
-            st.caption("Logo  *(fonte Space Mono com glow neon)*")
+            st.caption("Logo  *(exibido com efeito glow neon no topo)*")
             for i, item in enumerate(st.session_state.t4_logos):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t4_logos[i]["valor"] = st.text_input(
-                        "Logo", item["valor"], key=f"t4_logo_{i}", label_visibility="collapsed")
+                        "Logo", item["valor"], key=f"t4_logo_{i}", label_visibility="collapsed",
+                        placeholder="Ex: MINHA EMPRESA")
                 with c2:
                     if len(st.session_state.t4_logos) > 1 and _del_btn(f"t4_logo_del_{i}"):
                         st.session_state.t4_logos.pop(i); st.rerun()
             if _add_btn("t4_logo_add", "＋ Adicionar logo"):
                 st.session_state.t4_logos.append({"valor": "MARCA"}); st.rerun()
 
-            st.caption("Links do menu  *(Texto | URL)*")
+            st.markdown("""
+            <div class="info-box" style="margin:4px 0 8px">
+                🔗 <strong>URLs e destinos dos botões:</strong> você pode colocar seu WhatsApp
+                (<code>https://wa.me/55119XXXXXXXX</code>), Instagram, qualquer link — ou simplesmente
+                descrever para qual seção o botão deve levar (ex: <em>seção de contato ao final da página</em>).
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.caption("Links do menu  *(Texto exibido | Para onde leva ao clicar)*")
             for i, link in enumerate(st.session_state.t4_nav_links):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
                     st.session_state.t4_nav_links[i]["texto"] = st.text_input(
-                        "Texto", link["texto"], key=f"t4_nl_txt_{i}", label_visibility="collapsed", placeholder="Texto")
+                        "Texto", link["texto"], key=f"t4_nl_txt_{i}", label_visibility="collapsed",
+                        placeholder="Texto do link")
                 with c2:
                     st.session_state.t4_nav_links[i]["url"] = st.text_input(
-                        "URL", link["url"], key=f"t4_nl_url_{i}", label_visibility="collapsed", placeholder="URL")
+                        "Destino", link["url"], key=f"t4_nl_url_{i}", label_visibility="collapsed",
+                        placeholder="Seção ou https://...",
+                        help="Descreva a seção do site ou cole um link externo.")
                 with c3:
                     if len(st.session_state.t4_nav_links) > 1 and _del_btn(f"t4_nl_del_{i}"):
                         st.session_state.t4_nav_links.pop(i); st.rerun()
             if _add_btn("t4_nl_add", "＋ Adicionar link"):
-                st.session_state.t4_nav_links.append({"texto": "Link", "url": "#"}); st.rerun()
+                st.session_state.t4_nav_links.append({"texto": "Link", "url": "seção de destino"}); st.rerun()
 
-            st.caption("Botão CTA da navbar  *(Texto | URL)*")
+            st.caption("Botão CTA da navbar  *(Texto | URL ou destino)*")
             for i, btn in enumerate(st.session_state.t4_nav_ctas):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
                     st.session_state.t4_nav_ctas[i]["texto"] = st.text_input(
-                        "Texto", btn["texto"], key=f"t4_ncta_txt_{i}", label_visibility="collapsed", placeholder="Texto")
+                        "Texto", btn["texto"], key=f"t4_ncta_txt_{i}", label_visibility="collapsed",
+                        placeholder="Texto do botão")
                 with c2:
                     st.session_state.t4_nav_ctas[i]["url"] = st.text_input(
-                        "URL", btn["url"], key=f"t4_ncta_url_{i}", label_visibility="collapsed", placeholder="URL")
+                        "URL", btn["url"], key=f"t4_ncta_url_{i}", label_visibility="collapsed",
+                        placeholder="https:// ou seção")
                 with c3:
                     if len(st.session_state.t4_nav_ctas) > 1 and _del_btn(f"t4_ncta_del_{i}"):
                         st.session_state.t4_nav_ctas.pop(i); st.rerun()
             if _add_btn("t4_ncta_add", "＋ Adicionar CTA navbar"):
-                st.session_state.t4_nav_ctas.append({"texto": "CTA", "url": "#"}); st.rerun()
+                st.session_state.t4_nav_ctas.append({"texto": "CTA", "url": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # HERO
+            # 3. HERO
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">⚡ Hero (Principal)</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">⚡ Hero (Seção Principal)</div>', unsafe_allow_html=True)
 
-            st.caption("Título  *(Space Mono grande com glow neon)*")
+            st.caption("Título  *(exibido em destaque com efeito glow neon)*")
             for i, t in enumerate(st.session_state.t4_hero_titulos):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t4_hero_titulos[i]["valor"] = st.text_input(
-                        "Título", t["valor"], key=f"t4_ht_{i}", label_visibility="collapsed")
+                        "Título", t["valor"], key=f"t4_ht_{i}", label_visibility="collapsed",
+                        placeholder="Título principal em maiúsculas")
                 with c2:
                     if len(st.session_state.t4_hero_titulos) > 1 and _del_btn(f"t4_ht_del_{i}"):
                         st.session_state.t4_hero_titulos.pop(i); st.rerun()
             if _add_btn("t4_ht_add", "＋ Adicionar título"):
                 st.session_state.t4_hero_titulos.append({"valor": "NOVO TÍTULO"}); st.rerun()
 
-            st.caption("Subtítulo  *(texto cyan menor)*")
+            st.caption("Subtítulo  *(frase de apoio abaixo do título)*")
             for i, s in enumerate(st.session_state.t4_hero_subtitulos):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t4_hero_subtitulos[i]["valor"] = st.text_input(
-                        "Subtítulo", s["valor"], key=f"t4_hs_{i}", label_visibility="collapsed")
+                        "Subtítulo", s["valor"], key=f"t4_hs_{i}", label_visibility="collapsed",
+                        placeholder="Frase curta que explica o que você oferece")
                 with c2:
                     if len(st.session_state.t4_hero_subtitulos) > 1 and _del_btn(f"t4_hs_del_{i}"):
                         st.session_state.t4_hero_subtitulos.pop(i); st.rerun()
             if _add_btn("t4_hs_add", "＋ Adicionar subtítulo"):
                 st.session_state.t4_hero_subtitulos.append({"valor": "Novo subtítulo"}); st.rerun()
 
-            st.caption("Botões  *(Texto | URL | Estilo)*")
+            st.caption("Botões  *(Texto | URL ou destino | Estilo)*")
             for i, btn in enumerate(st.session_state.t4_hero_btns):
                 c1, c2, c3, c4 = st.columns([3, 3, 3, 1])
                 with c1:
                     st.session_state.t4_hero_btns[i]["texto"] = st.text_input(
-                        "Texto", btn["texto"], key=f"t4_hbtn_t_{i}", label_visibility="collapsed", placeholder="Texto")
+                        "Texto", btn["texto"], key=f"t4_hbtn_t_{i}", label_visibility="collapsed",
+                        placeholder="Texto do botão")
                 with c2:
                     st.session_state.t4_hero_btns[i]["url"] = st.text_input(
-                        "URL", btn["url"], key=f"t4_hbtn_u_{i}", label_visibility="collapsed", placeholder="URL")
+                        "URL", btn["url"], key=f"t4_hbtn_u_{i}", label_visibility="collapsed",
+                        placeholder="https:// ou seção")
                 with c3:
                     st.session_state.t4_hero_btns[i]["estilo"] = st.selectbox(
                         "Estilo", ["primário", "secundário"],
@@ -233,21 +391,23 @@ def render():
                     if len(st.session_state.t4_hero_btns) > 1 and _del_btn(f"t4_hbtn_del_{i}"):
                         st.session_state.t4_hero_btns.pop(i); st.rerun()
             if _add_btn("t4_hbtn_add", "＋ Adicionar botão hero"):
-                st.session_state.t4_hero_btns.append({"texto": "Botão", "url": "#", "estilo": "primário"}); st.rerun()
+                st.session_state.t4_hero_btns.append({"texto": "Botão", "url": "", "estilo": "primário"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # RECURSOS (FEATURES)
+            # 4. RECURSOS (FEATURES)
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">💎 Recursos Revolucionários</div>', unsafe_allow_html=True)
-            st.caption("Cards de recurso  *(Emoji | Título | Descrição)*")
+            st.caption("Cards de recurso  *(clique para expandir e editar cada um)*")
             for i, card in enumerate(st.session_state.t4_feat_cards):
                 with st.expander(f"Recurso {i+1}: {card['titulo']}"):
                     st.session_state.t4_feat_cards[i]["icone"] = st.text_input(
-                        "Ícone/Emoji", card["icone"], key=f"t4_fc_i_{i}")
+                        "Ícone/Emoji", card["icone"], key=f"t4_fc_i_{i}",
+                        help="Cole um emoji, ex: ⚡ 🎨 🚀")
                     st.session_state.t4_feat_cards[i]["titulo"] = st.text_input(
                         "Título", card["titulo"], key=f"t4_fc_t_{i}")
                     st.session_state.t4_feat_cards[i]["descricao"] = st.text_area(
-                        "Descrição", card["descricao"], key=f"t4_fc_d_{i}", height=80)
+                        "Descrição", card["descricao"], key=f"t4_fc_d_{i}", height=80,
+                        placeholder="Descreva este recurso. Para formatação especial, use as Observações.")
                     if len(st.session_state.t4_feat_cards) > 1:
                         if st.button("🗑 Remover este recurso", key=f"t4_fc_del_{i}"):
                             st.session_state.t4_feat_cards.pop(i); st.rerun()
@@ -255,7 +415,7 @@ def render():
                 st.session_state.t4_feat_cards.append({"icone": "✨", "titulo": "Novo Recurso", "descricao": "Descrição aqui"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # SHOWCASE (NÚMEROS)
+            # 5. SHOWCASE (NÚMEROS)
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📊 Números que Impressionam</div>', unsafe_allow_html=True)
 
@@ -264,22 +424,25 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t4_show_titulos[i]["valor"] = st.text_input(
-                        "Título", t["valor"], key=f"t4_st_{i}", label_visibility="collapsed")
+                        "Título", t["valor"], key=f"t4_st_{i}", label_visibility="collapsed",
+                        placeholder="Ex: NÚMEROS QUE FALAM")
                 with c2:
                     if len(st.session_state.t4_show_titulos) > 1 and _del_btn(f"t4_st_del_{i}"):
                         st.session_state.t4_show_titulos.pop(i); st.rerun()
             if _add_btn("t4_st_add", "＋ Adicionar título"):
                 st.session_state.t4_show_titulos.append({"valor": "NÚMEROS"}); st.rerun()
 
-            st.caption("Cards de números  *(Valor | Rótulo)*")
+            st.caption("Números  *(Valor | Rótulo)*")
             for i, card in enumerate(st.session_state.t4_show_cards):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
                     st.session_state.t4_show_cards[i]["numero"] = st.text_input(
-                        "Valor", card["numero"], key=f"t4_sc_n_{i}", label_visibility="collapsed", placeholder="Valor")
+                        "Valor", card["numero"], key=f"t4_sc_n_{i}", label_visibility="collapsed",
+                        placeholder="Ex: 500%")
                 with c2:
                     st.session_state.t4_show_cards[i]["label"] = st.text_input(
-                        "Rótulo", card["label"], key=f"t4_sc_l_{i}", label_visibility="collapsed", placeholder="Rótulo")
+                        "Rótulo", card["label"], key=f"t4_sc_l_{i}", label_visibility="collapsed",
+                        placeholder="Ex: Mais Engajamento")
                 with c3:
                     if len(st.session_state.t4_show_cards) > 1 and _del_btn(f"t4_sc_del_{i}"):
                         st.session_state.t4_show_cards.pop(i); st.rerun()
@@ -287,7 +450,7 @@ def render():
                 st.session_state.t4_show_cards.append({"numero": "0", "label": "Novo Dado"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # CTA FINAL
+            # 6. CTA FINAL
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🚀 Chamada para Ação Final</div>', unsafe_allow_html=True)
 
@@ -296,7 +459,8 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t4_ctaf_titulos[i]["valor"] = st.text_input(
-                        "Título", t["valor"], key=f"t4_ctaft_{i}", label_visibility="collapsed")
+                        "Título", t["valor"], key=f"t4_ctaft_{i}", label_visibility="collapsed",
+                        placeholder="Ex: Pronto para Começar?")
                 with c2:
                     if len(st.session_state.t4_ctaf_titulos) > 1 and _del_btn(f"t4_ctaft_del_{i}"):
                         st.session_state.t4_ctaf_titulos.pop(i); st.rerun()
@@ -308,39 +472,44 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t4_ctaf_descs[i]["valor"] = st.text_area(
-                        "Descrição", d["valor"], key=f"t4_ctafd_{i}", height=80, label_visibility="collapsed")
+                        "Descrição", d["valor"], key=f"t4_ctafd_{i}", height=80,
+                        label_visibility="collapsed",
+                        placeholder="Frase de encerramento e chamada para ação")
                 with c2:
                     if len(st.session_state.t4_ctaf_descs) > 1 and _del_btn(f"t4_ctafd_del_{i}"):
                         st.session_state.t4_ctaf_descs.pop(i); st.rerun()
             if _add_btn("t4_ctafd_add", "＋ Adicionar descrição"):
                 st.session_state.t4_ctaf_descs.append({"valor": "Nova Descrição"}); st.rerun()
 
-            st.caption("Botão  *(Texto | URL)*")
+            st.caption("Botão  *(Texto | URL ou destino)*")
             for i, btn in enumerate(st.session_state.t4_ctaf_btns):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
                     st.session_state.t4_ctaf_btns[i]["texto"] = st.text_input(
-                        "Texto", btn["texto"], key=f"t4_ctafb_t_{i}", label_visibility="collapsed", placeholder="Texto")
+                        "Texto", btn["texto"], key=f"t4_ctafb_t_{i}", label_visibility="collapsed",
+                        placeholder="Texto do botão")
                 with c2:
                     st.session_state.t4_ctaf_btns[i]["url"] = st.text_input(
-                        "URL", btn["url"], key=f"t4_ctafb_u_{i}", label_visibility="collapsed", placeholder="URL")
+                        "URL", btn["url"], key=f"t4_ctafb_u_{i}", label_visibility="collapsed",
+                        placeholder="https:// ou seção")
                 with c3:
                     if len(st.session_state.t4_ctaf_btns) > 1 and _del_btn(f"t4_ctafb_del_{i}"):
                         st.session_state.t4_ctaf_btns.pop(i); st.rerun()
             if _add_btn("t4_ctafb_add", "＋ Adicionar botão"):
-                st.session_state.t4_ctaf_btns.append({"texto": "Botão", "url": "#"}); st.rerun()
+                st.session_state.t4_ctaf_btns.append({"texto": "Botão", "url": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # FOOTER
+            # 7. FOOTER
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">👣 Rodapé Futurista</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">👣 Rodapé</div>', unsafe_allow_html=True)
 
             st.caption("Infos de contato  *(email, telefone etc.)*")
             for i, info in enumerate(st.session_state.t4_footer_infos):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t4_footer_infos[i]["valor"] = st.text_input(
-                        "Infos", info["valor"], key=f"t4_finfo_{i}", label_visibility="collapsed")
+                        "Infos", info["valor"], key=f"t4_finfo_{i}", label_visibility="collapsed",
+                        placeholder="Ex: Email: contato@empresa.com | Tel: (11) 99999-9999")
                 with c2:
                     if len(st.session_state.t4_footer_infos) > 1 and _del_btn(f"t4_finfo_del_{i}"):
                         st.session_state.t4_footer_infos.pop(i); st.rerun()
@@ -352,7 +521,8 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t4_footer_addrs[i]["valor"] = st.text_input(
-                        "Endereço", addr["valor"], key=f"t4_faddr_{i}", label_visibility="collapsed")
+                        "Endereço", addr["valor"], key=f"t4_faddr_{i}", label_visibility="collapsed",
+                        placeholder="Ex: Rua das Flores, 100 - São Paulo, SP")
                 with c2:
                     if len(st.session_state.t4_footer_addrs) > 1 and _del_btn(f"t4_faddr_del_{i}"):
                         st.session_state.t4_footer_addrs.pop(i); st.rerun()
@@ -364,7 +534,8 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t4_footer_copys[i]["valor"] = st.text_input(
-                        "Copyright", copy["valor"], key=f"t4_fcopy_{i}", label_visibility="collapsed")
+                        "Copyright", copy["valor"], key=f"t4_fcopy_{i}", label_visibility="collapsed",
+                        placeholder="Ex: © 2026 Minha Empresa. Todos os direitos reservados.")
                 with c2:
                     if len(st.session_state.t4_footer_copys) > 1 and _del_btn(f"t4_fcopy_del_{i}"):
                         st.session_state.t4_footer_copys.pop(i); st.rerun()
@@ -372,15 +543,45 @@ def render():
                 st.session_state.t4_footer_copys.append({"valor": "© 2026"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # OBSERVAÇÕES
+            # 8. IMAGENS
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">📝 Observações Adicionais</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">🖼️ Imagens</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="info-box">
+                📸 <strong>Como adicionar imagens ao seu site:</strong><br><br>
+                1. Acesse <a href="https://imgur.com" target="_blank"><strong>imgur.com</strong></a>
+                   (gratuito, sem cadastro) e faça o upload da sua imagem.<br>
+                2. Clique com o botão direito na imagem → <em>Copiar endereço da imagem</em> — a URL termina em
+                   <code>.jpg</code>, <code>.png</code> ou <code>.webp</code>.<br>
+                3. Cole essa URL no campo correspondente nas seções acima.<br><br>
+                📐 <strong>Tamanhos recomendados:</strong><br>
+                • Banner / Hero: <strong>1920 × 800 px</strong><br>
+                • Cards / miniaturas: <strong>600 × 400 px</strong><br>
+                • Logo: <strong>200 × 60 px</strong> (fundo transparente, formato PNG)<br><br>
+                ❌ <strong>Não conseguiu subir a imagem?</strong> Envie diretamente para
+                <strong>sttacksite@gmail.com</strong> com o assunto <em>"Imagem — [nome do seu site]"</em>
+                e diga onde ela deve ser inserida. Nossa equipe cuida disso para você. 😊
+            </div>
+            """, unsafe_allow_html=True)
+
+            # ══════════════════════════════════════════════════════════════════
+            # 9. OBSERVAÇÕES
+            # ══════════════════════════════════════════════════════════════════
+            st.markdown('<div class="section-label">📝 Observações / Pedidos Extras</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="warn-box">
+                💬 <strong>Use este espaço para tudo que não encontrou nos campos acima!</strong><br>
+                Ex: "quero mudar a fonte", "adicionar uma seção de FAQ", "colocar vídeo do YouTube",
+                "texto em negrito no título", "remover a seção X", "adicionar mapa do Google"...
+                Nossa equipe lê cada observação e aplica para você! 🙌
+            </div>
+            """, unsafe_allow_html=True)
             for i, item in enumerate(st.session_state.t4_obs):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t4_obs[i]["valor"] = st.text_area(
-                        "Obs", item["valor"], key=f"t4_obs_{i}", height=80,
-                        placeholder="Ex: quero mudar a fonte, adicionar FAQ, remover botão X...",
+                        "Obs", item["valor"], key=f"t4_obs_{i}", height=90,
+                        placeholder="Descreva aqui qualquer ajuste, ideia ou pedido especial...",
                         label_visibility="collapsed")
                 with c2:
                     if len(st.session_state.t4_obs) > 1 and _del_btn(f"t4_obs_del_{i}"):
@@ -389,12 +590,44 @@ def render():
                 st.session_state.t4_obs.append({"valor": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # ENVIAR
+            # 10. REVISÃO + ENVIO
             # ══════════════════════════════════════════════════════════════════
             st.markdown("---")
-            if st.button("✅ Finalizar e Enviar para a Equipe", key="t4_send", type="primary"):
-                st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
-                st.balloons()
+
+            with st.expander("👁 Revisar dados antes de enviar"):
+                st.json(_build_json())
+
+            erros = []
+            if not st.session_state.t4_nome_cliente.strip():
+                erros.append("• Preencha seu **nome completo**.")
+            if not st.session_state.t4_email_cliente.strip() or "@" not in st.session_state.t4_email_cliente:
+                erros.append("• Preencha um **e-mail válido** (mesmo da Eduzz).")
+            if not st.session_state.t4_nome_site.strip():
+                erros.append("• Preencha o **nome desejado para a URL** do site.")
+
+            if erros:
+                st.warning("⚠️ Antes de enviar, corrija os itens abaixo:\n\n" + "\n".join(erros))
+
+            if st.button("✅ Finalizar e Enviar para a Equipe", key="t4_send", type="primary",
+                         disabled=len(erros) > 0):
+                payload = _build_json()
+                sucesso = _enviar_resend(payload)
+                if sucesso:
+                    st.success(
+                        "🎉 **Pedido enviado com sucesso!**\n\n"
+                        "Nossa equipe já recebeu suas informações e entrará em contato assim que o site "
+                        "estiver em produção. Caso surja alguma dúvida, falaremos com você pelo e-mail "
+                        f"informado. 😊\n\n"
+                        f"Seu site será publicado em: **https://sttacksite.streamlit.app/?c={st.session_state.t4_nome_site}**"
+                    )
+                    st.balloons()
+                else:
+                    st.warning(
+                        "⚠️ Houve um problema ao enviar automaticamente. "
+                        "Copie o JSON abaixo e envie para **sttacksite@gmail.com** com o assunto "
+                        f"*'Pedido — {st.session_state.t4_nome_cliente}'*."
+                    )
+                    st.code(json.dumps(payload, ensure_ascii=False, indent=2), language="json")
 
     # ════════════════════════════════════════════════════════════════════════
     # PAINEL DIREITO — PREVIEW
