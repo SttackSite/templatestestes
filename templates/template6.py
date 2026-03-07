@@ -118,11 +118,6 @@ def _build_json():
             "url_final": f"https://sttacksite.streamlit.app/?c={st.session_state.t6_nome_site}",
         },
         "cores": st.session_state.t6_cores,
-        "navbar": {
-            "logo":  st.session_state.t6_navbar_logo,
-            "links": st.session_state.t6_navbar_links,
-            "cta":   st.session_state.t6_navbar_cta,
-        },
         "hero": {
             "mono":       st.session_state.t6_hero_mono,
             "titulos":    st.session_state.t6_hero_titulos,
@@ -304,20 +299,6 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # 2. NAVBAR
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">🔝 Navegação (Navbar)</div>', unsafe_allow_html=True)
-
-            st.caption("Logo / Nome da marca")
-            for i, item in enumerate(st.session_state.t6_navbar_logo):
-                c1, c2 = st.columns([9, 1])
-                with c1:
-                    st.session_state.t6_navbar_logo[i]["valor"] = st.text_input(
-                        "Logo", item["valor"], key=f"t6_logo_{i}", label_visibility="collapsed",
-                        placeholder="Ex: MINHA EMPRESA")
-                with c2:
-                    if len(st.session_state.t6_navbar_logo) > 1 and _del_btn(f"t6_logo_del_{i}"):
-                        st.session_state.t6_navbar_logo.pop(i); st.rerun()
-            if _add_btn("t6_logo_add", "＋ Adicionar logo"):
-                st.session_state.t6_navbar_logo.append({"valor": "NOVA MARCA"}); st.rerun()
 
             st.markdown("""
             <div class="info-box" style="margin:4px 0 8px">
@@ -326,40 +307,6 @@ def render():
                 descrever para qual seção o botão deve levar (ex: <em>seção de contato ao final da página</em>).
             </div>
             """, unsafe_allow_html=True)
-
-            st.caption("Links do menu  *(Texto | Destino ou URL)*")
-            for i, link in enumerate(st.session_state.t6_navbar_links):
-                c1, c2, c3 = st.columns([4, 4, 1])
-                with c1:
-                    st.session_state.t6_navbar_links[i]["texto"] = st.text_input(
-                        "Texto", link["texto"], key=f"t6_nl_txt_{i}", label_visibility="collapsed",
-                        placeholder="Texto do link")
-                with c2:
-                    st.session_state.t6_navbar_links[i]["url"] = st.text_input(
-                        "Destino", link["url"], key=f"t6_nl_url_{i}", label_visibility="collapsed",
-                        placeholder="Seção ou https://...")
-                with c3:
-                    if len(st.session_state.t6_navbar_links) > 1 and _del_btn(f"t6_nl_del_{i}"):
-                        st.session_state.t6_navbar_links.pop(i); st.rerun()
-            if _add_btn("t6_nl_add", "＋ Adicionar link ao menu"):
-                st.session_state.t6_navbar_links.append({"texto": "Link", "url": "seção de destino"}); st.rerun()
-
-            st.caption("Botão CTA da Navbar  *(Texto | URL ou destino)*")
-            for i, btn in enumerate(st.session_state.t6_navbar_cta):
-                c1, c2, c3 = st.columns([4, 4, 1])
-                with c1:
-                    st.session_state.t6_navbar_cta[i]["texto"] = st.text_input(
-                        "Texto", btn["texto"], key=f"t6_ncta_txt_{i}", label_visibility="collapsed",
-                        placeholder="Texto do botão")
-                with c2:
-                    st.session_state.t6_navbar_cta[i]["url"] = st.text_input(
-                        "URL", btn["url"], key=f"t6_ncta_url_{i}", label_visibility="collapsed",
-                        placeholder="https:// ou seção")
-                with c3:
-                    if len(st.session_state.t6_navbar_cta) > 1 and _del_btn(f"t6_ncta_del_{i}"):
-                        st.session_state.t6_navbar_cta.pop(i); st.rerun()
-            if _add_btn("t6_ncta_add", "＋ Adicionar botão CTA"):
-                st.session_state.t6_navbar_cta.append({"texto": "NOVO CTA", "url": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # 3. HERO
