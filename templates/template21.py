@@ -1,17 +1,27 @@
 import streamlit as st
+import json
+import urllib.request
 
 # ─────────────────────────────────────────────────────────────────────────────
-# URL DA IMAGEM DO TEMPLATE — SUBSTITUA PELO LINK DA SUA IMAGEM
+# CONFIGURAÇÕES FIXAS
 # ─────────────────────────────────────────────────────────────────────────────
 TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img21.png"
-TEMPLATE_NAME = "Template 21 — Feastables Style (MrBeast Inspired E-commerce)"
+TEMPLATE_NAME      = "Template 21 — Feastables Style (MrBeast Inspired E-commerce)"
+TEMPLATE_ID        = "template_21"
+RESEND_API_KEY     = st.secrets.get("RESEND_KEY", "")
+DESTINO_EMAIL      = "sttacksite@gmail.com"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# INICIALIZAÇÃO DO SESSION STATE
+# SESSION STATE
 # ─────────────────────────────────────────────────────────────────────────────
 def _init():
     defaults = {
+        # ── IDENTIFICAÇÃO ────────────────────────────────────────────────────
+        "t21_nome_cliente":  "",
+        "t21_email_cliente": "",
+        "t21_nome_site":     "",
+
         # ── CORES ───────────────────────────────────────────────────────────
         "t21_cores": [
             {"nome": "Azul Principal (Feast Blue)", "valor": "#0047ff"},
@@ -24,7 +34,7 @@ def _init():
         "t21_marquee_items": [
             {"texto": "MELHOR QUE O SEU CHOCOLATE ATUAL 🔥"},
             {"texto": "INGREDIENTES REAIS 🔥"},
-            {"texto": "DO MR MOON 🔥"},
+            {"texto": "DO MRMOON 🔥"},
             {"texto": "PROVE A DIFERENÇA 🔥"},
         ],
 
@@ -32,17 +42,17 @@ def _init():
         "t21_header_logos": [{"valor": "FEASTABLES"}],
 
         # ── HERO ────────────────────────────────────────────────────────────
-        "t21_hero_titulos": [{"valor": "O CHOCOLATE<br>QUE DETONA."}],
+        "t21_hero_titulos": [{"valor": "O CHOCOLATE QUE DETONA."}],
         "t21_hero_descs":   [{"valor": "Zero porcaria. Apenas sabor épico."}],
-        "t21_hero_btns":    [{"texto": "COMPRE AGORA", "url": "https://www.google.com/"}],
+        "t21_hero_btns":    [{"texto": "COMPRE AGORA", "url": "https://wa.me/5511999999999"}],
         "t21_hero_imgs":    [{"valor": "https://images.unsplash.com/photo-1621303837174-89787a7d4729?w=800"}],
 
         # ── LOJA DE PRODUTOS ─────────────────────────────────────────────────
         "t21_shop_titulos": [{"valor": "ESCOLHA SEU TIME"}],
         "t21_product_items": [
-            {"img": "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400", "nome": "MILK CRUNCH",    "flavor": "Com Arroz Crocante",    "price": "19,90", "url": "#"},
-            {"img": "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=400", "nome": "ORIGINAL MILK", "flavor": "Clássico e Cremoso",     "price": "18,90", "url": "#"},
-            {"img": "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?w=400","nome": "PEANUT BUTTER","flavor": "Manteiga de Amendoim",   "price": "22,90", "url": "#"},
+            {"img": "https://images.unsplash.com/photo-1548907040-4baa42d10919?w=400", "nome": "MILK CRUNCH",    "flavor": "Com Arroz Crocante",  "price": "19,90", "url": "https://wa.me/5511999999999"},
+            {"img": "https://images.unsplash.com/photo-1549007994-cb92caebd54b?w=400", "nome": "ORIGINAL MILK", "flavor": "Clássico e Cremoso",   "price": "18,90", "url": "https://wa.me/5511999999999"},
+            {"img": "https://images.unsplash.com/photo-1581798459219-318e76aecc7b?w=400","nome": "PEANUT BUTTER","flavor": "Manteiga de Amendoim", "price": "22,90", "url": "https://wa.me/5511999999999"},
         ],
 
         # ── BENEFÍCIOS ───────────────────────────────────────────────────────
@@ -57,8 +67,8 @@ def _init():
         "t21_foot_brand_names": [{"valor": "FEASTABLES"}],
         "t21_foot_brand_descs": [{"valor": "Inspirado pelo Mrmoon."}],
         "t21_foot_cols": [
-            {"titulo": "RECURSOS", "links": [{"texto": "Onde Comprar", "url": "#"}, {"texto": "Perguntas Frequentes", "url": "#"}, {"texto": "Termos de Uso", "url": "#"}]},
-            {"titulo": "NOS SIGA", "links": [{"texto": "TikTok", "url": "#"}, {"texto": "Instagram", "url": "#"}, {"texto": "YouTube", "url": "#"}]},
+            {"titulo": "RECURSOS", "links": [{"texto": "Onde Comprar", "url": "https://wa.me/5511999999999"}, {"texto": "Perguntas Frequentes", "url": "seção de contato ao final da página"}, {"texto": "Termos de Uso", "url": "seção de contato ao final da página"}]},
+            {"titulo": "NOS SIGA", "links": [{"texto": "TikTok", "url": "https://tiktok.com/"}, {"texto": "Instagram", "url": "https://instagram.com/"}, {"texto": "YouTube", "url": "https://youtube.com/"}]},
         ],
         "t21_foot_copys": [{"valor": "© 2026 FEASTABLES INC. TODOS OS DIREITOS RESERVADOS."}],
 
@@ -78,6 +88,67 @@ def _add_btn(key, label="＋ Adicionar"):
 
 def _del_btn(key, label="🗑"):
     return st.button(label, key=key, help="Remover")
+
+def _build_json():
+    return {
+        "template":      TEMPLATE_ID,
+        "template_nome": TEMPLATE_NAME,
+        "identificacao": {
+            "nome":      st.session_state.t21_nome_cliente,
+            "email":     st.session_state.t21_email_cliente,
+            "nome_site": st.session_state.t21_nome_site,
+            "url_final": f"https://sttacksite.streamlit.app/?c={st.session_state.t21_nome_site}",
+        },
+        "cores": st.session_state.t21_cores,
+        "banner_animado": st.session_state.t21_marquee_items,
+        "header": {
+            "logos": st.session_state.t21_header_logos,
+        },
+        "hero": {
+            "titulos": st.session_state.t21_hero_titulos,
+            "descs":   st.session_state.t21_hero_descs,
+            "botoes":  st.session_state.t21_hero_btns,
+            "imagens": st.session_state.t21_hero_imgs,
+        },
+        "loja": {
+            "titulo_secao": st.session_state.t21_shop_titulos,
+            "produtos":     st.session_state.t21_product_items,
+        },
+        "beneficios": {
+            "titulo_secao": st.session_state.t21_benefit_titulos,
+            "itens":        st.session_state.t21_benefit_items,
+        },
+        "footer": {
+            "brand_names": st.session_state.t21_foot_brand_names,
+            "brand_descs": st.session_state.t21_foot_brand_descs,
+            "colunas":     st.session_state.t21_foot_cols,
+            "copyright":   st.session_state.t21_foot_copys,
+        },
+        "observacoes": st.session_state.t21_obs,
+    }
+
+def _enviar_resend(payload: dict) -> bool:
+    try:
+        body_html = f"<pre style='font-family:monospace;font-size:13px'>{json.dumps(payload, ensure_ascii=False, indent=2)}</pre>"
+        data = json.dumps({
+            "from":    "editor@sttacksite.com.br",
+            "to":      [DESTINO_EMAIL],
+            "subject": f"[Novo Pedido] {TEMPLATE_NAME} — {payload['identificacao']['nome']}",
+            "html":    body_html,
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            "https://api.resend.com/emails",
+            data=data,
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type":  "application/json",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return resp.status in (200, 201)
+    except Exception:
+        return False
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -105,7 +176,28 @@ def render():
             border-radius: 12px; border: 1px solid #e2e8f0; background: #f8faff;
         }
         .template-img-wrapper img { width: 100%; display: block; }
+        .info-box {
+            background: #eff6ff; border: 1px solid #bfdbfe;
+            border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+            font-size: 13px; color: #1e40af; line-height: 1.6;
+        }
+        .info-box strong { color: #1e3a8a; }
+        .warn-box {
+            background: #fefce8; border: 1px solid #fde68a;
+            border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+            font-size: 13px; color: #92400e; line-height: 1.6;
+        }
     </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="info-box">
+        👋 <strong>Bem-vindo ao editor do seu site!</strong><br>
+        Preencha os campos abaixo para personalizar o seu site. Não precisa ser técnico — é só digitar!
+        Você também poderá vir aqui e ajustar seu site quantas vezes quiser.<br><br>
+        💡 <strong>Tem alguma ideia que não encontrou aqui?</strong> Use o campo <em>Observações</em> no final
+        para descrever o que deseja. Nossa equipe analisa tudo e aplica para você. 😊
+    </div>
     """, unsafe_allow_html=True)
 
     col_form, col_preview = st.columns([1, 2], gap="medium")
@@ -117,14 +209,54 @@ def render():
         with st.container(height=720, border=False):
 
             # ══════════════════════════════════════════════════════════════════
-            # CORES
+            # 0. IDENTIFICAÇÃO
+            # ══════════════════════════════════════════════════════════════════
+            st.markdown('<div class="section-label">👤 Seus Dados</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="info-box" style="margin-top:4px">
+                Preencha seus dados antes de começar. Usamos essas informações para identificar seu pedido e
+                entrar em contato quando o site estiver pronto. 🚀
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.session_state.t21_nome_cliente = st.text_input(
+                "Seu nome completo", value=st.session_state.t21_nome_cliente,
+                key="t21_nome_cliente_inp", placeholder="Ex: Lucas Ferreira",
+                help="Seu nome para identificarmos seu pedido.")
+
+            st.session_state.t21_email_cliente = st.text_input(
+                "Seu e-mail (mesmo e-mail de cadastro na Eduzz)",
+                value=st.session_state.t21_email_cliente,
+                key="t21_email_cliente_inp", placeholder="Ex: lucas@loja.com",
+                help="Use o mesmo e-mail com o qual você comprou na Eduzz.")
+
+            st.markdown("""
+            <div class="info-box" style="margin-top:8px">
+                🌐 <strong>Nome do seu site:</strong> seu site ficará disponível em<br>
+                <code>https://sttacksite.streamlit.app/?c=<strong>seunome</strong></code><br>
+                Digite abaixo o que você quer no lugar de <strong>seunome</strong>
+                (sem espaços, sem acentos — ex: feastables, minhachocoloja, epicbars).
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.session_state.t21_nome_site = st.text_input(
+                "Nome desejado para a URL do site",
+                value=st.session_state.t21_nome_site,
+                key="t21_nome_site_inp",
+                placeholder="Ex: feastables  →  sttacksite.streamlit.app/?c=feastables",
+                help="Apenas letras minúsculas, números e hífens. Sem espaços.")
+
+            # ══════════════════════════════════════════════════════════════════
+            # 1. CORES
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🎨 Identidade Visual</div>', unsafe_allow_html=True)
+            st.caption("Clique na bolinha colorida para escolher a cor de cada elemento.")
             for i, cor in enumerate(st.session_state.t21_cores):
                 c1, c2, c3 = st.columns([5, 2, 1])
                 with c1:
                     st.session_state.t21_cores[i]["nome"] = st.text_input(
-                        "Nome", cor["nome"], key=f"t21_cor_n_{i}", label_visibility="collapsed")
+                        "Nome", cor["nome"], key=f"t21_cor_n_{i}", label_visibility="collapsed",
+                        placeholder="Onde essa cor é usada")
                 with c2:
                     st.session_state.t21_cores[i]["valor"] = st.color_picker(
                         "Cor", cor["valor"], key=f"t21_cor_v_{i}", label_visibility="collapsed")
@@ -132,18 +264,19 @@ def render():
                     if len(st.session_state.t21_cores) > 1 and _del_btn(f"t21_cor_del_{i}"):
                         st.session_state.t21_cores.pop(i); st.rerun()
             if _add_btn("t21_cor_add", "＋ Adicionar cor"):
-                st.session_state.t21_cores.append({"nome": "Nova Cor", "valor": "#FFFFFF"}); st.rerun()
+                st.session_state.t21_cores.append({"nome": "Indique onde usar", "valor": "#FFFFFF"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # BANNER ANIMADO (MARQUEE)
+            # 2. BANNER ANIMADO
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📢 Banner Animado (Marquee)</div>', unsafe_allow_html=True)
-            st.caption("Textos que rolam na faixa amarela do topo")
+            st.caption("Textos que rolam na faixa colorida do topo — use frases curtas e impactantes!")
             for i, item in enumerate(st.session_state.t21_marquee_items):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_marquee_items[i]["texto"] = st.text_input(
-                        "Texto", item["texto"], key=f"t21_mq_t_{i}", label_visibility="collapsed")
+                        "Texto", item["texto"], key=f"t21_mq_t_{i}", label_visibility="collapsed",
+                        placeholder="Ex: FRETE GRÁTIS EM PEDIDOS ACIMA DE R$80 🔥")
                 with c2:
                     if len(st.session_state.t21_marquee_items) > 1 and _del_btn(f"t21_mq_del_{i}"):
                         st.session_state.t21_marquee_items.pop(i); st.rerun()
@@ -151,7 +284,7 @@ def render():
                 st.session_state.t21_marquee_items.append({"texto": "NOVO AVISO 🔥"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # HEADER / LOGO
+            # 3. HEADER / LOGO
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🔝 Cabeçalho (Logo)</div>', unsafe_allow_html=True)
             st.caption("Nome / Logo principal  *(título gigante centralizado)*")
@@ -159,7 +292,8 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_header_logos[i]["valor"] = st.text_input(
-                        "Logo", item["valor"], key=f"t21_hl_{i}", label_visibility="collapsed")
+                        "Logo", item["valor"], key=f"t21_hl_{i}", label_visibility="collapsed",
+                        placeholder="Ex: SUAMARCA ou NOME DA LOJA")
                 with c2:
                     if len(st.session_state.t21_header_logos) > 1 and _del_btn(f"t21_hl_del_{i}"):
                         st.session_state.t21_header_logos.pop(i); st.rerun()
@@ -167,63 +301,85 @@ def render():
                 st.session_state.t21_header_logos.append({"valor": "MARCA"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # HERO
+            # 4. HERO
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">💥 Hero Section</div>', unsafe_allow_html=True)
 
-            st.caption("Título principal  *(use <br> para quebrar linha)*")
+            st.markdown("""
+            <div class="info-box" style="margin:4px 0 8px">
+                💡 <strong>Título em letras gigantes:</strong> escreva o texto normalmente.
+                Se quiser quebrar o texto em linhas diferentes, descreva isso na seção Observações.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.caption("Título principal  *(letras maiúsculas em destaque)*")
             for i, t in enumerate(st.session_state.t21_hero_titulos):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_hero_titulos[i]["valor"] = st.text_area(
-                        "Título", t["valor"], key=f"t21_h_t_{i}", height=80, label_visibility="collapsed")
+                        "Título", t["valor"], key=f"t21_h_t_{i}", height=80,
+                        label_visibility="collapsed",
+                        placeholder="Ex: O PRODUTO QUE MUDA TUDO.")
                 with c2:
                     if len(st.session_state.t21_hero_titulos) > 1 and _del_btn(f"t21_h_t_del_{i}"):
                         st.session_state.t21_hero_titulos.pop(i); st.rerun()
             if _add_btn("t21_h_t_add", "＋ Adicionar título"):
                 st.session_state.t21_hero_titulos.append({"valor": "NOVO TÍTULO."}); st.rerun()
 
-            st.caption("Descrição")
+            st.caption("Descrição  *(frase de impacto abaixo do título)*")
             for i, d in enumerate(st.session_state.t21_hero_descs):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_hero_descs[i]["valor"] = st.text_area(
-                        "Descrição", d["valor"], key=f"t21_h_d_{i}", height=70, label_visibility="collapsed")
+                        "Descrição", d["valor"], key=f"t21_h_d_{i}", height=70,
+                        label_visibility="collapsed",
+                        placeholder="Ex: Sem conservantes. Apenas o melhor.")
                 with c2:
                     if len(st.session_state.t21_hero_descs) > 1 and _del_btn(f"t21_h_d_del_{i}"):
                         st.session_state.t21_hero_descs.pop(i); st.rerun()
             if _add_btn("t21_h_d_add", "＋ Adicionar descrição"):
                 st.session_state.t21_hero_descs.append({"valor": "Nova descrição épica."}); st.rerun()
 
-            st.caption("Imagem do hero  *(URL)*")
+            st.markdown("""
+            <div class="info-box" style="margin:4px 0 8px">
+                📸 <strong>Imagem do hero:</strong> cole a URL do
+                <a href="https://imgur.com" target="_blank">imgur.com</a>.
+                Tamanho ideal: <strong>800 × 800 px</strong> (quadrada) para o produto em destaque.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.caption("Imagem do produto hero  *(URL)*")
             for i, img in enumerate(st.session_state.t21_hero_imgs):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_hero_imgs[i]["valor"] = st.text_input(
-                        "Imagem", img["valor"], key=f"t21_h_i_{i}", label_visibility="collapsed", placeholder="https://...")
+                        "Imagem", img["valor"], key=f"t21_h_i_{i}", label_visibility="collapsed",
+                        placeholder="https://i.imgur.com/... ou URL da imagem")
                 with c2:
                     if len(st.session_state.t21_hero_imgs) > 1 and _del_btn(f"t21_h_i_del_{i}"):
                         st.session_state.t21_hero_imgs.pop(i); st.rerun()
             if _add_btn("t21_h_i_add", "＋ Adicionar imagem"):
-                st.session_state.t21_hero_imgs.append({"valor": "https://"}); st.rerun()
+                st.session_state.t21_hero_imgs.append({"valor": ""}); st.rerun()
 
-            st.caption("Botão  *(Texto | URL)*")
+            st.caption("Botão CTA  *(Texto | URL ou destino)*")
             for i, btn in enumerate(st.session_state.t21_hero_btns):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
                     st.session_state.t21_hero_btns[i]["texto"] = st.text_input(
-                        "Texto", btn["texto"], key=f"t21_hb_t_{i}", label_visibility="collapsed", placeholder="Texto")
+                        "Texto", btn["texto"], key=f"t21_hb_t_{i}", label_visibility="collapsed",
+                        placeholder="Ex: COMPRE AGORA")
                 with c2:
                     st.session_state.t21_hero_btns[i]["url"] = st.text_input(
-                        "URL", btn["url"], key=f"t21_hb_u_{i}", label_visibility="collapsed", placeholder="URL")
+                        "URL", btn["url"], key=f"t21_hb_u_{i}", label_visibility="collapsed",
+                        placeholder="https:// ou seção de produtos")
                 with c3:
                     if len(st.session_state.t21_hero_btns) > 1 and _del_btn(f"t21_hb_del_{i}"):
                         st.session_state.t21_hero_btns.pop(i); st.rerun()
             if _add_btn("t21_hb_add", "＋ Adicionar botão"):
-                st.session_state.t21_hero_btns.append({"texto": "COMPRE", "url": "#"}); st.rerun()
+                st.session_state.t21_hero_btns.append({"texto": "COMPRE", "url": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # LOJA DE PRODUTOS
+            # 5. LOJA DE PRODUTOS
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🍫 Loja de Produtos</div>', unsafe_allow_html=True)
 
@@ -232,36 +388,51 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_shop_titulos[i]["valor"] = st.text_input(
-                        "Título", t["valor"], key=f"t21_st_t_{i}", label_visibility="collapsed")
+                        "Título", t["valor"], key=f"t21_st_t_{i}", label_visibility="collapsed",
+                        placeholder="Ex: NOSSOS PRODUTOS")
                 with c2:
                     if len(st.session_state.t21_shop_titulos) > 1 and _del_btn(f"t21_st_t_del_{i}"):
                         st.session_state.t21_shop_titulos.pop(i); st.rerun()
             if _add_btn("t21_st_t_add", "＋ Adicionar título"):
                 st.session_state.t21_shop_titulos.append({"valor": "NOVO TÍTULO"}); st.rerun()
 
-            st.caption("Cards de produto  *(Nome | Sabor | Preço | Imagem)*")
+            st.markdown("""
+            <div class="info-box" style="margin:4px 0 8px">
+                📸 <strong>Imagens de produto:</strong> tamanho ideal <strong>400 × 400 px</strong> (quadrada).
+                Prefira fotos com fundo branco ou recortadas para melhor visual. Cole a URL do
+                <a href="https://imgur.com" target="_blank">imgur.com</a>.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.caption("Cards de produto  *(clique para expandir e editar cada um)*")
             for i, item in enumerate(st.session_state.t21_product_items):
                 with st.expander(f"Produto {i+1}: {item['nome']}"):
                     st.session_state.t21_product_items[i]["nome"] = st.text_input(
-                        "Nome", item["nome"], key=f"t21_pi_n_{i}")
+                        "Nome do Produto", item["nome"], key=f"t21_pi_n_{i}",
+                        placeholder="Ex: DARK CHOCOLATE")
                     st.session_state.t21_product_items[i]["flavor"] = st.text_input(
-                        "Sabor / Subtítulo", item["flavor"], key=f"t21_pi_f_{i}")
+                        "Sabor / Subtítulo", item["flavor"], key=f"t21_pi_f_{i}",
+                        placeholder="Ex: Intenso e Amargo")
                     st.session_state.t21_product_items[i]["price"] = st.text_input(
-                        "Preço  *(ex: 19,90)*", item["price"], key=f"t21_pi_p_{i}")
+                        "Preço", item["price"], key=f"t21_pi_p_{i}",
+                        placeholder="Ex: 24,90")
                     st.session_state.t21_product_items[i]["img"] = st.text_input(
-                        "URL da Imagem", item["img"], key=f"t21_pi_i_{i}")
+                        "URL da Imagem", item["img"], key=f"t21_pi_i_{i}",
+                        placeholder="https://i.imgur.com/... ou URL da imagem",
+                        help="Foto do produto — 400×400 px, fundo branco ideal")
                     st.session_state.t21_product_items[i]["url"] = st.text_input(
-                        "URL de Compra", item["url"], key=f"t21_pi_u_{i}")
+                        "URL de Compra", item["url"], key=f"t21_pi_u_{i}",
+                        placeholder="https://wa.me/... ou link da loja")
                     if len(st.session_state.t21_product_items) > 1:
                         if st.button("🗑 Remover este produto", key=f"t21_pi_del_{i}"):
                             st.session_state.t21_product_items.pop(i); st.rerun()
             if _add_btn("t21_pi_add", "＋ Adicionar produto"):
                 st.session_state.t21_product_items.append({
                     "img": "", "nome": "NOVO SABOR", "flavor": "DESCRIÇÃO",
-                    "price": "0,00", "url": "#"}); st.rerun()
+                    "price": "0,00", "url": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # BENEFÍCIOS
+            # 6. BENEFÍCIOS
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🌱 Por que nós? (Benefícios)</div>', unsafe_allow_html=True)
 
@@ -270,30 +441,33 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_benefit_titulos[i]["valor"] = st.text_input(
-                        "Título", t["valor"], key=f"t21_bt_t_{i}", label_visibility="collapsed")
+                        "Título", t["valor"], key=f"t21_bt_t_{i}", label_visibility="collapsed",
+                        placeholder="Ex: O QUE NOS DIFERENCIA.")
                 with c2:
                     if len(st.session_state.t21_benefit_titulos) > 1 and _del_btn(f"t21_bt_t_del_{i}"):
                         st.session_state.t21_benefit_titulos.pop(i); st.rerun()
             if _add_btn("t21_bt_t_add", "＋ Adicionar título"):
                 st.session_state.t21_benefit_titulos.append({"valor": "NOVO TÍTULO."}); st.rerun()
 
-            st.caption("Itens de benefício  *(Emoji | Título)*")
+            st.caption("Itens de benefício  *(Emoji | Descrição do benefício)*")
             for i, item in enumerate(st.session_state.t21_benefit_items):
                 c1, c2, c3 = st.columns([2, 7, 1])
                 with c1:
                     st.session_state.t21_benefit_items[i]["emoji"] = st.text_input(
-                        "Emoji", item["emoji"], key=f"t21_bi_e_{i}", label_visibility="collapsed")
+                        "Emoji", item["emoji"], key=f"t21_bi_e_{i}", label_visibility="collapsed",
+                        help="Cole um emoji para representar este benefício")
                 with c2:
                     st.session_state.t21_benefit_items[i]["titulo"] = st.text_input(
-                        "Título", item["titulo"], key=f"t21_bi_t_{i}", label_visibility="collapsed")
+                        "Benefício", item["titulo"], key=f"t21_bi_t_{i}", label_visibility="collapsed",
+                        placeholder="Ex: SEM CORANTES ARTIFICIAIS")
                 with c3:
                     if len(st.session_state.t21_benefit_items) > 1 and _del_btn(f"t21_bi_del_{i}"):
                         st.session_state.t21_benefit_items.pop(i); st.rerun()
             if _add_btn("t21_bi_add", "＋ Adicionar benefício"):
-                st.session_state.t21_benefit_items.append({"emoji": "✨", "titulo": "NOVO"}); st.rerun()
+                st.session_state.t21_benefit_items.append({"emoji": "✨", "titulo": "NOVO BENEFÍCIO"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # FOOTER
+            # 7. FOOTER
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">👣 Rodapé Completo</div>', unsafe_allow_html=True)
 
@@ -302,7 +476,8 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_foot_brand_names[i]["valor"] = st.text_input(
-                        "Nome", name["valor"], key=f"t21_fn_{i}", label_visibility="collapsed")
+                        "Nome", name["valor"], key=f"t21_fn_{i}", label_visibility="collapsed",
+                        placeholder="Ex: SUAMARCA")
                 with c2:
                     if len(st.session_state.t21_foot_brand_names) > 1 and _del_btn(f"t21_fn_del_{i}"):
                         st.session_state.t21_foot_brand_names.pop(i); st.rerun()
@@ -314,43 +489,49 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_foot_brand_descs[i]["valor"] = st.text_area(
-                        "Descrição", desc["valor"], key=f"t21_fd_{i}", height=70, label_visibility="collapsed")
+                        "Descrição", desc["valor"], key=f"t21_fd_{i}", height=70,
+                        label_visibility="collapsed",
+                        placeholder="Slogan ou frase curta da marca para o rodapé")
                 with c2:
                     if len(st.session_state.t21_foot_brand_descs) > 1 and _del_btn(f"t21_fd_del_{i}"):
                         st.session_state.t21_foot_brand_descs.pop(i); st.rerun()
             if _add_btn("t21_fd_add", "＋ Adicionar descrição"):
                 st.session_state.t21_foot_brand_descs.append({"valor": "Nova descrição."}); st.rerun()
 
-            st.caption("Colunas de links")
+            st.caption("Colunas de links  *(clique para expandir e editar cada uma)*")
             for i, col in enumerate(st.session_state.t21_foot_cols):
                 with st.expander(f"Coluna {i+1}: {col['titulo']}"):
                     st.session_state.t21_foot_cols[i]["titulo"] = st.text_input(
-                        "Título Coluna", col["titulo"], key=f"t21_fc_t_{i}")
+                        "Título Coluna", col["titulo"], key=f"t21_fc_t_{i}",
+                        placeholder="Ex: RECURSOS, NOS SIGA, CONTATO")
                     for j, link in enumerate(col["links"]):
                         c1, c2, c3 = st.columns([4, 4, 1])
                         with c1:
                             st.session_state.t21_foot_cols[i]["links"][j]["texto"] = st.text_input(
-                                "Texto", link["texto"], key=f"t21_fc_l_t_{i}_{j}", label_visibility="collapsed")
+                                "Texto", link["texto"], key=f"t21_fc_l_t_{i}_{j}",
+                                label_visibility="collapsed", placeholder="Texto do link")
                         with c2:
                             st.session_state.t21_foot_cols[i]["links"][j]["url"] = st.text_input(
-                                "URL", link["url"], key=f"t21_fc_l_u_{i}_{j}", label_visibility="collapsed")
+                                "URL", link["url"], key=f"t21_fc_l_u_{i}_{j}",
+                                label_visibility="collapsed", placeholder="https:// ou seção")
                         with c3:
                             if len(col["links"]) > 1 and _del_btn(f"t21_fc_l_del_{i}_{j}"):
                                 st.session_state.t21_foot_cols[i]["links"].pop(j); st.rerun()
                     if _add_btn(f"t21_fc_l_add_{i}", "＋ Adicionar link"):
-                        st.session_state.t21_foot_cols[i]["links"].append({"texto": "LINK", "url": "#"}); st.rerun()
+                        st.session_state.t21_foot_cols[i]["links"].append({"texto": "LINK", "url": ""}); st.rerun()
                     if len(st.session_state.t21_foot_cols) > 1:
                         if st.button("🗑 Remover esta coluna", key=f"t21_fc_del_{i}"):
                             st.session_state.t21_foot_cols.pop(i); st.rerun()
             if _add_btn("t21_fc_add", "＋ Adicionar coluna"):
-                st.session_state.t21_foot_cols.append({"titulo": "NOVA", "links": [{"texto": "Link", "url": "#"}]}); st.rerun()
+                st.session_state.t21_foot_cols.append({"titulo": "NOVA", "links": [{"texto": "Link", "url": ""}]}); st.rerun()
 
             st.caption("Copyright")
             for i, copy in enumerate(st.session_state.t21_foot_copys):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_foot_copys[i]["valor"] = st.text_input(
-                        "Copyright", copy["valor"], key=f"t21_fcp_{i}", label_visibility="collapsed")
+                        "Copyright", copy["valor"], key=f"t21_fcp_{i}", label_visibility="collapsed",
+                        placeholder="Ex: © 2026 EMPRESA INC. TODOS OS DIREITOS RESERVADOS.")
                 with c2:
                     if len(st.session_state.t21_foot_copys) > 1 and _del_btn(f"t21_fcp_del_{i}"):
                         st.session_state.t21_foot_copys.pop(i); st.rerun()
@@ -358,15 +539,44 @@ def render():
                 st.session_state.t21_foot_copys.append({"valor": "© 2026"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # OBSERVAÇÕES
+            # 8. IMAGENS
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">📝 Observações Adicionais</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">🖼️ Guia de Imagens</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="info-box">
+                📸 <strong>Como adicionar imagens ao seu site:</strong><br><br>
+                1. Acesse <a href="https://imgur.com" target="_blank"><strong>imgur.com</strong></a>
+                   (gratuito, sem cadastro) e faça o upload da sua imagem.<br>
+                2. Clique com o botão direito na imagem → <em>Copiar endereço da imagem</em> — a URL termina em
+                   <code>.jpg</code>, <code>.png</code> ou <code>.webp</code>.<br>
+                3. Cole a URL no campo correspondente acima.<br><br>
+                📐 <strong>Tamanhos recomendados:</strong><br>
+                • Produto hero (destaque): <strong>800 × 800 px</strong> (quadrada)<br>
+                • Produtos da loja: <strong>400 × 400 px</strong> (quadrada, fundo branco ideal)<br>
+                • Logo: <strong>200 × 60 px</strong> (fundo transparente, PNG)<br><br>
+                ❌ <strong>Não conseguiu subir a imagem?</strong> Envie para
+                <strong>sttacksite@gmail.com</strong> com o assunto <em>"Imagem — [nome do seu site]"</em>.
+            </div>
+            """, unsafe_allow_html=True)
+
+            # ══════════════════════════════════════════════════════════════════
+            # 9. OBSERVAÇÕES
+            # ══════════════════════════════════════════════════════════════════
+            st.markdown('<div class="section-label">📝 Observações / Pedidos Extras</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="warn-box">
+                💬 <strong>Use este espaço para tudo que não encontrou nos campos acima!</strong><br>
+                Ex: "adicionar seção de depoimentos", "adicionar cupom de desconto",
+                "adicionar FAQ", "remover banner animado", "mudar o azul para verde neon"...
+                Nossa equipe lê cada observação e aplica para você! 🙌
+            </div>
+            """, unsafe_allow_html=True)
             for i, item in enumerate(st.session_state.t21_obs):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t21_obs[i]["valor"] = st.text_area(
-                        "Notas extras", item["valor"], key=f"t21_obs_{i}", height=80,
-                        placeholder="Ex: Deixar o azul ainda mais vibrante...",
+                        "Notas extras", item["valor"], key=f"t21_obs_{i}", height=90,
+                        placeholder="Descreva aqui qualquer ajuste, ideia ou pedido especial...",
                         label_visibility="collapsed")
                 with c2:
                     if len(st.session_state.t21_obs) > 1 and _del_btn(f"t21_obs_del_{i}"):
@@ -375,12 +585,44 @@ def render():
                 st.session_state.t21_obs.append({"valor": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # ENVIAR
+            # 10. REVISÃO + ENVIO
             # ══════════════════════════════════════════════════════════════════
             st.markdown("---")
-            if st.button("✅ Finalizar e Enviar para a Equipe", key="t21_send", type="primary"):
-                st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
-                st.balloons()
+
+            with st.expander("👁 Revisar dados antes de enviar"):
+                st.json(_build_json())
+
+            erros = []
+            if not st.session_state.t21_nome_cliente.strip():
+                erros.append("• Preencha seu **nome completo**.")
+            if not st.session_state.t21_email_cliente.strip() or "@" not in st.session_state.t21_email_cliente:
+                erros.append("• Preencha um **e-mail válido** (mesmo da Eduzz).")
+            if not st.session_state.t21_nome_site.strip():
+                erros.append("• Preencha o **nome desejado para a URL** do site.")
+
+            if erros:
+                st.warning("⚠️ Antes de enviar, corrija os itens abaixo:\n\n" + "\n".join(erros))
+
+            if st.button("✅ Finalizar e Enviar para a Equipe", key="t21_send", type="primary",
+                         disabled=len(erros) > 0):
+                payload = _build_json()
+                sucesso = _enviar_resend(payload)
+                if sucesso:
+                    st.success(
+                        "🎉 **Pedido enviado com sucesso!**\n\n"
+                        "Nossa equipe já recebeu suas informações e entrará em contato assim que o site "
+                        "estiver em produção. Caso surja alguma dúvida, falaremos com você pelo e-mail "
+                        f"informado. 😊\n\n"
+                        f"Seu site será publicado em: **https://sttacksite.streamlit.app/?c={st.session_state.t21_nome_site}**"
+                    )
+                    st.balloons()
+                else:
+                    st.warning(
+                        "⚠️ Houve um problema ao enviar automaticamente. "
+                        "Copie o JSON abaixo e envie para **sttacksite@gmail.com** com o assunto "
+                        f"*'Pedido — {st.session_state.t21_nome_cliente}'*."
+                    )
+                    st.code(json.dumps(payload, ensure_ascii=False, indent=2), language="json")
 
     # ════════════════════════════════════════════════════════════════════════
     # PAINEL DIREITO — PREVIEW
