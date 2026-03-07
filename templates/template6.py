@@ -29,16 +29,6 @@ def _init():
             {"nome": "Cor do Texto (Deep Black)",      "valor": "#1a1a1a"},
         ],
 
-        # ── NAVBAR ──────────────────────────────────────────────────────────
-        "t6_navbar_logo":  [{"valor": "SITE PRO"}],
-        "t6_navbar_links": [
-            {"texto": "Catálogo",   "url": "seção Catálogo de Componentes"},
-            {"texto": "Aplicações", "url": "seção Aplicações do Sistema"},
-            {"texto": "Workflow",   "url": "seção Fluxo de Implementação"},
-            {"texto": "Preços",     "url": "seção Planos de Acesso"},
-            {"texto": "FAQ",        "url": "seção FAQ ao final da página"},
-        ],
-        "t6_navbar_cta": [{"texto": "CONFIGURAR AGORA", "url": "seção Catálogo de Componentes"}],
 
         # ── HERO ────────────────────────────────────────────────────────────
         "t6_hero_mono":       [{"valor": "Codeless Architecture v2.0"}],
