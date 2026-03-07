@@ -1,17 +1,27 @@
 import streamlit as st
+import json
+import urllib.request
 
 # ─────────────────────────────────────────────────────────────────────────────
-# URL DA IMAGEM DO TEMPLATE — SUBSTITUA PELO LINK DA SUA IMAGEM
+# CONFIGURAÇÕES FIXAS
 # ─────────────────────────────────────────────────────────────────────────────
 TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img13.png"
-TEMPLATE_NAME = "Template 13 — Ogreen Style (Sustentabilidade & Indústria) - COMPLETO"
+TEMPLATE_NAME      = "Template 13 — Ogreen Style (Sustentabilidade & Indústria)"
+TEMPLATE_ID        = "template_13"
+RESEND_API_KEY     = st.secrets.get("RESEND_KEY", "")
+DESTINO_EMAIL      = "sttacksite@gmail.com"
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-# INICIALIZAÇÃO DO SESSION STATE
+# SESSION STATE
 # ─────────────────────────────────────────────────────────────────────────────
 def _init():
     defaults = {
+        # ── IDENTIFICAÇÃO ────────────────────────────────────────────────────
+        "t13_nome_cliente":  "",
+        "t13_email_cliente": "",
+        "t13_nome_site":     "",
+
         # ── CORES ───────────────────────────────────────────────────────────
         "t13_cores": [
             {"nome": "Verde Principal",       "valor": "#005a31"},
@@ -23,11 +33,11 @@ def _init():
         # ── NAVBAR ──────────────────────────────────────────────────────────
         "t13_logos": [{"valor": "ogreen"}],
         "t13_nav_links": [
-            {"texto": "A ogreen",         "url": "#about"},
-            {"texto": "NOSSOS NEGÓCIOS",  "url": "#business"},
-            {"texto": "SUSTENTABILIDADE", "url": "#sustainability"},
-            {"texto": "INVESTIDORES",     "url": "#investors"},
-            {"texto": "PRODUTOS",         "url": "#products"},
+            {"texto": "A ogreen",         "url": "seção Sobre"},
+            {"texto": "NOSSOS NEGÓCIOS",  "url": "seção Frentes de Atuação"},
+            {"texto": "SUSTENTABILIDADE", "url": "seção KODS"},
+            {"texto": "INVESTIDORES",     "url": "seção Relações com Investidores"},
+            {"texto": "PRODUTOS",         "url": "seção Frentes de Atuação"},
         ],
 
         # ── HERO ────────────────────────────────────────────────────────────
@@ -39,7 +49,7 @@ def _init():
         "t13_about_titulos": [{"valor": "Sobre a ogreen"}],
         "t13_about_descs":   [{"valor": "Com 125 anos de história, somos a maior produtora e exportadora de papéis para embalagens e soluções sustentáveis do Brasil. Nossa atuação é baseada no desenvolvimento sustentável, com florestas 100% plantadas e certificadas."}],
         "t13_about_imgs":    [{"valor": "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&w=800&q=80", "legenda": "Gestão Florestal Responsável"}],
-        "t13_about_btns":    [{"texto": "CONHEÇA NOSSA HISTÓRIA", "url": "https://www.google.com/"}],
+        "t13_about_btns":    [{"texto": "CONHEÇA NOSSA HISTÓRIA", "url": "seção Frentes de Atuação"}],
 
         # ── ESTATÍSTICAS ────────────────────────────────────────────────────
         "t13_stats": [
@@ -52,9 +62,9 @@ def _init():
         # ── NEGÓCIOS ────────────────────────────────────────────────────────
         "t13_bus_secao_titulos": [{"valor": "Nossas Frentes de Atuação"}],
         "t13_bus_items": [
-            {"img": "https://images.unsplash.com/photo-1603484477859-abe6a73f9366?w=500", "titulo": "Celulose",   "desc": "Fibra curta, fibra longa e celulose fluff para diversas aplicações.",           "btn_txt": "Saiba Mais", "url": "https://www.google.com/"},
-            {"img": "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=500", "titulo": "Embalagens", "desc": "Soluções inteligentes em papelão ondulado e sacos industriais sustentáveis.",   "btn_txt": "Saiba Mais", "url": "https://www.google.com/"},
-            {"img": "https://images.unsplash.com/photo-1603484477859-abe6a73f9366?w=500", "titulo": "Papéis",     "desc": "Papel-cartão e Kraftliner de alta performance para o mercado.",                  "btn_txt": "Saiba Mais", "url": "https://www.google.com/"},
+            {"img": "https://images.unsplash.com/photo-1603484477859-abe6a73f9366?w=500", "titulo": "Celulose",   "desc": "Fibra curta, fibra longa e celulose fluff para diversas aplicações.",         "btn_txt": "Saiba Mais", "url": "https://wa.me/5511999999999"},
+            {"img": "https://images.unsplash.com/photo-1589939705384-5185137a7f0f?w=500", "titulo": "Embalagens", "desc": "Soluções inteligentes em papelão ondulado e sacos industriais sustentáveis.", "btn_txt": "Saiba Mais", "url": "https://wa.me/5511999999999"},
+            {"img": "https://images.unsplash.com/photo-1603484477859-abe6a73f9366?w=500", "titulo": "Papéis",     "desc": "Papel-cartão e Kraftliner de alta performance para o mercado.",                "btn_txt": "Saiba Mais", "url": "https://wa.me/5511999999999"},
         ],
 
         # ── KODS ────────────────────────────────────────────────────────────
@@ -72,17 +82,17 @@ def _init():
             {"label": "KLBN11 (Units)", "value": "R$ 22,45", "delta": "+1.20%"},
         ],
         "t13_ri_cards": [
-            {"titulo": "Central de Resultados",  "desc": "Acesse os relatórios do 4T25 e demonstrações financeiras.", "btn_texto": "Acessar Central", "url": "https://www.google.com/"},
-            {"titulo": "Governança Corporativa", "desc": "Transparência e ética em todos os níveis da companhia.",    "btn_texto": "Ver Diretoria",   "url": "https://www.google.com/"},
+            {"titulo": "Central de Resultados",  "desc": "Acesse os relatórios do 4T25 e demonstrações financeiras.", "btn_texto": "Acessar Central", "url": "https://wa.me/5511999999999"},
+            {"titulo": "Governança Corporativa", "desc": "Transparência e ética em todos os níveis da companhia.",    "btn_texto": "Ver Diretoria",   "url": "https://wa.me/5511999999999"},
         ],
 
         # ── FOOTER ──────────────────────────────────────────────────────────
         "t13_foot_logos": [{"valor": "ogreen"}],
         "t13_foot_descs": [{"valor": "Líder no mercado de papéis e embalagens, focada na inovação e na sustentabilidade do ciclo da floresta ao consumidor final."}],
         "t13_foot_cols": [
-            {"titulo": "NOSSOS SITES",  "links": [{"texto": "Relações com Investidores", "url": "#"}, {"texto": "ogreen ForYou", "url": "#"}, {"texto": "Blog ogreen", "url": "#"}]},
-            {"titulo": "CONTATO",       "links": [{"texto": "Fale Conosco", "url": "#"}, {"texto": "Imprensa", "url": "#"}, {"texto": "Trabalhe Conosco", "url": "#"}]},
-            {"titulo": "REDES SOCIAIS", "links": [{"texto": "LinkedIn", "url": "#"}, {"texto": "Instagram", "url": "#"}, {"texto": "YouTube", "url": "#"}]},
+            {"titulo": "NOSSOS SITES",  "links": [{"texto": "Relações com Investidores", "url": "https://wa.me/5511999999999"}, {"texto": "ogreen ForYou", "url": "https://wa.me/5511999999999"}, {"texto": "Blog ogreen", "url": "https://wa.me/5511999999999"}]},
+            {"titulo": "CONTATO",       "links": [{"texto": "Fale Conosco", "url": "https://wa.me/5511999999999"}, {"texto": "Imprensa", "url": "https://wa.me/5511999999999"}, {"texto": "Trabalhe Conosco", "url": "https://wa.me/5511999999999"}]},
+            {"titulo": "REDES SOCIAIS", "links": [{"texto": "LinkedIn", "url": "https://wa.me/5511999999999"}, {"texto": "Instagram", "url": "https://wa.me/5511999999999"}, {"texto": "YouTube", "url": "https://wa.me/5511999999999"}]},
         ],
         "t13_foot_copys": [{"valor": "© 2026 ogreen S.A. | Todos os direitos reservados."}],
 
@@ -102,6 +112,79 @@ def _add_btn(key, label="＋ Adicionar"):
 
 def _del_btn(key, label="🗑"):
     return st.button(label, key=key, help="Remover")
+
+def _build_json():
+    return {
+        "template":      TEMPLATE_ID,
+        "template_nome": TEMPLATE_NAME,
+        "identificacao": {
+            "nome":      st.session_state.t13_nome_cliente,
+            "email":     st.session_state.t13_email_cliente,
+            "nome_site": st.session_state.t13_nome_site,
+            "url_final": f"https://sttacksite.streamlit.app/?c={st.session_state.t13_nome_site}",
+        },
+        "cores": st.session_state.t13_cores,
+        "navbar": {
+            "logos": st.session_state.t13_logos,
+            "links": st.session_state.t13_nav_links,
+        },
+        "hero": {
+            "titulos": st.session_state.t13_hero_titulos,
+            "descs":   st.session_state.t13_hero_descs,
+            "imagens": st.session_state.t13_hero_imgs,
+        },
+        "sobre": {
+            "titulos": st.session_state.t13_about_titulos,
+            "descs":   st.session_state.t13_about_descs,
+            "imagens": st.session_state.t13_about_imgs,
+            "botoes":  st.session_state.t13_about_btns,
+        },
+        "estatisticas": st.session_state.t13_stats,
+        "negocios": {
+            "titulo_secao": st.session_state.t13_bus_secao_titulos,
+            "itens":        st.session_state.t13_bus_items,
+        },
+        "kods": {
+            "titulos":  st.session_state.t13_kods_titulos,
+            "descs":    st.session_state.t13_kods_descs,
+            "objetivos":st.session_state.t13_kods_items,
+        },
+        "investidores": {
+            "titulos":  st.session_state.t13_ri_titulos,
+            "metricas": st.session_state.t13_ri_metrics,
+            "cards":    st.session_state.t13_ri_cards,
+        },
+        "footer": {
+            "logos":    st.session_state.t13_foot_logos,
+            "descs":    st.session_state.t13_foot_descs,
+            "colunas":  st.session_state.t13_foot_cols,
+            "copyright":st.session_state.t13_foot_copys,
+        },
+        "observacoes": st.session_state.t13_obs,
+    }
+
+def _enviar_resend(payload: dict) -> bool:
+    try:
+        body_html = f"<pre style='font-family:monospace;font-size:13px'>{json.dumps(payload, ensure_ascii=False, indent=2)}</pre>"
+        data = json.dumps({
+            "from":    "editor@sttacksite.com.br",
+            "to":      [DESTINO_EMAIL],
+            "subject": f"[Novo Pedido] {TEMPLATE_NAME} — {payload['identificacao']['nome']}",
+            "html":    body_html,
+        }).encode("utf-8")
+        req = urllib.request.Request(
+            "https://api.resend.com/emails",
+            data=data,
+            headers={
+                "Authorization": f"Bearer {RESEND_API_KEY}",
+                "Content-Type":  "application/json",
+            },
+            method="POST",
+        )
+        with urllib.request.urlopen(req, timeout=10) as resp:
+            return resp.status in (200, 201)
+    except Exception:
+        return False
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -129,7 +212,28 @@ def render():
             border-radius: 12px; border: 1px solid #e2e8f0; background: #f8faff;
         }
         .template-img-wrapper img { width: 100%; display: block; }
+        .info-box {
+            background: #eff6ff; border: 1px solid #bfdbfe;
+            border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+            font-size: 13px; color: #1e40af; line-height: 1.6;
+        }
+        .info-box strong { color: #1e3a8a; }
+        .warn-box {
+            background: #fefce8; border: 1px solid #fde68a;
+            border-radius: 10px; padding: 14px 16px; margin-bottom: 10px;
+            font-size: 13px; color: #92400e; line-height: 1.6;
+        }
     </style>
+    """, unsafe_allow_html=True)
+
+    st.markdown("""
+    <div class="info-box">
+        👋 <strong>Bem-vindo ao editor do seu site!</strong><br>
+        Preencha os campos abaixo para personalizar o seu site. Não precisa ser técnico — é só digitar!
+        Você também poderá vir aqui e ajustar seu site quantas vezes quiser.<br><br>
+        💡 <strong>Tem alguma ideia que não encontrou aqui?</strong> Use o campo <em>Observações</em> no final
+        para descrever o que deseja. Nossa equipe analisa tudo e aplica para você. 😊
+    </div>
     """, unsafe_allow_html=True)
 
     col_form, col_preview = st.columns([1, 2], gap="medium")
@@ -141,14 +245,54 @@ def render():
         with st.container(height=720, border=False):
 
             # ══════════════════════════════════════════════════════════════════
-            # CORES
+            # 0. IDENTIFICAÇÃO
+            # ══════════════════════════════════════════════════════════════════
+            st.markdown('<div class="section-label">👤 Seus Dados</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="info-box" style="margin-top:4px">
+                Preencha seus dados antes de começar. Usamos essas informações para identificar seu pedido e
+                entrar em contato quando o site estiver pronto. 🚀
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.session_state.t13_nome_cliente = st.text_input(
+                "Seu nome completo", value=st.session_state.t13_nome_cliente,
+                key="t13_nome_cliente_inp", placeholder="Ex: João Silva",
+                help="Seu nome para identificarmos seu pedido.")
+
+            st.session_state.t13_email_cliente = st.text_input(
+                "Seu e-mail (mesmo e-mail de cadastro na Eduzz)",
+                value=st.session_state.t13_email_cliente,
+                key="t13_email_cliente_inp", placeholder="Ex: joao@email.com",
+                help="Use o mesmo e-mail com o qual você comprou na Eduzz.")
+
+            st.markdown("""
+            <div class="info-box" style="margin-top:8px">
+                🌐 <strong>Nome do seu site:</strong> seu site ficará disponível em<br>
+                <code>https://sttacksite.streamlit.app/?c=<strong>seunome</strong></code><br>
+                Digite abaixo o que você quer no lugar de <strong>seunome</strong>
+                (sem espaços, sem acentos — ex: ogreen, minhaempresa, sustentavel2026).
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.session_state.t13_nome_site = st.text_input(
+                "Nome desejado para a URL do site",
+                value=st.session_state.t13_nome_site,
+                key="t13_nome_site_inp",
+                placeholder="Ex: ogreen  →  sttacksite.streamlit.app/?c=ogreen",
+                help="Apenas letras minúsculas, números e hífens. Sem espaços.")
+
+            # ══════════════════════════════════════════════════════════════════
+            # 1. CORES
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🎨 Identidade Visual</div>', unsafe_allow_html=True)
+            st.caption("Clique na bolinha colorida para escolher a cor de cada elemento.")
             for i, cor in enumerate(st.session_state.t13_cores):
                 c1, c2, c3 = st.columns([5, 2, 1])
                 with c1:
                     st.session_state.t13_cores[i]["nome"] = st.text_input(
-                        "Nome", cor["nome"], key=f"t13_cor_n_{i}", label_visibility="collapsed")
+                        "Nome", cor["nome"], key=f"t13_cor_n_{i}", label_visibility="collapsed",
+                        placeholder="Onde essa cor é usada")
                 with c2:
                     st.session_state.t13_cores[i]["valor"] = st.color_picker(
                         "Cor", cor["valor"], key=f"t13_cor_v_{i}", label_visibility="collapsed")
@@ -156,10 +300,10 @@ def render():
                     if len(st.session_state.t13_cores) > 1 and _del_btn(f"t13_cor_del_{i}"):
                         st.session_state.t13_cores.pop(i); st.rerun()
             if _add_btn("t13_cor_add", "＋ Adicionar cor"):
-                st.session_state.t13_cores.append({"nome": "Nova Cor", "valor": "#FFFFFF"}); st.rerun()
+                st.session_state.t13_cores.append({"nome": "Indique onde usar", "valor": "#FFFFFF"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # NAVBAR
+            # 2. NAVBAR
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🔝 Navegação (Header)</div>', unsafe_allow_html=True)
 
@@ -168,39 +312,51 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_logos[i]["valor"] = st.text_input(
-                        "Logo", logo["valor"], key=f"t13_logo_{i}", label_visibility="collapsed")
+                        "Logo", logo["valor"], key=f"t13_logo_{i}", label_visibility="collapsed",
+                        placeholder="Ex: ogreen ou Minha Empresa")
                 with c2:
                     if len(st.session_state.t13_logos) > 1 and _del_btn(f"t13_logo_del_{i}"):
                         st.session_state.t13_logos.pop(i); st.rerun()
             if _add_btn("t13_logo_add", "＋ Adicionar logo"):
                 st.session_state.t13_logos.append({"valor": "empresa"}); st.rerun()
 
-            st.caption("Links do menu  *(Texto | URL)*")
+            st.markdown("""
+            <div class="info-box" style="margin:4px 0 8px">
+                🔗 <strong>Destinos dos links:</strong> você pode colocar seu WhatsApp
+                (<code>https://wa.me/55119XXXXXXXX</code>), qualquer link — ou descrever
+                para qual seção o link deve levar (ex: <em>seção Sobre</em>).
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.caption("Links do menu  *(Texto | Destino ou URL)*")
             for i, link in enumerate(st.session_state.t13_nav_links):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
                     st.session_state.t13_nav_links[i]["texto"] = st.text_input(
-                        "Texto", link["texto"], key=f"t13_nl_t_{i}", label_visibility="collapsed", placeholder="Texto")
+                        "Texto", link["texto"], key=f"t13_nl_t_{i}", label_visibility="collapsed",
+                        placeholder="Texto do link")
                 with c2:
                     st.session_state.t13_nav_links[i]["url"] = st.text_input(
-                        "URL", link["url"], key=f"t13_nl_u_{i}", label_visibility="collapsed", placeholder="URL")
+                        "Destino", link["url"], key=f"t13_nl_u_{i}", label_visibility="collapsed",
+                        placeholder="Seção ou https://...")
                 with c3:
                     if len(st.session_state.t13_nav_links) > 1 and _del_btn(f"t13_nl_del_{i}"):
                         st.session_state.t13_nav_links.pop(i); st.rerun()
             if _add_btn("t13_nl_add", "＋ Adicionar link ao menu"):
-                st.session_state.t13_nav_links.append({"texto": "LINK", "url": "#"}); st.rerun()
+                st.session_state.t13_nav_links.append({"texto": "LINK", "url": "seção de destino"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # HERO
+            # 3. HERO
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🌲 Hero Banner</div>', unsafe_allow_html=True)
 
-            st.caption("Título principal")
+            st.caption("Título principal  *(geralmente em maiúsculas)*")
             for i, t in enumerate(st.session_state.t13_hero_titulos):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_hero_titulos[i]["valor"] = st.text_input(
-                        "Título", t["valor"], key=f"t13_h_t_{i}", label_visibility="collapsed")
+                        "Título", t["valor"], key=f"t13_h_t_{i}", label_visibility="collapsed",
+                        placeholder="Ex: O FUTURO É RENOVÁVEL")
                 with c2:
                     if len(st.session_state.t13_hero_titulos) > 1 and _del_btn(f"t13_h_t_del_{i}"):
                         st.session_state.t13_hero_titulos.pop(i); st.rerun()
@@ -212,27 +368,38 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_hero_descs[i]["valor"] = st.text_area(
-                        "Descrição", d["valor"], key=f"t13_h_d_{i}", height=80, label_visibility="collapsed")
+                        "Descrição", d["valor"], key=f"t13_h_d_{i}", height=80,
+                        label_visibility="collapsed",
+                        placeholder="Frase que resume sua empresa ou proposta")
                 with c2:
                     if len(st.session_state.t13_hero_descs) > 1 and _del_btn(f"t13_h_d_del_{i}"):
                         st.session_state.t13_hero_descs.pop(i); st.rerun()
             if _add_btn("t13_h_d_add", "＋ Adicionar descrição"):
                 st.session_state.t13_hero_descs.append({"valor": "Nova descrição"}); st.rerun()
 
+            st.markdown("""
+            <div class="info-box" style="margin:4px 0 8px">
+                📸 <strong>Imagem de fundo do Hero:</strong> cole a URL de uma foto do
+                <a href="https://imgur.com" target="_blank">imgur.com</a>.
+                Tamanho ideal: <strong>1920 × 800 px</strong>. Prefira fotos de natureza ou indústria sustentável.
+            </div>
+            """, unsafe_allow_html=True)
+
             st.caption("Imagem de fundo  *(URL)*")
             for i, img in enumerate(st.session_state.t13_hero_imgs):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_hero_imgs[i]["valor"] = st.text_input(
-                        "Imagem", img["valor"], key=f"t13_h_i_{i}", label_visibility="collapsed", placeholder="https://...")
+                        "Imagem", img["valor"], key=f"t13_h_i_{i}", label_visibility="collapsed",
+                        placeholder="https://i.imgur.com/... ou URL da imagem")
                 with c2:
                     if len(st.session_state.t13_hero_imgs) > 1 and _del_btn(f"t13_h_i_del_{i}"):
                         st.session_state.t13_hero_imgs.pop(i); st.rerun()
             if _add_btn("t13_h_i_add", "＋ Adicionar imagem de fundo"):
-                st.session_state.t13_hero_imgs.append({"valor": "https://"}); st.rerun()
+                st.session_state.t13_hero_imgs.append({"valor": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # SOBRE
+            # 4. SOBRE
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📖 Seção Sobre</div>', unsafe_allow_html=True)
 
@@ -241,7 +408,8 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_about_titulos[i]["valor"] = st.text_input(
-                        "Título", t["valor"], key=f"t13_at_{i}", label_visibility="collapsed")
+                        "Título", t["valor"], key=f"t13_at_{i}", label_visibility="collapsed",
+                        placeholder="Ex: Sobre a Empresa")
                 with c2:
                     if len(st.session_state.t13_about_titulos) > 1 and _del_btn(f"t13_at_del_{i}"):
                         st.session_state.t13_about_titulos.pop(i); st.rerun()
@@ -253,7 +421,9 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_about_descs[i]["valor"] = st.text_area(
-                        "Descrição", d["valor"], key=f"t13_ad_{i}", height=90, label_visibility="collapsed")
+                        "Descrição", d["valor"], key=f"t13_ad_{i}", height=90,
+                        label_visibility="collapsed",
+                        placeholder="Conte a história e missão da sua empresa")
                 with c2:
                     if len(st.session_state.t13_about_descs) > 1 and _del_btn(f"t13_ad_del_{i}"):
                         st.session_state.t13_about_descs.pop(i); st.rerun()
@@ -265,32 +435,36 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_about_imgs[i]["valor"] = st.text_input(
-                        "URL Imagem", item["valor"], key=f"t13_ai_i_{i}", label_visibility="collapsed", placeholder="https://...")
+                        "URL Imagem", item["valor"], key=f"t13_ai_i_{i}", label_visibility="collapsed",
+                        placeholder="https://i.imgur.com/... ou URL da imagem")
                     st.session_state.t13_about_imgs[i]["legenda"] = st.text_input(
-                        "Legenda", item["legenda"], key=f"t13_ai_l_{i}", label_visibility="collapsed", placeholder="Legenda")
+                        "Legenda", item["legenda"], key=f"t13_ai_l_{i}", label_visibility="collapsed",
+                        placeholder="Ex: Gestão Florestal Responsável")
                 with c2:
                     if len(st.session_state.t13_about_imgs) > 1 and _del_btn(f"t13_ai_del_{i}"):
                         st.session_state.t13_about_imgs.pop(i); st.rerun()
             if _add_btn("t13_ai_add", "＋ Adicionar imagem lateral"):
-                st.session_state.t13_about_imgs.append({"valor": "https://", "legenda": "Legenda"}); st.rerun()
+                st.session_state.t13_about_imgs.append({"valor": "", "legenda": "Legenda"}); st.rerun()
 
-            st.caption("Botão  *(Texto | URL)*")
+            st.caption("Botão  *(Texto | URL ou destino)*")
             for i, btn in enumerate(st.session_state.t13_about_btns):
                 c1, c2, c3 = st.columns([4, 4, 1])
                 with c1:
                     st.session_state.t13_about_btns[i]["texto"] = st.text_input(
-                        "Texto", btn["texto"], key=f"t13_ab_t_{i}", label_visibility="collapsed", placeholder="Texto")
+                        "Texto", btn["texto"], key=f"t13_ab_t_{i}", label_visibility="collapsed",
+                        placeholder="Texto do botão")
                 with c2:
                     st.session_state.t13_about_btns[i]["url"] = st.text_input(
-                        "URL", btn["url"], key=f"t13_ab_u_{i}", label_visibility="collapsed", placeholder="URL")
+                        "URL", btn["url"], key=f"t13_ab_u_{i}", label_visibility="collapsed",
+                        placeholder="https:// ou seção")
                 with c3:
                     if len(st.session_state.t13_about_btns) > 1 and _del_btn(f"t13_ab_del_{i}"):
                         st.session_state.t13_about_btns.pop(i); st.rerun()
             if _add_btn("t13_ab_add", "＋ Adicionar botão"):
-                st.session_state.t13_about_btns.append({"texto": "SAIBA MAIS", "url": "#"}); st.rerun()
+                st.session_state.t13_about_btns.append({"texto": "SAIBA MAIS", "url": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # ESTATÍSTICAS
+            # 5. ESTATÍSTICAS
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📊 Números de Impacto</div>', unsafe_allow_html=True)
             st.caption("Número | Descrição")
@@ -298,10 +472,12 @@ def render():
                 c1, c2, c3 = st.columns([3, 5, 1])
                 with c1:
                     st.session_state.t13_stats[i]["valor"] = st.text_input(
-                        "Número", stat["valor"], key=f"t13_st_v_{i}", label_visibility="collapsed", placeholder="Ex: 22")
+                        "Número", stat["valor"], key=f"t13_st_v_{i}", label_visibility="collapsed",
+                        placeholder="Ex: 125")
                 with c2:
                     st.session_state.t13_stats[i]["label"] = st.text_input(
-                        "Descrição", stat["label"], key=f"t13_st_l_{i}", label_visibility="collapsed", placeholder="Descrição")
+                        "Descrição", stat["label"], key=f"t13_st_l_{i}", label_visibility="collapsed",
+                        placeholder="Ex: Anos de Inovação")
                 with c3:
                     if len(st.session_state.t13_stats) > 1 and _del_btn(f"t13_st_del_{i}"):
                         st.session_state.t13_stats.pop(i); st.rerun()
@@ -309,7 +485,7 @@ def render():
                 st.session_state.t13_stats.append({"valor": "0", "label": "Novo Dado"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # NEGÓCIOS
+            # 6. NEGÓCIOS
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">🏢 Frentes de Atuação</div>', unsafe_allow_html=True)
 
@@ -318,46 +494,61 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_bus_secao_titulos[i]["valor"] = st.text_input(
-                        "Título", t["valor"], key=f"t13_bst_{i}", label_visibility="collapsed")
+                        "Título", t["valor"], key=f"t13_bst_{i}", label_visibility="collapsed",
+                        placeholder="Ex: Nossas Frentes de Atuação")
                 with c2:
                     if len(st.session_state.t13_bus_secao_titulos) > 1 and _del_btn(f"t13_bst_del_{i}"):
                         st.session_state.t13_bus_secao_titulos.pop(i); st.rerun()
-            if _add_btn("t13_bst_add", "＋ Adicionar título de seção"):
+            if _add_btn("t13_bst_add", "＋ Adicionar título"):
                 st.session_state.t13_bus_secao_titulos.append({"valor": "Novo Título"}); st.rerun()
 
-            st.caption("Cards de negócio  *(Título | Descrição | Imagem | Botão | URL)*")
+            st.markdown("""
+            <div class="info-box" style="margin:4px 0 8px">
+                📸 <strong>Imagens dos cards:</strong> cole a URL do
+                <a href="https://imgur.com" target="_blank">imgur.com</a>.
+                Tamanho recomendado: <strong>500 × 350 px</strong>.
+            </div>
+            """, unsafe_allow_html=True)
+
+            st.caption("Cards  *(clique para expandir e editar cada um)*")
             for i, item in enumerate(st.session_state.t13_bus_items):
                 with st.expander(f"Negócio {i+1}: {item['titulo']}"):
                     st.session_state.t13_bus_items[i]["titulo"] = st.text_input(
-                        "Título", item["titulo"], key=f"t13_bi_t_{i}")
+                        "Título", item["titulo"], key=f"t13_bi_t_{i}",
+                        placeholder="Ex: Celulose")
                     st.session_state.t13_bus_items[i]["desc"] = st.text_area(
-                        "Descrição", item["desc"], key=f"t13_bi_d_{i}", height=80)
+                        "Descrição", item["desc"], key=f"t13_bi_d_{i}", height=80,
+                        placeholder="Descreva esta frente de negócio")
                     st.session_state.t13_bus_items[i]["img"] = st.text_input(
-                        "URL da Imagem", item["img"], key=f"t13_bi_i_{i}")
+                        "URL da Imagem", item["img"], key=f"t13_bi_i_{i}",
+                        placeholder="https://i.imgur.com/... ou URL da imagem",
+                        help="Cole a URL da imagem do imgur.com")
                     st.session_state.t13_bus_items[i]["btn_txt"] = st.text_input(
                         "Texto do Botão", item["btn_txt"], key=f"t13_bi_bt_{i}")
                     st.session_state.t13_bus_items[i]["url"] = st.text_input(
-                        "URL do Botão", item["url"], key=f"t13_bi_u_{i}")
+                        "URL do Botão", item["url"], key=f"t13_bi_u_{i}",
+                        placeholder="https:// ou seção de destino")
                     if len(st.session_state.t13_bus_items) > 1:
                         if st.button("🗑 Remover este negócio", key=f"t13_bi_del_{i}"):
                             st.session_state.t13_bus_items.pop(i); st.rerun()
             if _add_btn("t13_bi_add", "＋ Adicionar negócio"):
                 st.session_state.t13_bus_items.append({
                     "img": "", "titulo": "NOVO NEGÓCIO", "desc": "Descrição.",
-                    "btn_txt": "Saiba Mais", "url": "#"
-                }); st.rerun()
+                    "btn_txt": "Saiba Mais", "url": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # KODS - SUSTENTABILIDADE
+            # 7. KODS
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">♻️ KODS (Sustentabilidade)</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">♻️ Sustentabilidade / KODS</div>', unsafe_allow_html=True)
 
             st.caption("Título")
             for i, t in enumerate(st.session_state.t13_kods_titulos):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_kods_titulos[i]["valor"] = st.text_area(
-                        "Título KODS", t["valor"], key=f"t13_kt_{i}", height=70, label_visibility="collapsed")
+                        "Título KODS", t["valor"], key=f"t13_kt_{i}", height=70,
+                        label_visibility="collapsed",
+                        placeholder="Ex: Objetivos para o Desenvolvimento Sustentável")
                 with c2:
                     if len(st.session_state.t13_kods_titulos) > 1 and _del_btn(f"t13_kt_del_{i}"):
                         st.session_state.t13_kods_titulos.pop(i); st.rerun()
@@ -369,22 +560,25 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_kods_descs[i]["valor"] = st.text_area(
-                        "Descrição KODS", d["valor"], key=f"t13_kd_{i}", height=80, label_visibility="collapsed")
+                        "Descrição KODS", d["valor"], key=f"t13_kd_{i}", height=80,
+                        label_visibility="collapsed",
+                        placeholder="Descreva sua agenda de sustentabilidade")
                 with c2:
                     if len(st.session_state.t13_kods_descs) > 1 and _del_btn(f"t13_kd_del_{i}"):
                         st.session_state.t13_kods_descs.pop(i); st.rerun()
             if _add_btn("t13_kd_add", "＋ Adicionar descrição"):
                 st.session_state.t13_kods_descs.append({"valor": "Nova descrição"}); st.rerun()
 
-            st.caption("Objetivos  *(Texto | Estilo de cor)*")
+            st.caption("Objetivos  *(Texto | Cor do badge)*")
             for i, item in enumerate(st.session_state.t13_kods_items):
                 c1, c2, c3 = st.columns([5, 3, 1])
                 with c1:
                     st.session_state.t13_kods_items[i]["texto"] = st.text_input(
-                        "Objetivo", item["texto"], key=f"t13_ki_t_{i}", label_visibility="collapsed")
+                        "Objetivo", item["texto"], key=f"t13_ki_t_{i}", label_visibility="collapsed",
+                        placeholder="Ex: 🌳 Conservação da Biodiversidade")
                 with c2:
                     st.session_state.t13_kods_items[i]["tipo"] = st.selectbox(
-                        "Estilo", ["info", "success", "warning", "error"],
+                        "Cor", ["info", "success", "warning", "error"],
                         index=["info", "success", "warning", "error"].index(item["tipo"]),
                         key=f"t13_ki_tp_{i}", label_visibility="collapsed")
                 with c3:
@@ -394,7 +588,7 @@ def render():
                 st.session_state.t13_kods_items.append({"texto": "🌿 Novo Objetivo", "tipo": "info"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # INVESTIDORES
+            # 8. INVESTIDORES
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">📈 Relações com Investidores</div>', unsafe_allow_html=True)
 
@@ -403,7 +597,8 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_ri_titulos[i]["valor"] = st.text_input(
-                        "Título RI", t["valor"], key=f"t13_rit_{i}", label_visibility="collapsed")
+                        "Título RI", t["valor"], key=f"t13_rit_{i}", label_visibility="collapsed",
+                        placeholder="Ex: Relações com Investidores")
                 with c2:
                     if len(st.session_state.t13_ri_titulos) > 1 and _del_btn(f"t13_rit_del_{i}"):
                         st.session_state.t13_ri_titulos.pop(i); st.rerun()
@@ -415,40 +610,45 @@ def render():
                 c1, c2, c3, c4 = st.columns([3, 3, 2, 1])
                 with c1:
                     st.session_state.t13_ri_metrics[i]["label"] = st.text_input(
-                        "Ticker", met["label"], key=f"t13_rim_l_{i}", label_visibility="collapsed", placeholder="Ticker")
+                        "Ticker", met["label"], key=f"t13_rim_l_{i}", label_visibility="collapsed",
+                        placeholder="Ex: ACAO11")
                 with c2:
                     st.session_state.t13_ri_metrics[i]["value"] = st.text_input(
-                        "Valor", met["value"], key=f"t13_rim_v_{i}", label_visibility="collapsed", placeholder="R$ 0,00")
+                        "Valor", met["value"], key=f"t13_rim_v_{i}", label_visibility="collapsed",
+                        placeholder="Ex: R$ 22,45")
                 with c3:
                     st.session_state.t13_ri_metrics[i]["delta"] = st.text_input(
-                        "Variação", met["delta"], key=f"t13_rim_d_{i}", label_visibility="collapsed", placeholder="+0%")
+                        "Variação", met["delta"], key=f"t13_rim_d_{i}", label_visibility="collapsed",
+                        placeholder="Ex: +1.20%")
                 with c4:
                     if len(st.session_state.t13_ri_metrics) > 1 and _del_btn(f"t13_rim_del_{i}"):
                         st.session_state.t13_ri_metrics.pop(i); st.rerun()
             if _add_btn("t13_rim_add", "＋ Adicionar métrica"):
                 st.session_state.t13_ri_metrics.append({"label": "ACAO", "value": "R$ 0,00", "delta": "0%"}); st.rerun()
 
-            st.caption("Cards RI  *(Título | Descrição | Botão | URL)*")
+            st.caption("Cards RI  *(clique para expandir e editar cada um)*")
             for i, card in enumerate(st.session_state.t13_ri_cards):
                 with st.expander(f"Card RI {i+1}: {card['titulo']}"):
                     st.session_state.t13_ri_cards[i]["titulo"] = st.text_input(
-                        "Título", card["titulo"], key=f"t13_ric_t_{i}")
+                        "Título", card["titulo"], key=f"t13_ric_t_{i}",
+                        placeholder="Ex: Central de Resultados")
                     st.session_state.t13_ri_cards[i]["desc"] = st.text_area(
-                        "Descrição", card["desc"], key=f"t13_ric_d_{i}", height=70)
+                        "Descrição", card["desc"], key=f"t13_ric_d_{i}", height=70,
+                        placeholder="Descrição do card")
                     st.session_state.t13_ri_cards[i]["btn_texto"] = st.text_input(
                         "Texto do Botão", card["btn_texto"], key=f"t13_ric_bt_{i}")
                     st.session_state.t13_ri_cards[i]["url"] = st.text_input(
-                        "URL do Botão", card["url"], key=f"t13_ric_u_{i}")
+                        "URL do Botão", card["url"], key=f"t13_ric_u_{i}",
+                        placeholder="https:// ou seção de destino")
                     if len(st.session_state.t13_ri_cards) > 1:
                         if st.button("🗑 Remover este card", key=f"t13_ric_del_{i}"):
                             st.session_state.t13_ri_cards.pop(i); st.rerun()
             if _add_btn("t13_ric_add", "＋ Adicionar card RI"):
                 st.session_state.t13_ri_cards.append({
-                    "titulo": "NOVO CARD", "desc": "Descrição.", "btn_texto": "VER", "url": "#"
-                }); st.rerun()
+                    "titulo": "NOVO CARD", "desc": "Descrição.", "btn_texto": "VER", "url": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # FOOTER
+            # 9. FOOTER
             # ══════════════════════════════════════════════════════════════════
             st.markdown('<div class="section-label">👣 Rodapé Completo</div>', unsafe_allow_html=True)
 
@@ -457,7 +657,8 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_foot_logos[i]["valor"] = st.text_input(
-                        "Logo Footer", logo["valor"], key=f"t13_fl_{i}", label_visibility="collapsed")
+                        "Logo Footer", logo["valor"], key=f"t13_fl_{i}", label_visibility="collapsed",
+                        placeholder="Ex: ogreen ou Minha Empresa")
                 with c2:
                     if len(st.session_state.t13_foot_logos) > 1 and _del_btn(f"t13_fl_del_{i}"):
                         st.session_state.t13_foot_logos.pop(i); st.rerun()
@@ -469,14 +670,16 @@ def render():
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_foot_descs[i]["valor"] = st.text_area(
-                        "Descrição Footer", desc["valor"], key=f"t13_fd_{i}", height=70, label_visibility="collapsed")
+                        "Descrição Footer", desc["valor"], key=f"t13_fd_{i}", height=70,
+                        label_visibility="collapsed",
+                        placeholder="Breve descrição da empresa para o rodapé")
                 with c2:
                     if len(st.session_state.t13_foot_descs) > 1 and _del_btn(f"t13_fd_del_{i}"):
                         st.session_state.t13_foot_descs.pop(i); st.rerun()
             if _add_btn("t13_fd_add", "＋ Adicionar descrição"):
                 st.session_state.t13_foot_descs.append({"valor": "Nova descrição"}); st.rerun()
 
-            st.caption("Colunas de links  *(Título | Links)*")
+            st.caption("Colunas de links  *(clique para expandir e editar cada uma)*")
             for i, col in enumerate(st.session_state.t13_foot_cols):
                 with st.expander(f"Coluna {i+1}: {col['titulo']}"):
                     st.session_state.t13_foot_cols[i]["titulo"] = st.text_input(
@@ -485,27 +688,30 @@ def render():
                         c1, c2, c3 = st.columns([4, 4, 1])
                         with c1:
                             st.session_state.t13_foot_cols[i]["links"][j]["texto"] = st.text_input(
-                                "Texto", link["texto"], key=f"t13_fcol_lt_{i}_{j}", label_visibility="collapsed")
+                                "Texto", link["texto"], key=f"t13_fcol_lt_{i}_{j}",
+                                label_visibility="collapsed", placeholder="Texto do link")
                         with c2:
                             st.session_state.t13_foot_cols[i]["links"][j]["url"] = st.text_input(
-                                "URL", link["url"], key=f"t13_fcol_lu_{i}_{j}", label_visibility="collapsed")
+                                "URL", link["url"], key=f"t13_fcol_lu_{i}_{j}",
+                                label_visibility="collapsed", placeholder="https:// ou seção")
                         with c3:
                             if len(col["links"]) > 1 and _del_btn(f"t13_fcol_ld_{i}_{j}"):
                                 st.session_state.t13_foot_cols[i]["links"].pop(j); st.rerun()
                     if _add_btn(f"t13_fcol_la_{i}", "＋ Adicionar link"):
-                        st.session_state.t13_foot_cols[i]["links"].append({"texto": "Novo Link", "url": "#"}); st.rerun()
+                        st.session_state.t13_foot_cols[i]["links"].append({"texto": "Novo Link", "url": ""}); st.rerun()
                     if len(st.session_state.t13_foot_cols) > 1:
                         if st.button("🗑 Remover esta coluna", key=f"t13_fcol_del_{i}"):
                             st.session_state.t13_foot_cols.pop(i); st.rerun()
             if _add_btn("t13_fcol_add", "＋ Adicionar coluna ao rodapé"):
-                st.session_state.t13_foot_cols.append({"titulo": "NOVA COLUNA", "links": [{"texto": "Link", "url": "#"}]}); st.rerun()
+                st.session_state.t13_foot_cols.append({"titulo": "NOVA COLUNA", "links": [{"texto": "Link", "url": ""}]}); st.rerun()
 
             st.caption("Copyright")
             for i, copy in enumerate(st.session_state.t13_foot_copys):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_foot_copys[i]["valor"] = st.text_input(
-                        "Copyright", copy["valor"], key=f"t13_fcp_{i}", label_visibility="collapsed")
+                        "Copyright", copy["valor"], key=f"t13_fcp_{i}", label_visibility="collapsed",
+                        placeholder="Ex: © 2026 Minha Empresa. Todos os direitos reservados.")
                 with c2:
                     if len(st.session_state.t13_foot_copys) > 1 and _del_btn(f"t13_fcp_del_{i}"):
                         st.session_state.t13_foot_copys.pop(i); st.rerun()
@@ -513,15 +719,45 @@ def render():
                 st.session_state.t13_foot_copys.append({"valor": "© 2026"}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # OBSERVAÇÕES
+            # 10. IMAGENS
             # ══════════════════════════════════════════════════════════════════
-            st.markdown('<div class="section-label">📝 Observações Adicionais</div>', unsafe_allow_html=True)
+            st.markdown('<div class="section-label">🖼️ Guia de Imagens</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="info-box">
+                📸 <strong>Como adicionar imagens ao seu site:</strong><br><br>
+                1. Acesse <a href="https://imgur.com" target="_blank"><strong>imgur.com</strong></a>
+                   (gratuito, sem cadastro) e faça o upload da sua imagem.<br>
+                2. Clique com o botão direito na imagem → <em>Copiar endereço da imagem</em> — a URL termina em
+                   <code>.jpg</code>, <code>.png</code> ou <code>.webp</code>.<br>
+                3. Cole a URL no campo correspondente nas seções acima.<br><br>
+                📐 <strong>Tamanhos recomendados:</strong><br>
+                • Hero de fundo: <strong>1920 × 800 px</strong><br>
+                • Imagem lateral (Sobre): <strong>800 × 600 px</strong><br>
+                • Cards de negócios: <strong>500 × 350 px</strong><br>
+                • Logo: <strong>200 × 60 px</strong> (fundo transparente, PNG)<br><br>
+                ❌ <strong>Não conseguiu subir a imagem?</strong> Envie para
+                <strong>sttacksite@gmail.com</strong> com o assunto <em>"Imagem — [nome do seu site]"</em>.
+            </div>
+            """, unsafe_allow_html=True)
+
+            # ══════════════════════════════════════════════════════════════════
+            # 11. OBSERVAÇÕES
+            # ══════════════════════════════════════════════════════════════════
+            st.markdown('<div class="section-label">📝 Observações / Pedidos Extras</div>', unsafe_allow_html=True)
+            st.markdown("""
+            <div class="warn-box">
+                💬 <strong>Use este espaço para tudo que não encontrou nos campos acima!</strong><br>
+                Ex: "alterar fonte do logo", "adicionar seção de depoimentos", "colocar vídeo do YouTube",
+                "adicionar FAQ", "remover seção de Investidores", "adicionar mapa do Google"...
+                Nossa equipe lê cada observação e aplica para você! 🙌
+            </div>
+            """, unsafe_allow_html=True)
             for i, item in enumerate(st.session_state.t13_obs):
                 c1, c2 = st.columns([9, 1])
                 with c1:
                     st.session_state.t13_obs[i]["valor"] = st.text_area(
-                        "Notas extras", item["valor"], key=f"t13_obs_{i}", height=80,
-                        placeholder="Ex: Mudar a imagem do hero para uma floresta...",
+                        "Notas extras", item["valor"], key=f"t13_obs_{i}", height=90,
+                        placeholder="Descreva aqui qualquer ajuste, ideia ou pedido especial...",
                         label_visibility="collapsed")
                 with c2:
                     if len(st.session_state.t13_obs) > 1 and _del_btn(f"t13_obs_del_{i}"):
@@ -530,12 +766,44 @@ def render():
                 st.session_state.t13_obs.append({"valor": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
-            # ENVIAR
+            # 12. REVISÃO + ENVIO
             # ══════════════════════════════════════════════════════════════════
             st.markdown("---")
-            if st.button("✅ Finalizar e Enviar para a Equipe", key="t13_send", type="primary"):
-                st.success("✅ Suas informações foram enviadas! Nossa equipe aplicará as alterações em breve.")
-                st.balloons()
+
+            with st.expander("👁 Revisar dados antes de enviar"):
+                st.json(_build_json())
+
+            erros = []
+            if not st.session_state.t13_nome_cliente.strip():
+                erros.append("• Preencha seu **nome completo**.")
+            if not st.session_state.t13_email_cliente.strip() or "@" not in st.session_state.t13_email_cliente:
+                erros.append("• Preencha um **e-mail válido** (mesmo da Eduzz).")
+            if not st.session_state.t13_nome_site.strip():
+                erros.append("• Preencha o **nome desejado para a URL** do site.")
+
+            if erros:
+                st.warning("⚠️ Antes de enviar, corrija os itens abaixo:\n\n" + "\n".join(erros))
+
+            if st.button("✅ Finalizar e Enviar para a Equipe", key="t13_send", type="primary",
+                         disabled=len(erros) > 0):
+                payload = _build_json()
+                sucesso = _enviar_resend(payload)
+                if sucesso:
+                    st.success(
+                        "🎉 **Pedido enviado com sucesso!**\n\n"
+                        "Nossa equipe já recebeu suas informações e entrará em contato assim que o site "
+                        "estiver em produção. Caso surja alguma dúvida, falaremos com você pelo e-mail "
+                        f"informado. 😊\n\n"
+                        f"Seu site será publicado em: **https://sttacksite.streamlit.app/?c={st.session_state.t13_nome_site}**"
+                    )
+                    st.balloons()
+                else:
+                    st.warning(
+                        "⚠️ Houve um problema ao enviar automaticamente. "
+                        "Copie o JSON abaixo e envie para **sttacksite@gmail.com** com o assunto "
+                        f"*'Pedido — {st.session_state.t13_nome_cliente}'*."
+                    )
+                    st.code(json.dumps(payload, ensure_ascii=False, indent=2), language="json")
 
     # ════════════════════════════════════════════════════════════════════════
     # PAINEL DIREITO — PREVIEW
