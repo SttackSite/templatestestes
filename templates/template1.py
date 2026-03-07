@@ -211,7 +211,7 @@ def render():
     st.markdown("""
     <div class="info-box">
         👋 <strong>Bem-vindo ao editor do seu site!</strong><br>
-        Preencha os campos abaixo para personalizar o seu site. Não precisa ser técnico — é só digitar!<br><br>
+        Preencha os campos abaixo para personalizar o seu site. Não precisa ser técnico — é só digitar! Você também poderá vir aqui e ajustar seu site quantas vezes quiser.<br><br>
         💡 <strong>Tem alguma ideia que não encontrou aqui?</strong> Use o campo <em>Observações</em> no final
         para descrever o que deseja (ex: "quero uma fonte diferente", "adicionar um vídeo", "mudar o layout da seção X").
         Nossa equipe analisa tudo e aplica para você. 😊
