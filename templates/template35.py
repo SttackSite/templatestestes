@@ -1,6 +1,8 @@
 import streamlit as st
 import json
-import urllib.request
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIGURAÇÕES FIXAS
@@ -8,7 +10,8 @@ import urllib.request
 TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img35.png"
 TEMPLATE_NAME      = "Template 35 — Good Secrets Style (Nutrição Chic)"
 TEMPLATE_ID        = "template_35"
-RESEND_API_KEY     = st.secrets.get("RESEND_KEY", "")
+GMAIL_USER         = st.secrets.get("sttacksite@gmail.com", "")
+GMAIL_PASS         = st.secrets.get("jfww wgtt rsqk acsq", "")
 DESTINO_EMAIL      = "sttacksite@gmail.com"
 
 
@@ -146,33 +149,22 @@ def _build_json():
     }
 
 def _enviar_resend(payload: dict):
-    """Retorna (sucesso: bool, mensagem_erro: str)"""
+    """Retorna (sucesso: bool, mensagem_erro: str) via Gmail SMTP"""
     try:
+        nome   = payload["identificacao"]["nome"]
+        subject = f"[Novo Pedido] {TEMPLATE_NAME} — {nome}"
         body_html = f"<pre style='font-family:monospace;font-size:13px'>{json.dumps(payload, ensure_ascii=False, indent=2)}</pre>"
-        data = json.dumps({
-            "from":    "onboarding@resend.dev",
-            "to":      [DESTINO_EMAIL],
-            "subject": f"[Novo Pedido] {TEMPLATE_NAME} — {payload['identificacao']['nome']}",
-            "html":    body_html,
-        }).encode("utf-8")
-        req = urllib.request.Request(
-            "https://api.resend.com/emails",
-            data=data,
-            headers={
-                "Authorization": f"Bearer {RESEND_API_KEY}",
-                "Content-Type":  "application/json",
-            },
-            method="POST",
-        )
-        try:
-            with urllib.request.urlopen(req, timeout=10) as resp:
-                body = resp.read().decode("utf-8")
-                if resp.status in (200, 201):
-                    return True, ""
-                return False, f"HTTP {resp.status}: {body}"
-        except urllib.error.HTTPError as e:
-            body = e.read().decode("utf-8")
-            return False, f"HTTP {e.code}: {body}"
+
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"]    = GMAIL_USER
+        msg["To"]      = DESTINO_EMAIL
+        msg.attach(MIMEText(body_html, "html", "utf-8"))
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=15) as server:
+            server.login(GMAIL_USER, GMAIL_PASS)
+            server.sendmail(GMAIL_USER, DESTINO_EMAIL, msg.as_string())
+        return True, ""
     except Exception as ex:
         return False, str(ex)
 
