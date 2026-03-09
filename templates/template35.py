@@ -149,7 +149,7 @@ def _enviar_resend(payload: dict) -> bool:
     try:
         body_html = f"<pre style='font-family:monospace;font-size:13px'>{json.dumps(payload, ensure_ascii=False, indent=2)}</pre>"
         data = json.dumps({
-            "from":    "editor@sttacksite.com.br",
+            "from":    "onboarding@resend.dev",
             "to":      [DESTINO_EMAIL],
             "subject": f"[Novo Pedido] {TEMPLATE_NAME} — {payload['identificacao']['nome']}",
             "html":    body_html,
