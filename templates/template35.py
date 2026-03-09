@@ -11,7 +11,7 @@ TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestest
 TEMPLATE_NAME      = "Template 35 — Good Secrets Style (Nutrição Chic)"
 TEMPLATE_ID        = "template_35"
 GMAIL_USER         = st.secrets.get("sttacksite@gmail.com", "")
-GMAIL_PASS         = st.secrets.get("jfww wgtt rsqk acsq", "")
+GMAIL_PASS         = st.secrets.get("jfwwwgttrsqkacsq", "")
 DESTINO_EMAIL      = "sttacksite@gmail.com"
 
 
