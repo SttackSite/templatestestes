@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIGURAÇÕES FIXAS
 # ─────────────────────────────────────────────────────────────────────────────
-TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img30.png"
+TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/editor/main/img30.png"
 TEMPLATE_NAME      = "Template 30 — FORZY Pro Style (Performance & Design)"
 TEMPLATE_ID        = "template_30"
 GMAIL_USER         = st.secrets.get("GMAIL_USER", "")
