@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIGURAÇÕES FIXAS
 # ─────────────────────────────────────────────────────────────────────────────
-TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img11.png"
+TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/editor/main/img11.png"
 TEMPLATE_NAME      = "Template 11 — Pura Vida Brackets (E-commerce & Estilo de Vida)"
 TEMPLATE_ID        = "template_11"
 GMAIL_USER         = st.secrets.get("GMAIL_USER", "")
