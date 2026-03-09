@@ -145,7 +145,8 @@ def _build_json():
         "observacoes": st.session_state.t35_obs,
     }
 
-def _enviar_resend(payload: dict) -> bool:
+def _enviar_resend(payload: dict):
+    """Retorna (sucesso: bool, mensagem_erro: str)"""
     try:
         body_html = f"<pre style='font-family:monospace;font-size:13px'>{json.dumps(payload, ensure_ascii=False, indent=2)}</pre>"
         data = json.dumps({
@@ -163,10 +164,17 @@ def _enviar_resend(payload: dict) -> bool:
             },
             method="POST",
         )
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            return resp.status in (200, 201)
-    except Exception:
-        return False
+        try:
+            with urllib.request.urlopen(req, timeout=10) as resp:
+                body = resp.read().decode("utf-8")
+                if resp.status in (200, 201):
+                    return True, ""
+                return False, f"HTTP {resp.status}: {body}"
+        except urllib.error.HTTPError as e:
+            body = e.read().decode("utf-8")
+            return False, f"HTTP {e.code}: {body}"
+    except Exception as ex:
+        return False, str(ex)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -690,7 +698,9 @@ def render():
             if st.button("✅ Finalizar e Enviar para a Equipe", key="t35_send", type="primary",
                          disabled=len(erros) > 0):
                 payload = _build_json()
-                sucesso = _enviar_resend(payload)
+                sucesso, erro_msg = _enviar_resend(payload)
+                if erro_msg:
+                    st.error(f"🔴 Erro da API Resend: {erro_msg}")
                 if sucesso:
                     st.success(
                         "🎉 **Pedido enviado com sucesso!**\n\n"
