@@ -10,8 +10,8 @@ from email.mime.text import MIMEText
 TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img35.png"
 TEMPLATE_NAME      = "Template 35 — Good Secrets Style (Nutrição Chic)"
 TEMPLATE_ID        = "template_35"
-GMAIL_USER         = st.secrets.get("sttacksite@gmail.com", "")
-GMAIL_PASS         = st.secrets.get("jfwwwgttrsqkacsq", "")
+GMAIL_USER         = st.secrets.get("GMAIL_USER", "")
+GMAIL_PASS         = st.secrets.get("GMAIL_PASS", "")
 DESTINO_EMAIL      = "sttacksite@gmail.com"
 
 
