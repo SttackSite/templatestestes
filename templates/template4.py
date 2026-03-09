@@ -1,6 +1,8 @@
 import streamlit as st
 import json
-import urllib.request
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIGURAÇÕES FIXAS
@@ -8,7 +10,8 @@ import urllib.request
 TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img4.png"
 TEMPLATE_NAME      = "Template 4 — Inovação Absoluta (Champion)"
 TEMPLATE_ID        = "template_4"
-RESEND_API_KEY     = st.secrets.get("RESEND_KEY", "")
+GMAIL_USER         = st.secrets.get("GMAIL_USER", "")
+GMAIL_PASS         = st.secrets.get("GMAIL_PASS", "")
 DESTINO_EMAIL      = "sttacksite@gmail.com"
 
 
@@ -135,28 +138,25 @@ def _build_json():
         "observacoes": st.session_state.t4_obs,
     }
 
-def _enviar_resend(payload: dict) -> bool:
+def _enviar_resend(payload: dict):
+    """Retorna (sucesso: bool, mensagem_erro: str) via Gmail SMTP"""
     try:
+        nome    = payload["identificacao"]["nome"]
+        subject = f"[Novo Pedido] {TEMPLATE_NAME} — {nome}"
         body_html = f"<pre style='font-family:monospace;font-size:13px'>{json.dumps(payload, ensure_ascii=False, indent=2)}</pre>"
-        data = json.dumps({
-            "from":    "editor@sttacksite.com.br",
-            "to":      [DESTINO_EMAIL],
-            "subject": f"[Novo Pedido] {TEMPLATE_NAME} — {payload['identificacao']['nome']}",
-            "html":    body_html,
-        }).encode("utf-8")
-        req = urllib.request.Request(
-            "https://api.resend.com/emails",
-            data=data,
-            headers={
-                "Authorization": f"Bearer {RESEND_API_KEY}",
-                "Content-Type":  "application/json",
-            },
-            method="POST",
-        )
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            return resp.status in (200, 201)
-    except Exception:
-        return False
+
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"]    = GMAIL_USER
+        msg["To"]      = DESTINO_EMAIL
+        msg.attach(MIMEText(body_html, "html", "utf-8"))
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=15) as server:
+            server.login(GMAIL_USER, GMAIL_PASS)
+            server.sendmail(GMAIL_USER, DESTINO_EMAIL, msg.as_string())
+        return True, ""
+    except Exception as ex:
+        return False, str(ex)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -611,7 +611,9 @@ def render():
             if st.button("✅ Finalizar e Enviar para a Equipe", key="t4_send", type="primary",
                          disabled=len(erros) > 0):
                 payload = _build_json()
-                sucesso = _enviar_resend(payload)
+                sucesso, erro_msg = _enviar_resend(payload)
+                if erro_msg:
+                    st.error(f"🔴 Erro ao enviar: {erro_msg}")
                 if sucesso:
                     st.success(
                         "🎉 **Pedido enviado com sucesso!**\n\n"
