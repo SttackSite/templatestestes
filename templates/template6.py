@@ -1,6 +1,8 @@
 import streamlit as st
 import json
-import urllib.request
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIGURAÇÕES FIXAS
@@ -8,7 +10,8 @@ import urllib.request
 TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img6.png"
 TEMPLATE_NAME      = "Template 6 — Alta Precisão (Bautz Style)"
 TEMPLATE_ID        = "template_6"
-RESEND_API_KEY     = st.secrets.get("RESEND_KEY", "")
+GMAIL_USER         = st.secrets.get("GMAIL_USER", "")
+GMAIL_PASS         = st.secrets.get("GMAIL_PASS", "")
 DESTINO_EMAIL      = "sttacksite@gmail.com"
 
 
@@ -29,6 +32,16 @@ def _init():
             {"nome": "Cor do Texto (Deep Black)",      "valor": "#1a1a1a"},
         ],
 
+        # ── NAVBAR ──────────────────────────────────────────────────────────
+        "t6_navbar_logo":  [{"valor": "SITE PRO"}],
+        "t6_navbar_links": [
+            {"texto": "Catálogo",   "url": "seção Catálogo de Componentes"},
+            {"texto": "Aplicações", "url": "seção Aplicações do Sistema"},
+            {"texto": "Workflow",   "url": "seção Fluxo de Implementação"},
+            {"texto": "Preços",     "url": "seção Planos de Acesso"},
+            {"texto": "FAQ",        "url": "seção FAQ ao final da página"},
+        ],
+        "t6_navbar_cta": [{"texto": "CONFIGURAR AGORA", "url": "seção Catálogo de Componentes"}],
 
         # ── HERO ────────────────────────────────────────────────────────────
         "t6_hero_mono":       [{"valor": "Codeless Architecture v2.0"}],
@@ -118,6 +131,11 @@ def _build_json():
             "url_final": f"https://sttacksite.streamlit.app/?c={st.session_state.t6_nome_site}",
         },
         "cores": st.session_state.t6_cores,
+        "navbar": {
+            "logo":  st.session_state.t6_navbar_logo,
+            "links": st.session_state.t6_navbar_links,
+            "cta":   st.session_state.t6_navbar_cta,
+        },
         "hero": {
             "mono":       st.session_state.t6_hero_mono,
             "titulos":    st.session_state.t6_hero_titulos,
@@ -154,28 +172,25 @@ def _build_json():
         "observacoes": st.session_state.t6_obs,
     }
 
-def _enviar_resend(payload: dict) -> bool:
+def _enviar_resend(payload: dict):
+    """Retorna (sucesso: bool, mensagem_erro: str) via Gmail SMTP"""
     try:
+        nome    = payload["identificacao"]["nome"]
+        subject = f"[Novo Pedido] {TEMPLATE_NAME} — {nome}"
         body_html = f"<pre style='font-family:monospace;font-size:13px'>{json.dumps(payload, ensure_ascii=False, indent=2)}</pre>"
-        data = json.dumps({
-            "from":    "editor@sttacksite.com.br",
-            "to":      [DESTINO_EMAIL],
-            "subject": f"[Novo Pedido] {TEMPLATE_NAME} — {payload['identificacao']['nome']}",
-            "html":    body_html,
-        }).encode("utf-8")
-        req = urllib.request.Request(
-            "https://api.resend.com/emails",
-            data=data,
-            headers={
-                "Authorization": f"Bearer {RESEND_API_KEY}",
-                "Content-Type":  "application/json",
-            },
-            method="POST",
-        )
-        with urllib.request.urlopen(req, timeout=10) as resp:
-            return resp.status in (200, 201)
-    except Exception:
-        return False
+
+        msg = MIMEMultipart("alternative")
+        msg["Subject"] = subject
+        msg["From"]    = GMAIL_USER
+        msg["To"]      = DESTINO_EMAIL
+        msg.attach(MIMEText(body_html, "html", "utf-8"))
+
+        with smtplib.SMTP_SSL("smtp.gmail.com", 465, timeout=15) as server:
+            server.login(GMAIL_USER, GMAIL_PASS)
+            server.sendmail(GMAIL_USER, DESTINO_EMAIL, msg.as_string())
+        return True, ""
+    except Exception as ex:
+        return False, str(ex)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -299,6 +314,20 @@ def render():
             # ══════════════════════════════════════════════════════════════════
             # 2. NAVBAR
             # ══════════════════════════════════════════════════════════════════
+            st.markdown('<div class="section-label">🔝 Navegação (Navbar)</div>', unsafe_allow_html=True)
+
+            st.caption("Logo / Nome da marca")
+            for i, item in enumerate(st.session_state.t6_navbar_logo):
+                c1, c2 = st.columns([9, 1])
+                with c1:
+                    st.session_state.t6_navbar_logo[i]["valor"] = st.text_input(
+                        "Logo", item["valor"], key=f"t6_logo_{i}", label_visibility="collapsed",
+                        placeholder="Ex: MINHA EMPRESA")
+                with c2:
+                    if len(st.session_state.t6_navbar_logo) > 1 and _del_btn(f"t6_logo_del_{i}"):
+                        st.session_state.t6_navbar_logo.pop(i); st.rerun()
+            if _add_btn("t6_logo_add", "＋ Adicionar logo"):
+                st.session_state.t6_navbar_logo.append({"valor": "NOVA MARCA"}); st.rerun()
 
             st.markdown("""
             <div class="info-box" style="margin:4px 0 8px">
@@ -307,6 +336,40 @@ def render():
                 descrever para qual seção o botão deve levar (ex: <em>seção de contato ao final da página</em>).
             </div>
             """, unsafe_allow_html=True)
+
+            st.caption("Links do menu  *(Texto | Destino ou URL)*")
+            for i, link in enumerate(st.session_state.t6_navbar_links):
+                c1, c2, c3 = st.columns([4, 4, 1])
+                with c1:
+                    st.session_state.t6_navbar_links[i]["texto"] = st.text_input(
+                        "Texto", link["texto"], key=f"t6_nl_txt_{i}", label_visibility="collapsed",
+                        placeholder="Texto do link")
+                with c2:
+                    st.session_state.t6_navbar_links[i]["url"] = st.text_input(
+                        "Destino", link["url"], key=f"t6_nl_url_{i}", label_visibility="collapsed",
+                        placeholder="Seção ou https://...")
+                with c3:
+                    if len(st.session_state.t6_navbar_links) > 1 and _del_btn(f"t6_nl_del_{i}"):
+                        st.session_state.t6_navbar_links.pop(i); st.rerun()
+            if _add_btn("t6_nl_add", "＋ Adicionar link ao menu"):
+                st.session_state.t6_navbar_links.append({"texto": "Link", "url": "seção de destino"}); st.rerun()
+
+            st.caption("Botão CTA da Navbar  *(Texto | URL ou destino)*")
+            for i, btn in enumerate(st.session_state.t6_navbar_cta):
+                c1, c2, c3 = st.columns([4, 4, 1])
+                with c1:
+                    st.session_state.t6_navbar_cta[i]["texto"] = st.text_input(
+                        "Texto", btn["texto"], key=f"t6_ncta_txt_{i}", label_visibility="collapsed",
+                        placeholder="Texto do botão")
+                with c2:
+                    st.session_state.t6_navbar_cta[i]["url"] = st.text_input(
+                        "URL", btn["url"], key=f"t6_ncta_url_{i}", label_visibility="collapsed",
+                        placeholder="https:// ou seção")
+                with c3:
+                    if len(st.session_state.t6_navbar_cta) > 1 and _del_btn(f"t6_ncta_del_{i}"):
+                        st.session_state.t6_navbar_cta.pop(i); st.rerun()
+            if _add_btn("t6_ncta_add", "＋ Adicionar botão CTA"):
+                st.session_state.t6_navbar_cta.append({"texto": "NOVO CTA", "url": ""}); st.rerun()
 
             # ══════════════════════════════════════════════════════════════════
             # 3. HERO
@@ -705,7 +768,9 @@ def render():
             if st.button("✅ Finalizar e Enviar para a Equipe", key="t6_send", type="primary",
                          disabled=len(erros) > 0):
                 payload = _build_json()
-                sucesso = _enviar_resend(payload)
+                sucesso, erro_msg = _enviar_resend(payload)
+                if erro_msg:
+                    st.error(f"🔴 Erro ao enviar: {erro_msg}")
                 if sucesso:
                     st.success(
                         "🎉 **Pedido enviado com sucesso!**\n\n"
