@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIGURAÇÕES FIXAS
 # ─────────────────────────────────────────────────────────────────────────────
-TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img12.png"
+TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/editor/main/img12.png"
 TEMPLATE_NAME      = "Template 12 — Crehana Style (Cursos Online & Educação)"
 TEMPLATE_ID        = "template_12"
 GMAIL_USER         = st.secrets.get("GMAIL_USER", "")
