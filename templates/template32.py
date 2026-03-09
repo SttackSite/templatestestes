@@ -7,7 +7,7 @@ from email.mime.text import MIMEText
 # ─────────────────────────────────────────────────────────────────────────────
 # CONFIGURAÇÕES FIXAS
 # ─────────────────────────────────────────────────────────────────────────────
-TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/templatestestes/main/img32.png"
+TEMPLATE_IMAGE_URL = "https://raw.githubusercontent.com/SttackSite/editor/main/img32.png"
 TEMPLATE_NAME      = "Template 32 — SCENCO Style (Museum & Heritage)"
 TEMPLATE_ID        = "template_32"
 GMAIL_USER         = st.secrets.get("GMAIL_USER", "")
