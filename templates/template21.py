@@ -225,10 +225,10 @@ def render():
                 help="Seu nome para identificarmos seu pedido.")
 
             st.session_state.t21_email_cliente = st.text_input(
-                "Seu e-mail (mesmo e-mail de cadastro na Eduzz)",
+                "Seu e-mail (mesmo e-mail de cadastro na Kiwify)",
                 value=st.session_state.t21_email_cliente,
                 key="t21_email_cliente_inp", placeholder="Ex: lucas@loja.com",
-                help="Use o mesmo e-mail com o qual você comprou na Eduzz.")
+                help="Use o mesmo e-mail com o qual você comprou na Kiwify.")
 
             st.markdown("""
             <div class="info-box" style="margin-top:8px">
@@ -596,7 +596,7 @@ def render():
             if not st.session_state.t21_nome_cliente.strip():
                 erros.append("• Preencha seu **nome completo**.")
             if not st.session_state.t21_email_cliente.strip() or "@" not in st.session_state.t21_email_cliente:
-                erros.append("• Preencha um **e-mail válido** (mesmo da Eduzz).")
+                erros.append("• Preencha um **e-mail válido** (mesmo da Kiwify).")
             if not st.session_state.t21_nome_site.strip():
                 erros.append("• Preencha o **nome desejado para a URL** do site.")
 
